@@ -49,10 +49,13 @@
 
     .channel img {
       width: 120px;
-      height: auto;
+      height: 80px;
+      object-fit: contain;
       border-radius: 10px;
       box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
       margin-bottom: 5px;
+      background: white;
+      padding: 5px;
     }
 
     .channel-name {
@@ -82,33 +85,34 @@
 
   <h1>Wasi TV</h1>
 
-  <div class="channels">
-    <!-- Ten Sports -->
-    <div class="channel" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/157-3H/playlist.m3u8')">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Ten_Sports_logo.png/320px-Ten_Sports_logo.png" alt="Ten Sports">
-      <div class="channel-name">Ten Sports</div>
-    </div>
-
-    <!-- Makkah Live -->
-    <div class="channel" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/141M/playlist.m3u8')">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Kaaba_Makkah_Logo.png/320px-Kaaba_Makkah_Logo.png" alt="Makkah Live">
-      <div class="channel-name">Makkah Live</div>
-    </div>
-
-    <!-- Hum TV -->
-    <div class="channel" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/humTV-abr/playlist.m3u8')">
-      <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/4f/Hum_TV_2013.png/320px-Hum_TV_2013.png" alt="Hum TV">
-      <div class="channel-name">Hum TV</div>
-    </div>
-  </div>
+  <div class="channels" id="channels"></div>
 
   <video id="video" controls autoplay></video>
 
   <div class="note">it's work free on jazz without data</div>
 
   <script>
-    var video = document.getElementById('video');
-    var hls;
+    const channels = [
+      {
+        name: "Ten Sports",
+        url: "https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/157-3H/playlist.m3u8",
+        logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Ten_Sports_logo.png/320px-Ten_Sports_logo.png"
+      },
+      {
+        name: "Makkah Live",
+        url: "https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/141M/playlist.m3u8",
+        logo: "https://i.ibb.co/6rhYgmZ/kaaba-logo.png"  /* Fixed direct logo */
+      },
+      {
+        name: "Hum TV",
+        url: "https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/humTV-abr/playlist.m3u8",
+        logo: "https://upload.wikimedia.org/wikipedia/en/thumb/4/4f/Hum_TV_2013.png/320px-Hum_TV_2013.png"
+      }
+    ];
+
+    const channelsDiv = document.getElementById("channels");
+    const video = document.getElementById("video");
+    let hls;
 
     function playChannel(url) {
       if (hls) {
@@ -129,6 +133,18 @@
         });
       }
     }
+
+    // Auto generate channel buttons
+    channels.forEach(channel => {
+      const div = document.createElement("div");
+      div.className = "channel";
+      div.innerHTML = `
+        <img src="${channel.logo}" alt="${channel.name}">
+        <div class="channel-name">${channel.name}</div>
+      `;
+      div.addEventListener("click", () => playChannel(channel.url));
+      channelsDiv.appendChild(div);
+    });
   </script>
 
 </body>
