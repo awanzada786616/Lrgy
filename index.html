@@ -1,197 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Wasi TV Panel</title>
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(to right, #1e3c72, #2a5298);
-      font-family: Arial, sans-serif;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-    }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wasi TV Panel</title>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #1e3c72, #2a5298);
+      font-family: Arial, sans-serif;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+    }
 
-    h1 {
-      font-size: 3em;
-      animation: glow 1.5s infinite alternate;
-      margin-bottom: 20px;
-      text-align: center;
-    }
+    h1 {
+      font-size: 3em;
+      margin: 20px 0;
+      animation: glow 1.5s infinite alternate;
+    }
 
-    @keyframes glow {
-      from { text-shadow: 0 0 10px #fff; }
-      to { text-shadow: 0 0 20px #ff00ff; }
-    }
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #fff; }
+      to { text-shadow: 0 0 20px #ff00ff; }
+    }
 
-    .channels {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
+    .channels {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 30px;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+    }
 
-    .channel {
-      cursor: pointer;
-      text-align: center;
-      transition: transform 0.3s;
-    }
+    .channel {
+      cursor: pointer;
+      text-align: center;
+      transition: transform 0.3s;
+    }
 
-    .channel:hover {
-      transform: scale(1.1);
-    }
+    .channel:hover {
+      transform: scale(1.1);
+    }
 
-    .channel img {
-      width: 100px;
-      height: 70px;
-      object-fit: contain;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-      background: white;
-      padding: 5px;
-      margin-bottom: 5px;
-    }
+    .channel img {
+      width: 100px;
+      height: 70px;
+      object-fit: contain;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+      background: white;
+      padding: 5px;
+      margin-bottom: 5px;
+    }
 
-    .channel-name {
-      font-size: 1em;
-    }
+    .channel-name {
+      font-size: 1em;
+    }
 
-    .video-wrapper {
-      width: 100%;
-      max-width: 900px;
-      margin: 20px 0;
-      position: relative;
-    }
+    .video-wrapper {
+      width: 100%;
+      max-width: 800px;
+      height: 450px;
+      margin: 20px auto;
+    }
 
-    #video {
-      width: 100%;
-      border: 5px solid #fff;
-      border-radius: 12px;
-      box-shadow: 0 0 25px rgba(0,0,0,0.7);
-    }
+    #video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border: 5px solid #fff;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.7);
+    }
 
-    .note {
-      background: white;
-      color: black;
-      padding: 10px 20px;
-      border-radius: 10px;
-      font-size: 1.1em;
-      text-align: center;
-      margin-bottom: 20px;
-      max-width: 600px;
-    }
+    .note {
+      background: white;
+      color: black;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 1.1em;
+      text-align: center;
+      margin: 20px auto;
+      max-width: 600px;
+    }
 
-    .bottom-image {
-      margin-top: 20px;
-      display: flex;
-      justify-content: center;
-    }
+    .bottom-image img {
+      width: 100%;
+      max-width: 800px;
+      height: 450px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #0ff;
+      margin: 20px auto;
+    }
 
-    .bottom-image img {
-      width: 180px; /* balanced size */
-      max-width: 100%;
-      border-radius: 12px;
-      padding: 8px;
-      background: #000;
-      box-shadow:
-        0 0 5px #0ff,
-        0 0 10px #0ff,
-        0 0 15px #0ff;
-    }
+    @media (max-width: 600px) {
+      .channel img {
+        width: 80px;
+        height: 60px;
+      }
 
-    /* Responsive for mobile */
-    @media (max-width: 600px) {
-      .channel img {
-        width: 80px;
-        height: 60px;
-      }
-
-      .bottom-image img {
-        width: 140px;
-      }
-    }
-  </style>
+      .bottom-image img {
+        height: auto;
+      }
+    }
+  </style>
 </head>
 <body>
 
-  <h1>Wasi TV</h1>
+  <h1>Wasi TV</h1>
 
-  <div class="channels" id="channels"></div>
+  <div class="channels" id="channels"></div>
 
-  <div class="video-wrapper">
-    <video id="video" controls autoplay></video>
-  </div>
+  <div class="video-wrapper">
+    <video id="video" controls autoplay></video>
+  </div>
 
-  <div class="note">It works free on Jazz without data</div>
+  <div class="note">It works free on Jazz without data</div>
 
-  <div class="bottom-image">
-    <img src="https://i.postimg.cc/x8Dznkfv/Picsart-25-06-17-13-22-18-958.jpg" alt="Neon Image" />
-  </div>
+  <div class="bottom-image">
+    <img src="https://i.postimg.cc/x8Dznkfv/Picsart-25-06-17-13-22-18-958.jpg" alt="Neon Image" />
+  </div>
 
-  <script>
-    const channels = [
-      {
-        name: "Ten Sports",
-        url: "https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/157-3H/playlist.m3u8",
-        logo: "https://i.postimg.cc/y8188fvb/Ten-Sports-Logo.png"
-      },
-      {
-        name: "Makkah Live",
-        url: "https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/141M/playlist.m3u8",
-        logo: "https://i.postimg.cc/mrrk8d9H/unnamed.png"
-      },
-      {
-        name: "Hum TV",
-        url: "https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/humTV-abr/playlist.m3u8",
-        logo: "https://i.postimg.cc/02qNL5mx/Hum-TV-2013.png"
-      }
-    ];
+  <script>
+    const channels = [
+      {
+        name: "Ten Sports",
+        url: "https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/157-3H/playlist.m3u8",
+        logo: "https://i.postimg.cc/y8188fvb/Ten-Sports-Logo.png"
+      },
+      {
+        name: "Makkah Live",
+        url: "https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/141M/playlist.m3u8",
+        logo: "https://i.postimg.cc/mrrk8d9H/unnamed.png"
+      },
+      {
+        name: "Hum TV",
+        url: "https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/humTV-abr/playlist.m3u8",
+        logo: "https://i.postimg.cc/02qNL5mx/Hum-TV-2013.png"
+      }
+    ];
 
-    const channelsDiv = document.getElementById("channels");
-    const video = document.getElementById("video");
-    let hls;
+    const channelsDiv = document.getElementById("channels");
+    const video = document.getElementById("video");
+    let hls;
 
-    function playChannel(url) {
-      if (hls) {
-        hls.destroy();
-      }
+    function playChannel(url) {
+      if (hls) {
+        hls.destroy();
+      }
 
-      if (Hls.isSupported()) {
-        hls = new Hls();
-        hls.loadSource(url);
-        hls.attachMedia(video);
-        hls.on(Hls.Events.MANIFEST_PARSED, function() {
-          video.play();
-        });
-      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-        video.src = url;
-        video.addEventListener('loadedmetadata', function() {
-          video.play();
-        });
-      }
-    }
+      if (Hls.isSupported()) {
+        hls = new Hls();
+        hls.loadSource(url);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, function () {
+          video.play();
+        });
+      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = url;
+        video.addEventListener('loadedmetadata', function () {
+          video.play();
+        });
+      }
+    }
 
-    channels.forEach(channel => {
-      const div = document.createElement("div");
-      div.className = "channel";
-      div.innerHTML = `
-        <img src="${channel.logo}" alt="${channel.name}">
-        <div class="channel-name">${channel.name}</div>
-      `;
-      div.addEventListener("click", () => playChannel(channel.url));
-      channelsDiv.appendChild(div);
-    });
+    channels.forEach(channel => {
+      const div = document.createElement("div");
+      div.className = "channel";
+      div.innerHTML = `
+        <img src="${channel.logo}" alt="${channel.name}">
+        <div class="channel-name">${channel.name}</div>
+      `;
+      div.addEventListener("click", () => playChannel(channel.url));
+      channelsDiv.appendChild(div);
+    });
 
-    // Auto-play first channel on load
-    playChannel(channels[0].url);
-  </script>
+    playChannel(channels[0].url);
+  </script>
 
 </body>
 </html>
