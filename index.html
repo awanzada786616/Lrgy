@@ -6,23 +6,66 @@
   <title>Wasi TV</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body {
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
       font-family: 'Poppins', sans-serif;
       background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
       color: #fff;
-      text-align: center;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 200px;
+      background-color: rgba(0, 0, 0, 0.6);
       padding: 20px;
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar h2 {
+      font-size: 22px;
+      margin-bottom: 20px;
+      color: #00f2fe;
+    }
+
+    .sidebar ul {
+      list-style: none;
+    }
+
+    .sidebar ul li {
+      margin: 15px 0;
+      padding: 10px;
+      border-radius: 8px;
+      background-color: rgba(255,255,255,0.05);
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .sidebar ul li:hover {
+      background-color: rgba(255,255,255,0.15);
+    }
+
+    /* Main */
+    .main-content {
+      flex: 1;
+      padding: 30px;
+      text-align: center;
     }
 
     h1 {
       font-size: 2.5rem;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
     }
 
     .video-container {
       max-width: 800px;
-      margin: auto;
+      margin: 0 auto;
       border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 0 15px rgba(0,0,0,0.4);
@@ -80,36 +123,75 @@
       border-top: 1px solid rgba(255,255,255,0.2);
       padding-top: 20px;
     }
+
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        text-align: center;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .main-content {
+        padding: 20px;
+      }
+
+      .channel {
+        width: 80px;
+      }
+
+      .channel img {
+        width: 50px;
+        height: 50px;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <h1>Wasi TV</h1>
-
-  <div class="video-container">
-    <iframe src="https://your-live-stream-link.com" allowfullscreen></iframe>
+  <div class="sidebar">
+    <h2>📺 Wasi TV</h2>
+    <ul>
+      <li>Home</li>
+      <li>Live TV</li>
+      <li>Islamic</li>
+      <li>Entertainment</li>
+      <li>Support</li>
+    </ul>
   </div>
 
-  <div class="channel-buttons">
-    <div class="channel">
-      <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d3/Ten_Sports_logo.png/220px-Ten_Sports_logo.png" alt="Ten Sports">
-      <div>Ten Sports</div>
-    </div>
-    <div class="channel">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Makkah_Live.svg/1024px-Makkah_Live.svg.png" alt="Makkah Live">
-      <div>Makkah Live</div>
-    </div>
-    <div class="channel">
-      <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/e9/Hum_TV_Logo.svg/1024px-Hum_TV_Logo.svg.png" alt="Hum TV">
-      <div>Hum TV</div>
-    </div>
-  </div>
+  <div class="main-content">
+    <h1>Welcome to Wasi TV</h1>
 
-  <div class="note">𝐍𝐄𝐖 𝐂𝐇𝐀𝐍𝐍𝐄𝐋𝐒 𝐂𝐎𝐌𝐈𝐍𝐆 𝐒𝐎𝐎𝐍 (𝐎𝐍𝐋𝐘 𝐎𝐍 𝐖𝐀𝐒𝐈 𝐓𝐕)</div>
+    <div class="video-container">
+      <iframe src="https://your-live-stream-link.com" allowfullscreen></iframe>
+    </div>
 
-  <div class="footer">
-    © 2025 Wasi TV — Powered by wasismmpannel.online <br>
-    Need Help? WhatsApp us at +923175768178
+    <div class="channel-buttons">
+      <div class="channel">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Makkah_Live.svg/1024px-Makkah_Live.svg.png" alt="Makkah Live">
+        <div>Makkah</div>
+      </div>
+      <div class="channel">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/e9/Hum_TV_Logo.svg/1024px-Hum_TV_Logo.svg.png" alt="Hum TV">
+        <div>Hum TV</div>
+      </div>
+      <div class="channel">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Madinah_Live.svg/1024px-Madinah_Live.svg.png" alt="Madinah Live">
+        <div>Madinah</div>
+      </div>
+    </div>
+
+    <div class="note">NEW CHANNELS COMING SOON (ONLY ON WASI TV)</div>
+
+    <div class="footer">
+      © 2025 Wasi TV — Powered by <strong>wasismmpannel.online</strong><br>
+      Need Help? WhatsApp us at <strong>+923175768178</strong>
+    </div>
   </div>
 
 </body>
