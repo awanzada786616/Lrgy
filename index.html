@@ -15,20 +15,44 @@
 
     header {
       background: rgba(0, 0, 50, 0.8);
-      padding: 15px 0;
+      padding: 10px 20px;
       display: flex;
-      justify-content: center;
-      gap: 20px;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
       box-shadow: 0 2px 8px rgba(0,0,0,0.5);
       position: sticky;
       top: 0;
       z-index: 1000;
     }
 
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo img {
+      height: 40px;
+    }
+
+    .logo span {
+      font-size: 22px;
+      font-weight: bold;
+      color: #00e5ff;
+    }
+
+    .menu {
+      display: flex;
+      gap: 15px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
     .menu-btn {
       background: #113355;
-      padding: 10px 20px;
-      border-radius: 30px;
+      padding: 8px 16px;
+      border-radius: 20px;
       color: white;
       cursor: pointer;
       transition: 0.3s;
@@ -74,7 +98,8 @@
     }
 
     .channel-card {
-      background: rgba(255, 255, 255, 0.05);
+      background: #C0C0C0; /* Silver background */
+      color: black;
       border-radius: 15px;
       padding: 15px;
       width: 130px;
@@ -103,19 +128,25 @@
     footer {
       text-align: center;
       padding: 20px;
-      color: #aaa;
+      color: #ccc;
       font-size: 14px;
     }
   </style>
 </head>
 <body>
 
-  <!-- Menu -->
+  <!-- Header + Logo -->
   <header>
-    <div class="menu-btn" onclick="filterCategory('all')">All</div>
-    <div class="menu-btn" onclick="filterCategory('islamic')">Islamic</div>
-    <div class="menu-btn" onclick="filterCategory('entertainment')">Entertainment</div>
-    <div class="menu-btn" onclick="filterCategory('sports')">Sports</div>
+    <div class="logo">
+      <img src="https://i.postimg.cc/x1kb0Fxh/wasi-tv-logo.png" alt="Wasi TV Logo" />
+      <span>Wasi TV</span>
+    </div>
+    <div class="menu">
+      <div class="menu-btn" onclick="filterCategory('all')">All</div>
+      <div class="menu-btn" onclick="filterCategory('islamic')">Islamic</div>
+      <div class="menu-btn" onclick="filterCategory('entertainment')">Entertainment</div>
+      <div class="menu-btn" onclick="filterCategory('sports')">Sports</div>
+    </div>
   </header>
 
   <!-- Video Player -->
