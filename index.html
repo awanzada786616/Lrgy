@@ -3,160 +3,185 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Wasi TV - Live Channels</title>
+  <title>Wasi TV - Syara Movie + Live Channels</title>
   <style>
-    body {
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
       font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom right, #1f1f1f, #3a3a3a);
+      background: linear-gradient(to right, #1f1f1f, #3c3c3c);
       color: white;
       display: flex;
-      flex-direction: column;
-      align-items: center;
+    }
+    .sidebar {
+      width: 200px;
+      background: #2e2e2e;
+      padding: 20px 10px;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      overflow-y: auto;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.5);
+    }
+    .sidebar h2 {
+      color: #00ffff;
+      font-size: 18px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .sidebar a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      background-color: #444;
+      transition: 0.3s;
+    }
+    .sidebar a:hover {
+      background-color: #00cc66;
     }
 
-    header {
-      background-color: #000000cc;
+    .main {
+      margin-left: 200px;
       padding: 20px;
       width: 100%;
-      text-align: center;
-      box-shadow: 0 2px 5px #000;
     }
 
-    header img {
-      max-height: 60px;
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .logo img {
+      width: 150px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px silver;
     }
 
     h1 {
-      margin: 10px 0 20px;
-      font-size: 26px;
+      text-align: center;
       color: #00ffff;
-      text-shadow: 1px 1px 3px #000;
+      text-shadow: 1px 1px 5px #000;
+      margin: 20px 0;
     }
 
-    .channels {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 20px;
-      padding: 20px;
+    .video-container {
       width: 100%;
       max-width: 900px;
+      margin: 0 auto 40px auto;
+      aspect-ratio: 16/9;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+    }
+
+    iframe, video {
+      width: 100%;
+      height: 100%;
+      border: none;
     }
 
     .channel {
-      background: #c0c0c0;
-      border-radius: 12px;
-      padding: 10px;
+      margin-bottom: 40px;
       text-align: center;
-      cursor: pointer;
-      box-shadow: 2px 2px 10px #000;
-      transition: transform 0.2s;
-    }
-
-    .channel:hover {
-      transform: scale(1.05);
     }
 
     .channel img {
-      width: 100%;
-      max-height: 60px;
-      object-fit: contain;
+      width: 100px;
       margin-bottom: 10px;
     }
 
-    iframe {
-      width: 90%;
-      max-width: 900px;
-      aspect-ratio: 16 / 9;
-      border: none;
-      margin: 20px 0;
-      box-shadow: 0 0 15px #000;
-      border-radius: 10px;
+    .bottom-menu {
+      text-align: center;
+      margin: 40px 0 20px;
     }
 
-    .footer {
-      margin: 30px 0;
-      display: flex;
-      gap: 15px;
-    }
-
-    .footer a {
+    .bottom-menu a {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px 20px;
       background-color: #00cc66;
       color: white;
       text-decoration: none;
-      padding: 10px 20px;
       border-radius: 8px;
       font-weight: bold;
       box-shadow: 1px 1px 8px #000;
+      transition: 0.3s;
     }
 
-    marquee {
-      background: #ffcc00;
-      color: #000;
-      padding: 8px;
-      width: 100%;
-      font-weight: bold;
+    .bottom-menu a:hover {
+      background-color: #00994d;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+      .main {
+        margin-left: 0;
+      }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <img src="https://i.postimg.cc/zfwd7GY8/wasitv-logo.png" alt="Wasi TV Logo">
-    <h1>Live TV by Wasi</h1>
-  </header>
-
-  <marquee>📺 Welcome to Wasi TV – Watch Live Pakistani Channels in HD! | Real Tamasha Links 🎥</marquee>
-
-  <div class="channels">
-    <div class="channel" onclick="playChannel('https://tamashaweb.com/embeds/popup/Pakistan-Tv/ptv-sports')">
-      <img src="https://upload.wikimedia.org/wikipedia/en/thumb/3/3c/PTV_Sports_Logo.png/320px-PTV_Sports_Logo.png" alt="PTV Sports">
-      <div>PTV Sports</div>
-    </div>
-
-    <div class="channel" onclick="playChannel('https://tamashaweb.com/embeds/popup/Pakistan-Tv/geo-news')">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Geo_News_LOGO.png" alt="Geo News">
-      <div>Geo News</div>
-    </div>
-
-    <div class="channel" onclick="playChannel('https://tamashaweb.com/embeds/popup/Pakistan-Tv/ary-news')">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/f/f4/ARY_News_logo.png" alt="ARY News">
-      <div>ARY News</div>
-    </div>
-
-    <div class="channel" onclick="playChannel('https://tamashaweb.com/embeds/popup/Pakistan-Tv/hum-tv')">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/4/48/HUM_Network_logo.png" alt="Hum TV">
-      <div>Hum TV</div>
-    </div>
-
-    <div class="channel" onclick="playChannel('https://tamashaweb.com/embeds/popup/Pakistan-Tv/express-news')">
-      <img src="https://upload.wikimedia.org/wikipedia/en/f/f9/Express_News_%28Pakistan%29_logo.png" alt="Express News">
-      <div>Express News</div>
-    </div>
-
-    <div class="channel" onclick="playChannel('https://tamashaweb.com/embeds/popup/Pakistan-Tv/sama-tv')">
-      <img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/62/Samaa_News_Logo.png/300px-Samaa_News_Logo.png" alt="Samaa TV">
-      <div>Samaa TV</div>
-    </div>
-
-    <div class="channel" onclick="playChannel('https://tamashaweb.com/embeds/popup/Pakistan-Tv/a-sports')">
-      <img src="https://upload.wikimedia.org/wikipedia/en/4/49/A_Sports_HD_Logo.png" alt="A Sports">
-      <div>A Sports</div>
-    </div>
+  <div class="sidebar">
+    <h2>📺 WASI TV</h2>
+    <a href="#movie">🎬 Syara Movie</a>
+    <a href="#ten">🏏 Ten Sports</a>
+    <a href="#makkah">🕋 Makkah TV</a>
+    <a href="#hum">🎭 Hum TV</a>
   </div>
 
-  <iframe id="player" src="" allowfullscreen></iframe>
+  <div class="main">
+    <div class="logo">
+      <img src="https://i.postimg.cc/FzZ9mGPc/Wasi-TV-Logo.png" alt="Wasi TV Logo">
+    </div>
 
-  <div class="footer">
-    <a href="https://wa.me/923175768178" target="_blank">📱 WhatsApp Wasi</a>
-    <a href="https://wasismmpannel.online" target="_blank">🌐 SMM Panel</a>
+    <h1 id="movie">🎬 Syara Movie by Wasi</h1>
+    <div class="video-container">
+      <iframe 
+        src="https://drive.google.com/file/d/1sDNuQPbjP_jP9KM8LAAl8lfadNkaEgsl/preview" 
+        allow="autoplay; encrypted-media" 
+        allowfullscreen>
+      </iframe>
+    </div>
+
+    <div class="channel" id="ten">
+      <img src="https://i.postimg.cc/y8188fvb/Ten-Sports-Logo.png" alt="Ten Sports Logo">
+      <div class="video-container">
+        <video controls autoplay>
+          <source src="https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/157-3H/playlist.m3u8" type="application/x-mpegURL">
+        </video>
+      </div>
+    </div>
+
+    <div class="channel" id="makkah">
+      <img src="https://i.postimg.cc/mrrk8d9H/unnamed.png" alt="Makkah TV Logo">
+      <div class="video-container">
+        <video controls autoplay>
+          <source src="https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/141M/playlist.m3u8" type="application/x-mpegURL">
+        </video>
+      </div>
+    </div>
+
+    <div class="channel" id="hum">
+      <img src="https://i.postimg.cc/02qNL5mx/Hum-TV-2013.png" alt="Hum TV Logo">
+      <div class="video-container">
+        <video controls autoplay>
+          <source src="https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/humTV-abr/playlist.m3u8" type="application/x-mpegURL">
+        </video>
+      </div>
+    </div>
+
+    <div class="bottom-menu">
+      <a href="https://wa.me/923175768178" target="_blank">📞 WhatsApp</a>
+      <a href="https://wasismmpannel.online" target="_blank">🌐 SMM Panel</a>
+    </div>
   </div>
-
-  <script>
-    function playChannel(url) {
-      document.getElementById('player').src = url;
-    }
-  </script>
 
 </body>
 </html>
