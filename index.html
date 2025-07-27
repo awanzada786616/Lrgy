@@ -25,7 +25,7 @@
     .categories {
       display: flex;
       justify-content: center;
-      gap: 20px;
+      gap: 15px;
       background-color: #002a4d;
       padding: 10px;
       flex-wrap: wrap;
@@ -52,12 +52,12 @@
       padding: 20px;
     }
 
-    video, iframe {
+    iframe {
       width: 90%;
       max-width: 1000px;
       height: 550px;
       background-color: black;
-      border-radius: 10px;
+      border-radius: 12px;
       box-shadow: 0 0 20px #000;
     }
 
@@ -99,7 +99,7 @@
     }
 
     @media (max-width: 600px) {
-      video, iframe {
+      iframe {
         height: 250px;
       }
     }
@@ -119,19 +119,20 @@
     <iframe id="mainPlayer" src="https://drive.google.com/file/d/1sDNuQPbjP_jP9KM8LAAl8lfadNkaEgsl/preview" allowfullscreen allow="autoplay; encrypted-media"></iframe>
   </div>
 
-  <!-- Entertainment -->
+  <!-- Entertainment Channels -->
   <div class="channel-buttons active" id="entertainment">
     <button class="channel-button" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/humTV-abr/playlist.m3u8')">
       <img src="https://i.postimg.cc/02qNL5mx/Hum-TV-2013.png" alt="Hum TV" />
       Hum TV
     </button>
+
     <button class="channel-button" onclick="playChannel('https://drive.google.com/file/d/1sDNuQPbjP_jP9KM8LAAl8lfadNkaEgsl/preview')">
       <img src="https://i.postimg.cc/vm8Gw3NS/Picsart-25-07-27-22-04-38-093.jpg" alt="Syara Movie" />
-      Syara Movie 🎥
+      Syara Movie 🎬
     </button>
   </div>
 
-  <!-- Sports -->
+  <!-- Sports Channels -->
   <div class="channel-buttons" id="sports">
     <button class="channel-button" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/157-3H/playlist.m3u8')">
       <img src="https://i.postimg.cc/y8188fvb/Ten-Sports-Logo.png" alt="Ten Sports" />
@@ -139,7 +140,7 @@
     </button>
   </div>
 
-  <!-- Islamic -->
+  <!-- Islamic Channels -->
   <div class="channel-buttons" id="islamic">
     <button class="channel-button" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/141M/playlist.m3u8')">
       <img src="https://i.postimg.cc/mrrk8d9H/unnamed.png" alt="Makkah TV" />
@@ -157,11 +158,9 @@
 
     function playChannel(link) {
       const player = document.getElementById('mainPlayer');
-
       if (link.includes("drive.google.com")) {
         player.src = link;
       } else {
-        // Create HLS player page for non-Google links
         player.src = "https://videojs-hls-stream.vercel.app/?url=" + encodeURIComponent(link);
       }
     }
