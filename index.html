@@ -3,15 +3,16 @@
 <head>
   <meta charset="UTF‑8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wasi TV – Live Streaming</title>
+  <title>Wasi TV</title>
   <style>
     body { margin:0; background:#003366; color:white; font-family:Arial,sans-serif; }
     header { background:#00264d; text-align:center; padding:15px; font-size:24px; }
-    nav { display:flex; justify-content:center; background:#0055cc; padding:10px; gap:20px; }
+    nav { display:flex; justify-content:center; background:#0055cc; padding:10px; gap:20px; flex-wrap:wrap; }
     nav button { background:#007acc; color:#fff; border:none; padding:8px 16px; border-radius:20px; cursor:pointer; }
     nav button:hover { background:#0094f4; }
-    .player-container { display:flex; justify-content:center; margin:20px; }
-    video { width:90vw; max-width:1000px; height:56vw; max-height:560px; background:#000; border-radius:10px; }
+    .player-container { display:flex; justify-content:center; margin:20px; position:relative; }
+    video, iframe { width:90vw; max-width:1000px; height:56vw; max-height:560px; border-radius:10px; background:#000; }
+    iframe { display:none; border:none; }
     .channel-grid { display:flex; flex-wrap:wrap; justify-content:center; gap:20px; padding:20px; }
     .channel-button { background:#0055cc; border:none; padding:10px; width:140px; text-align:center; border-radius:10px; color:#fff; cursor:pointer; }
     .channel-button img { width:80px; height:50px; margin-bottom:5px; }
@@ -33,25 +34,29 @@
 
   <div class="player-container">
     <video id="videoPlayer" controls autoplay muted></video>
+    <iframe id="moviePlayer" allowfullscreen></iframe>
   </div>
 
   <div class="channel-grid" id="channelGrid">
-    <!-- Syara Movie (entertainment) -->
+    <!-- Syara Movie (Google Drive) -->
     <div class="channel-button entertainment" onclick="playStream('https://drive.google.com/file/d/1sDNuQPbjP_jP9KM8LAAl8lfadNkaEgsl/preview', true)">
       <img src="https://i.postimg.cc/vm8Gw3NS/Picsart-25-07-27-22-04-38-093.jpg" alt="Syara Movie">
       <span>Syara Movie</span>
     </div>
-    <!-- Hum TV (entertainment) -->
+
+    <!-- Hum TV -->
     <div class="channel-button entertainment" onclick="playStream('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/humTV-abr/playlist.m3u8')">
       <img src="https://i.postimg.cc/02qNL5mx/Hum-TV-2013.png" alt="Hum TV">
       <span>Hum TV</span>
     </div>
-    <!-- Ten Sports (sports) -->
+
+    <!-- Ten Sports -->
     <div class="channel-button sports" onclick="playStream('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/157-3H/playlist.m3u8')">
       <img src="https://i.postimg.cc/y8188fvb/Ten-Sports-Logo.png" alt="Ten Sports">
       <span>Ten Sports</span>
     </div>
-    <!-- Makkah TV (islamic) -->
+
+    <!-- Makkah TV -->
     <div class="channel-button islamic" onclick="playStream('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/141M/playlist.m3u8')">
       <img src="https://i.postimg.cc/mrrk8d9H/unnamed.png" alt="Makkah TV">
       <span>Makkah TV</span>
@@ -62,10 +67,18 @@
 
   <script>
     const video = document.getElementById('videoPlayer');
+    const iframe = document.getElementById('moviePlayer');
 
     function playStream(url, isDrive = false) {
+      // Stop any playing media
+      video.pause();
+      video.src = '';
+      video.style.display = 'none';
+      iframe.style.display = 'none';
+
       if (isDrive) {
-        video.src = url;
+        iframe.src = url;
+        iframe.style.display = 'block';
       } else {
         if (Hls.isSupported()) {
           const hls = new Hls();
@@ -76,8 +89,9 @@
           video.src = url;
           video.play();
         } else {
-          alert('Stream not supported on this browser');
+          alert('Your browser does not support this stream.');
         }
+        video.style.display = 'block';
       }
     }
 
@@ -87,7 +101,7 @@
       });
     }
 
-    // on page load, default play Syara Movie
+    // Default load Syara Movie
     window.addEventListener('load', () => playStream('https://drive.google.com/file/d/1sDNuQPbjP_jP9KM8LAAl8lfadNkaEgsl/preview', true));
   </script>
 
