@@ -9,16 +9,16 @@
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      background: #111;
       color: white;
     }
 
     header {
+      background: #000;
+      padding: 15px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: #111;
-      padding: 10px 20px;
     }
 
     .brand {
@@ -35,13 +35,13 @@
     .sidebar {
       position: fixed;
       top: 0;
-      left: -260px;
-      width: 260px;
+      left: -250px;
+      width: 250px;
       height: 100%;
-      background: #111;
-      padding-top: 60px;
-      transition: left 0.3s ease;
+      background: #000;
+      transition: 0.3s;
       z-index: 999;
+      padding-top: 60px;
     }
 
     .sidebar.active {
@@ -49,64 +49,62 @@
     }
 
     .sidebar a {
+      padding: 15px 20px;
       display: block;
-      padding: 16px;
       color: white;
       text-decoration: none;
-      border-bottom: 1px solid #333;
+      border-bottom: 1px solid #222;
       font-weight: 500;
       cursor: pointer;
     }
 
     .sidebar a:hover {
-      background-color: #222;
+      background: #111;
     }
 
     .main {
-      padding: 40px 20px;
+      padding: 20px;
+      margin-left: 0;
+    }
+
+    .channel {
+      margin-bottom: 40px;
+    }
+
+    .channel h2 {
+      font-size: 20px;
+      margin: 10px 0;
       text-align: center;
     }
 
-    .main h1 {
-      font-size: 32px;
-      margin-bottom: 30px;
+    .channel-logo {
+      display: block;
+      margin: 0 auto 10px;
+      height: 60px;
     }
 
-    .tv-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-    }
-
-    .tv-card {
-      background: rgba(255,255,255,0.05);
+    .video-container {
+      position: relative;
+      padding-top: 56.25%;
+      background: black;
       border-radius: 10px;
-      padding: 15px;
-      width: 140px;
-      text-align: center;
+      overflow: hidden;
+      max-width: 800px;
+      margin: auto;
     }
 
-    .tv-card img {
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
-      border-radius: 8px;
-    }
-
-    .tv-card p {
-      margin: 10px 0 0;
-      font-size: 14px;
-    }
-
-    .tv-card iframe {
-      width: 100%;
-      height: 100px;
-      margin-top: 10px;
+      height: 100%;
       border: none;
     }
 
-    @media (max-width: 600px) {
-      .tv-card {
-        width: 120px;
+    @media (max-width: 768px) {
+      .video-container {
+        padding-top: 58%;
       }
     }
   </style>
@@ -118,58 +116,57 @@
     <div class="menu-btn" onclick="toggleMenu()">☰</div>
   </header>
 
-  <div class="sidebar" id="sideMenu">
-    <a onclick="filterChannels('all')">Home</a>
-    <a onclick="filterChannels('islamic')">Islamic</a>
-    <a onclick="filterChannels('sports')">Sports</a>
-    <a onclick="filterChannels('entertainment')">Entertainment</a>
-    <a href="#">Support</a>
+  <div class="sidebar" id="sidebar">
+    <a onclick="filterChannels('all')">📺 All</a>
+    <a onclick="filterChannels('islamic')">🕌 Islamic</a>
+    <a onclick="filterChannels('sports')">🏏 Sports</a>
+    <a onclick="filterChannels('entertainment')">🎬 Entertainment</a>
   </div>
 
-  <div class="main">
-    <h1>Welcome to Wasi TV</h1>
-
-    <div class="tv-grid" id="channelGrid">
-      <!-- Makkah TV (Islamic) -->
-      <div class="tv-card" data-category="islamic">
-        <img src="https://i.postimg.cc/mrrk8d9H/unnamed.png" alt="Makkah TV Logo">
-        <p>Makkah TV</p>
+  <div class="main" id="channelList">
+    <!-- Makkah TV -->
+    <div class="channel" data-category="islamic">
+      <img class="channel-logo" src="https://i.postimg.cc/mrrk8d9H/unnamed.png" alt="Makkah TV">
+      <h2>Makkah TV</h2>
+      <div class="video-container">
         <iframe src="https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/141M/playlist.m3u8"></iframe>
-      </div>
-
-      <!-- Ten Sports (Sports) -->
-      <div class="tv-card" data-category="sports">
-        <img src="https://i.postimg.cc/y8188fvb/Ten-Sports-Logo.png" alt="Ten Sports Logo">
-        <p>Ten Sports</p>
-        <iframe src="https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/157-3H/playlist.m3u8"></iframe>
-      </div>
-
-      <!-- Hum TV (Entertainment) -->
-      <div class="tv-card" data-category="entertainment">
-        <img src="https://i.postimg.cc/02qNL5mx/Hum-TV-2013.png" alt="Hum TV Logo">
-        <p>Hum TV</p>
-        <iframe src="https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/humTV-abr/playlist.m3u8"></iframe>
       </div>
     </div>
 
-    <p style="margin-top: 40px; font-size: 14px;">NEW CHANNELS COMING SOON (ONLY ON WASI TV)</p>
+    <!-- Ten Sports -->
+    <div class="channel" data-category="sports">
+      <img class="channel-logo" src="https://i.postimg.cc/y8188fvb/Ten-Sports-Logo.png" alt="Ten Sports">
+      <h2>Ten Sports</h2>
+      <div class="video-container">
+        <iframe src="https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/157-3H/playlist.m3u8"></iframe>
+      </div>
+    </div>
+
+    <!-- Hum TV -->
+    <div class="channel" data-category="entertainment">
+      <img class="channel-logo" src="https://i.postimg.cc/02qNL5mx/Hum-TV-2013.png" alt="Hum TV">
+      <h2>Hum TV</h2>
+      <div class="video-container">
+        <iframe src="https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/humTV-abr/playlist.m3u8"></iframe>
+      </div>
+    </div>
   </div>
 
   <script>
     function toggleMenu() {
-      document.getElementById("sideMenu").classList.toggle("active");
+      document.getElementById("sidebar").classList.toggle("active");
     }
 
     function filterChannels(category) {
-      const cards = document.querySelectorAll(".tv-card");
-      cards.forEach(card => {
-        if (category === "all" || card.dataset.category === category) {
-          card.style.display = "block";
+      const channels = document.querySelectorAll(".channel");
+      channels.forEach(channel => {
+        if (category === "all" || channel.dataset.category === category) {
+          channel.style.display = "block";
         } else {
-          card.style.display = "none";
+          channel.style.display = "none";
         }
       });
-      toggleMenu(); // Auto-close sidebar after click
+      toggleMenu();
     }
   </script>
 
