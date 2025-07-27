@@ -4,194 +4,163 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Wasi TV</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet"/>
   <style>
     body {
       margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to bottom, #001f3f, #005c97);
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #1e3c72, #2a5298);
       color: white;
     }
-
-    header {
-      background: rgba(0, 0, 50, 0.8);
-      padding: 10px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+    .header {
+      text-align: center;
+      padding: 20px 0 10px;
+    }
+    .header img {
+      height: 60px;
+    }
+    .header h1 {
+      margin: 10px 0 0;
+      font-size: 30px;
     }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .logo img {
-      height: 40px;
-    }
-
-    .logo span {
-      font-size: 22px;
-      font-weight: bold;
+    .marquee-container {
+      background: #001f3f;
       color: #00e5ff;
+      padding: 8px;
+      font-weight: 500;
+      font-size: 16px;
+      border-top: 1px solid #00e5ff;
+      border-bottom: 1px solid #00e5ff;
+      text-align: center;
     }
 
-    .menu {
+    .nav {
       display: flex;
-      gap: 15px;
-      margin-top: 10px;
+      justify-content: center;
+      gap: 20px;
+      padding: 10px;
+      background-color: #00000070;
       flex-wrap: wrap;
     }
-
-    .menu-btn {
-      background: #113355;
+    .nav button {
       padding: 8px 16px;
-      border-radius: 20px;
+      background-color: #ffffff22;
       color: white;
+      border: 1px solid #ccc;
       cursor: pointer;
-      transition: 0.3s;
+      border-radius: 5px;
     }
-
-    .menu-btn:hover {
-      background: #00e5ff;
-      color: black;
-    }
-
-    .video-section {
-      max-width: 900px;
-      margin: 30px auto 10px auto;
-      padding: 0 15px;
+    .nav button:hover {
+      background-color: #ffffff55;
     }
 
     .video-container {
-      position: relative;
-      padding-top: 56.25%;
-      background: black;
-      border-radius: 14px;
-      overflow: hidden;
-      box-shadow: 0 0 15px rgba(0,255,255,0.3);
-    }
-
-    .video-container iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
+      display: flex;
+      justify-content: center;
+      margin: 20px auto;
       width: 100%;
-      height: 100%;
+    }
+    iframe {
+      width: 90%;
+      height: 220px;
       border: none;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #000;
     }
 
-    .channel-logos {
+    .channels {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      margin: 40px auto;
-      gap: 20px;
-      max-width: 1000px;
-      padding: 0 20px 40px 20px;
+      gap: 15px;
+      padding: 20px;
     }
 
-    .channel-card {
-      background: #C0C0C0; /* Silver background */
-      color: black;
-      border-radius: 15px;
-      padding: 15px;
-      width: 130px;
+    .channel {
+      background-color: silver;
+      padding: 10px;
+      border-radius: 10px;
+      width: 120px;
       text-align: center;
       cursor: pointer;
-      transition: 0.3s;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      transition: transform 0.2s;
     }
 
-    .channel-card:hover {
-      background: #00e5ff;
-      color: black;
-      transform: translateY(-5px);
-    }
-
-    .channel-card img {
+    .channel img {
+      max-width: 100%;
       height: 60px;
-      width: auto;
-      margin-bottom: 10px;
+      object-fit: contain;
     }
 
-    .channel-card.hidden {
-      display: none;
+    .channel:hover {
+      transform: scale(1.05);
     }
 
     footer {
       text-align: center;
       padding: 20px;
-      color: #ccc;
       font-size: 14px;
+      color: #ddd;
     }
   </style>
 </head>
 <body>
 
-  <!-- Header + Logo -->
-  <header>
-    <div class="logo">
-      <img src="https://i.postimg.cc/x1kb0Fxh/wasi-tv-logo.png" alt="Wasi TV Logo" />
-      <span>Wasi TV</span>
-    </div>
-    <div class="menu">
-      <div class="menu-btn" onclick="filterCategory('all')">All</div>
-      <div class="menu-btn" onclick="filterCategory('islamic')">Islamic</div>
-      <div class="menu-btn" onclick="filterCategory('entertainment')">Entertainment</div>
-      <div class="menu-btn" onclick="filterCategory('sports')">Sports</div>
-    </div>
-  </header>
-
-  <!-- Video Player -->
-  <div class="video-section">
-    <div class="video-container">
-      <iframe id="videoPlayer" src="https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/141M/playlist.m3u8" allowfullscreen></iframe>
-    </div>
+  <div class="header">
+    <img src="https://i.postimg.cc/fWMBJDbH/wasi-tv-logo.png" alt="Wasi TV Logo" />
+    <h1>Wasi TV</h1>
   </div>
 
-  <!-- Channel Logos -->
-  <div class="channel-logos" id="channelList">
-    <!-- Makkah TV -->
-    <div class="channel-card" data-category="islamic" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/141M/playlist.m3u8')">
-      <img src="https://i.postimg.cc/mrrk8d9H/unnamed.png" alt="Makkah TV">
-      <div>Makkah TV</div>
-    </div>
+  <div class="marquee-container">
+    <marquee behavior="scroll" direction="left" scrollamount="5">
+      📺 Live Now: Enjoy Wasi TV with Islamic, Sports, and Entertainment Channels | Click any channel below to start watching instantly!
+    </marquee>
+  </div>
 
-    <!-- Ten Sports -->
-    <div class="channel-card" data-category="sports" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/157-3H/playlist.m3u8')">
-      <img src="https://i.postimg.cc/y8188fvb/Ten-Sports-Logo.png" alt="Ten Sports">
+  <div class="nav">
+    <button onclick="filterChannels('all')">All</button>
+    <button onclick="filterChannels('islamic')">Islamic</button>
+    <button onclick="filterChannels('sports')">Sports</button>
+    <button onclick="filterChannels('entertainment')">Entertainment</button>
+  </div>
+
+  <div class="video-container">
+    <iframe id="player" src="" allowfullscreen></iframe>
+  </div>
+
+  <div class="channels">
+    <div class="channel sports" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/157-3H/playlist.m3u8')">
+      <img src="https://i.postimg.cc/y8188fvb/Ten-Sports-Logo.png" alt="Ten Sports" />
       <div>Ten Sports</div>
     </div>
 
-    <!-- Hum TV -->
-    <div class="channel-card" data-category="entertainment" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/humTV-abr/playlist.m3u8')">
-      <img src="https://i.postimg.cc/02qNL5mx/Hum-TV-2013.png" alt="Hum TV">
+    <div class="channel islamic" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/141M/playlist.m3u8')">
+      <img src="https://i.postimg.cc/mrrk8d9H/unnamed.png" alt="Makkah TV" />
+      <div>Makkah TV</div>
+    </div>
+
+    <div class="channel entertainment" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/humTV-abr/playlist.m3u8')">
+      <img src="https://i.postimg.cc/02qNL5mx/Hum-TV-2013.png" alt="Hum TV" />
       <div>Hum TV</div>
     </div>
   </div>
 
-  <footer>© 2025 Wasi TV - All rights reserved</footer>
+  <footer>
+    © 2025 Wasi TV - All rights reserved.
+  </footer>
 
   <script>
     function playChannel(url) {
-      document.getElementById("videoPlayer").src = url;
+      document.getElementById('player').src = url;
     }
 
-    function filterCategory(category) {
-      const cards = document.querySelectorAll('.channel-card');
-      cards.forEach(card => {
-        const cat = card.getAttribute('data-category');
-        if (category === 'all' || cat === category) {
-          card.classList.remove('hidden');
+    function filterChannels(category) {
+      const all = document.querySelectorAll('.channel');
+      all.forEach(c => {
+        if (category === 'all') {
+          c.style.display = 'inline-block';
         } else {
-          card.classList.add('hidden');
+          c.style.display = c.classList.contains(category) ? 'inline-block' : 'none';
         }
       });
     }
