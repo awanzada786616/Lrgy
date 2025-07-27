@@ -2,145 +2,170 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wasi TV</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wasi TV - Live Streaming</title>
   <style>
     body {
       margin: 0;
+      background: linear-gradient(to bottom, #003366, #001f3f);
       font-family: Arial, sans-serif;
-      background: linear-gradient(to right, #003366, #004080);
       color: white;
     }
-    .top-bar {
-      background-color: #00264d;
-      padding: 10px;
+
+    header {
+      background-color: #001f3f;
+      padding: 15px;
       text-align: center;
-      box-shadow: 0 2px 5px #000;
+      font-size: 24px;
+      font-weight: bold;
+      color: #00ccff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     }
-    .top-bar img {
-      height: 50px;
-    }
+
     .categories {
       display: flex;
       justify-content: center;
       gap: 20px;
+      background-color: #002a4d;
       padding: 10px;
-      background-color: #004080;
+      flex-wrap: wrap;
     }
+
     .categories button {
-      background-color: #0066cc;
-      color: white;
+      background-color: #005c99;
       border: none;
+      color: white;
       padding: 10px 20px;
-      border-radius: 8px;
-      cursor: pointer;
       font-weight: bold;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: 0.3s;
     }
+
     .categories button:hover {
-      background-color: #005bb5;
+      background-color: #007acc;
     }
+
     .player-container {
       display: flex;
       justify-content: center;
-      margin: 20px auto;
-      max-width: 90%;
-      aspect-ratio: 16 / 9;
+      padding: 20px;
     }
-    iframe, video {
-      width: 100%;
-      height: 100%;
-      border: none;
+
+    video, iframe {
+      width: 90%;
+      max-width: 1000px;
+      height: 550px;
+      background-color: black;
       border-radius: 10px;
       box-shadow: 0 0 20px #000;
     }
-    .channels {
-      display: flex;
+
+    .channel-buttons {
+      display: none;
       flex-wrap: wrap;
       justify-content: center;
       gap: 15px;
       padding: 20px;
     }
-    .channel-btn {
-      background-color: #0055aa;
+
+    .channel-buttons.active {
+      display: flex;
+    }
+
+    .channel-button {
+      background-color: #004466;
       border: none;
-      border-radius: 10px;
       padding: 10px;
-      width: 120px;
+      width: 150px;
       text-align: center;
       color: white;
+      font-weight: bold;
+      border-radius: 12px;
       cursor: pointer;
       transition: 0.3s;
-      box-shadow: 0 0 10px #000;
+      box-shadow: 2px 2px 10px #000;
     }
-    .channel-btn:hover {
-      background-color: #004080;
-    }
-    .channel-btn img {
-      width: 60px;
-      height: 60px;
+
+    .channel-button img {
+      width: 80px;
+      height: 50px;
       object-fit: contain;
       margin-bottom: 5px;
+    }
+
+    .channel-button:hover {
+      background-color: #0077b3;
+    }
+
+    @media (max-width: 600px) {
+      video, iframe {
+        height: 250px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="top-bar">
-    <img src="https://i.postimg.cc/YCzq2L1Z/wasi-tv-logo.png" alt="Wasi TV" />
-  </div>
+
+  <header>📺 Wasi TV - Live Streaming</header>
 
   <div class="categories">
-    <button onclick="filterChannels('all')">All</button>
-    <button onclick="filterChannels('entertainment')">Entertainment</button>
-    <button onclick="filterChannels('sports')">Sports</button>
-    <button onclick="filterChannels('islamic')">Islamic</button>
+    <button onclick="showCategory('entertainment')">Entertainment</button>
+    <button onclick="showCategory('sports')">Sports</button>
+    <button onclick="showCategory('islamic')">Islamic</button>
   </div>
 
   <div class="player-container">
-    <video id="mainPlayer" controls autoplay>
-      <source src="https://drive.google.com/uc?export=preview&id=1sDNuQPbjP_jP9KM8LAAl8lfadNkaEgsl" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
+    <iframe id="mainPlayer" src="https://drive.google.com/file/d/1sDNuQPbjP_jP9KM8LAAl8lfadNkaEgsl/preview" allowfullscreen allow="autoplay; encrypted-media"></iframe>
   </div>
 
-  <div class="channels">
-    <div class="channel-btn entertainment" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/humTV-abr/playlist.m3u8')">
+  <!-- Entertainment -->
+  <div class="channel-buttons active" id="entertainment">
+    <button class="channel-button" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/humTV-abr/playlist.m3u8')">
       <img src="https://i.postimg.cc/02qNL5mx/Hum-TV-2013.png" alt="Hum TV" />
       Hum TV
-    </div>
-    <div class="channel-btn sports" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/157-3H/playlist.m3u8')">
+    </button>
+    <button class="channel-button" onclick="playChannel('https://drive.google.com/file/d/1sDNuQPbjP_jP9KM8LAAl8lfadNkaEgsl/preview')">
+      <img src="https://i.postimg.cc/vm8Gw3NS/Picsart-25-07-27-22-04-38-093.jpg" alt="Syara Movie" />
+      Syara Movie 🎥
+    </button>
+  </div>
+
+  <!-- Sports -->
+  <div class="channel-buttons" id="sports">
+    <button class="channel-button" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/157-3H/playlist.m3u8')">
       <img src="https://i.postimg.cc/y8188fvb/Ten-Sports-Logo.png" alt="Ten Sports" />
       Ten Sports
-    </div>
-    <div class="channel-btn islamic" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/141M/playlist.m3u8')">
+    </button>
+  </div>
+
+  <!-- Islamic -->
+  <div class="channel-buttons" id="islamic">
+    <button class="channel-button" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/141M/playlist.m3u8')">
       <img src="https://i.postimg.cc/mrrk8d9H/unnamed.png" alt="Makkah TV" />
       Makkah TV
-    </div>
-    <div class="channel-btn entertainment" onclick="playChannel('https://drive.google.com/uc?export=preview&id=1sDNuQPbjP_jP9KM8LAAl8lfadNkaEgsl')">
-      <img src="https://i.postimg.cc/vm8Gw3NS/Picsart-25-07-27-22-04-38-093.jpg" alt="Syara Movie" />
-      Syara Movie
-    </div>
+    </button>
   </div>
 
   <script>
-    function playChannel(url) {
-      const player = document.getElementById('mainPlayer');
-      player.src = url;
-      player.load();
-      player.play();
+    function showCategory(category) {
+      document.querySelectorAll('.channel-buttons').forEach(div => {
+        div.classList.remove('active');
+      });
+      document.getElementById(category).classList.add('active');
     }
 
-    function filterChannels(category) {
-      const all = document.querySelectorAll('.channel-btn');
-      all.forEach(btn => {
-        if (category === 'all' || btn.classList.contains(category)) {
-          btn.style.display = 'flex';
-          btn.style.flexDirection = 'column';
-          btn.style.alignItems = 'center';
-        } else {
-          btn.style.display = 'none';
-        }
-      });
+    function playChannel(link) {
+      const player = document.getElementById('mainPlayer');
+
+      if (link.includes("drive.google.com")) {
+        player.src = link;
+      } else {
+        // Create HLS player page for non-Google links
+        player.src = "https://videojs-hls-stream.vercel.app/?url=" + encodeURIComponent(link);
+      }
     }
   </script>
+
 </body>
 </html>
