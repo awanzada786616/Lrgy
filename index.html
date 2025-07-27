@@ -4,93 +4,49 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Wasi TV</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet"/>
   <style>
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
       background: #111;
       color: white;
+      text-align: center;
     }
 
     header {
       background: #000;
-      padding: 15px 20px;
+      padding: 15px;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .brand {
-      font-size: 22px;
-      font-weight: 600;
-      color: #00e5ff;
+      justify-content: center;
+      gap: 30px;
     }
 
     .menu-btn {
-      font-size: 26px;
-      cursor: pointer;
-    }
-
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: -250px;
-      width: 250px;
-      height: 100%;
-      background: #000;
-      transition: 0.3s;
-      z-index: 999;
-      padding-top: 60px;
-    }
-
-    .sidebar.active {
-      left: 0;
-    }
-
-    .sidebar a {
-      padding: 15px 20px;
-      display: block;
+      background: #222;
+      padding: 10px 20px;
+      border-radius: 20px;
       color: white;
-      text-decoration: none;
-      border-bottom: 1px solid #222;
-      font-weight: 500;
       cursor: pointer;
+      transition: 0.3s;
     }
 
-    .sidebar a:hover {
-      background: #111;
+    .menu-btn:hover {
+      background: #00e5ff;
+      color: black;
     }
 
-    .main {
-      padding: 20px;
-      margin-left: 0;
-    }
-
-    .channel {
-      margin-bottom: 40px;
-    }
-
-    .channel h2 {
-      font-size: 20px;
-      margin: 10px 0;
-      text-align: center;
-    }
-
-    .channel-logo {
-      display: block;
-      margin: 0 auto 10px;
-      height: 60px;
+    .video-section {
+      max-width: 800px;
+      margin: 20px auto;
     }
 
     .video-container {
       position: relative;
       padding-top: 56.25%;
       background: black;
-      border-radius: 10px;
+      border-radius: 12px;
       overflow: hidden;
-      max-width: 800px;
-      margin: auto;
     }
 
     .video-container iframe {
@@ -102,71 +58,92 @@
       border: none;
     }
 
-    @media (max-width: 768px) {
-      .video-container {
-        padding-top: 58%;
-      }
+    .channel-logos {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 30px;
+      gap: 20px;
+    }
+
+    .channel-logos img {
+      height: 60px;
+      width: auto;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: transform 0.3s, border 0.3s;
+      border: 2px solid transparent;
+    }
+
+    .channel-logos img:hover {
+      transform: scale(1.05);
+      border-color: #00e5ff;
+    }
+
+    .hidden {
+      display: none !important;
     }
   </style>
 </head>
 <body>
 
+  <!-- Menu Section -->
   <header>
-    <div class="brand">📺 Wasi TV</div>
-    <div class="menu-btn" onclick="toggleMenu()">☰</div>
+    <div class="menu-btn" onclick="filterCategory('all')">All</div>
+    <div class="menu-btn" onclick="filterCategory('islamic')">Islamic</div>
+    <div class="menu-btn" onclick="filterCategory('entertainment')">Entertainment</div>
+    <div class="menu-btn" onclick="filterCategory('sports')">Sports</div>
   </header>
 
-  <div class="sidebar" id="sidebar">
-    <a onclick="filterChannels('all')">📺 All</a>
-    <a onclick="filterChannels('islamic')">🕌 Islamic</a>
-    <a onclick="filterChannels('sports')">🏏 Sports</a>
-    <a onclick="filterChannels('entertainment')">🎬 Entertainment</a>
+  <!-- Video Player Section -->
+  <div class="video-section">
+    <div class="video-container">
+      <iframe id="videoPlayer" src="https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/141M/playlist.m3u8" allowfullscreen></iframe>
+    </div>
   </div>
 
-  <div class="main" id="channelList">
+  <!-- Channel Logos -->
+  <div class="channel-logos" id="channelList">
     <!-- Makkah TV -->
-    <div class="channel" data-category="islamic">
-      <img class="channel-logo" src="https://i.postimg.cc/mrrk8d9H/unnamed.png" alt="Makkah TV">
-      <h2>Makkah TV</h2>
-      <div class="video-container">
-        <iframe src="https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/141M/playlist.m3u8"></iframe>
-      </div>
-    </div>
+    <img
+      src="https://i.postimg.cc/mrrk8d9H/unnamed.png"
+      data-category="islamic"
+      onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/141M/playlist.m3u8')"
+      title="Makkah TV"
+    />
 
     <!-- Ten Sports -->
-    <div class="channel" data-category="sports">
-      <img class="channel-logo" src="https://i.postimg.cc/y8188fvb/Ten-Sports-Logo.png" alt="Ten Sports">
-      <h2>Ten Sports</h2>
-      <div class="video-container">
-        <iframe src="https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/157-3H/playlist.m3u8"></iframe>
-      </div>
-    </div>
+    <img
+      src="https://i.postimg.cc/y8188fvb/Ten-Sports-Logo.png"
+      data-category="sports"
+      onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/157-3H/playlist.m3u8')"
+      title="Ten Sports"
+    />
 
     <!-- Hum TV -->
-    <div class="channel" data-category="entertainment">
-      <img class="channel-logo" src="https://i.postimg.cc/02qNL5mx/Hum-TV-2013.png" alt="Hum TV">
-      <h2>Hum TV</h2>
-      <div class="video-container">
-        <iframe src="https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/humTV-abr/playlist.m3u8"></iframe>
-      </div>
-    </div>
+    <img
+      src="https://i.postimg.cc/02qNL5mx/Hum-TV-2013.png"
+      data-category="entertainment"
+      onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/humTV-abr/playlist.m3u8')"
+      title="Hum TV"
+    />
   </div>
 
   <script>
-    function toggleMenu() {
-      document.getElementById("sidebar").classList.toggle("active");
+    function playChannel(url) {
+      document.getElementById("videoPlayer").src = url;
     }
 
-    function filterChannels(category) {
-      const channels = document.querySelectorAll(".channel");
-      channels.forEach(channel => {
-        if (category === "all" || channel.dataset.category === category) {
-          channel.style.display = "block";
+    function filterCategory(category) {
+      const logos = document.querySelectorAll('.channel-logos img');
+      logos.forEach(logo => {
+        const cat = logo.getAttribute('data-category');
+        if (category === 'all' || cat === category) {
+          logo.classList.remove('hidden');
         } else {
-          channel.style.display = "none";
+          logo.classList.add('hidden');
         }
       });
-      toggleMenu();
     }
   </script>
 
