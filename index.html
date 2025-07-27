@@ -3,159 +3,174 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wasi TV</title>
+  <title>Wasi TV - Live Channels</title>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+
     body {
-      display: flex;
-      font-family: Arial, sans-serif;
-      background-color: #111;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
       color: white;
+      display: flex;
       height: 100vh;
+      overflow: hidden;
     }
-    .sidebar {
+
+    aside {
       width: 220px;
       background-color: #1e1e1e;
       padding: 20px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      border-right: 2px solid #333;
+      gap: 15px;
+      border-right: 1px solid #444;
     }
-    .sidebar h2 {
-      color: #00ffff;
+
+    aside h2 {
       margin-bottom: 10px;
+      font-size: 18px;
+      color: #00ffff;
+      text-align: center;
     }
+
     .category {
       cursor: pointer;
+      background: #2e2e2e;
       padding: 10px;
-      background-color: #2b2b2b;
-      border-radius: 6px;
+      border-radius: 8px;
+      text-align: center;
       transition: background 0.3s;
     }
+
     .category:hover {
-      background-color: #3d3d3d;
+      background: #444;
     }
-    .main {
+
+    .channel-buttons {
       flex: 1;
-      display: flex;
+      display: none;
       flex-direction: column;
-      padding: 20px;
+      gap: 10px;
+      margin-top: 10px;
     }
-    .player {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      margin-bottom: 20px;
+
+    .channel-buttons.active {
+      display: flex;
     }
-    iframe, video {
-      width: 100%;
-      height: 100%;
-      border: none;
-      border-radius: 10px;
-    }
-    .channels {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 15px;
-    }
-    .channel-btn {
+
+    .channel-button {
       display: flex;
       align-items: center;
       gap: 10px;
-      background-color: #222;
+      background-color: #00cc66;
       padding: 10px;
       border-radius: 8px;
       cursor: pointer;
       transition: 0.3s;
     }
-    .channel-btn:hover {
-      background-color: #333;
+
+    .channel-button:hover {
+      background-color: #00994d;
     }
-    .channel-btn img {
-      width: 40px;
-      height: 40px;
+
+    .channel-button img {
+      width: 30px;
+      height: 30px;
       border-radius: 4px;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+    }
+
+    .player-wrapper {
+      width: 100%;
+      max-width: 1000px;
+      aspect-ratio: 16 / 9;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+    }
+
+    iframe, video {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 12px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 28px;
+      color: #00ffff;
+      text-shadow: 1px 1px 5px black;
     }
   </style>
 </head>
 <body>
-  <div class="sidebar">
-    <h2>Categories</h2>
-    <div class="category" onclick="filterCategory('entertainment')">Entertainment</div>
-    <div class="category" onclick="filterCategory('sports')">Sports</div>
-    <div class="category" onclick="filterCategory('islamic')">Islamic</div>
-  </div>
 
-  <div class="main">
-    <div class="player">
-      <video id="tvPlayer" controls autoplay src=""></video>
+  <aside>
+    <h2>Wasi TV</h2>
+    <div class="category" onclick="showCategory('entertainment')">🎭 Entertainment</div>
+    <div class="category" onclick="showCategory('sports')">🏏 Sports</div>
+    <div class="category" onclick="showCategory('islamic')">🕋 Islamic</div>
+
+    <div id="entertainment" class="channel-buttons">
+      <div class="channel-button" onclick="setChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/humTV-abr/playlist.m3u8')">
+        <img src="https://i.postimg.cc/02qNL5mx/Hum-TV-2013.png" alt="Hum TV" /> Hum TV
+      </div>
+      <div class="channel-button" onclick="setChannel('https://drive.google.com/file/d/1sDNuQPbjP_jP9KM8LAAl8lfadNkaEgsl/preview')">
+        <img src="https://i.postimg.cc/vm8Gw3NS/Picsart-25-07-27-22-04-38-093.jpg" alt="Syara Movie" /> Syara Movie
+      </div>
     </div>
 
-    <div class="channels" id="channelList">
-      <!-- Channels will be injected here -->
+    <div id="sports" class="channel-buttons">
+      <div class="channel-button" onclick="setChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/157-3H/playlist.m3u8')">
+        <img src="https://i.postimg.cc/y8188fvb/Ten-Sports-Logo.png" alt="Ten Sports" /> Ten Sports
+      </div>
     </div>
-  </div>
+
+    <div id="islamic" class="channel-buttons">
+      <div class="channel-button" onclick="setChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/141M/playlist.m3u8')">
+        <img src="https://i.postimg.cc/mrrk8d9H/unnamed.png" alt="Makkah TV" /> Makkah TV
+      </div>
+    </div>
+  </aside>
+
+  <main>
+    <h1>Live TV Stream</h1>
+    <div class="player-wrapper">
+      <iframe id="mainPlayer" src="https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/humTV-abr/playlist.m3u8" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+    </div>
+  </main>
 
   <script>
-    const channels = [
-      {
-        name: "Ten Sports",
-        logo: "https://i.postimg.cc/y8188fvb/Ten-Sports-Logo.png",
-        url: "https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/157-3H/playlist.m3u8",
-        category: "sports"
-      },
-      {
-        name: "Makkah TV",
-        logo: "https://i.postimg.cc/mrrk8d9H/unnamed.png",
-        url: "https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/141M/playlist.m3u8",
-        category: "islamic"
-      },
-      {
-        name: "Hum TV",
-        logo: "https://i.postimg.cc/02qNL5mx/Hum-TV-2013.png",
-        url: "https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/humTV-abr/playlist.m3u8",
-        category: "entertainment"
-      },
-      {
-        name: "Syara Movie",
-        logo: "https://i.postimg.cc/5tHyF11W/syaramovie.png",
-        url: "https://drive.google.com/uc?export=download&id=1sDNuQPbjP_jP9KM8LAAl8lfadNkaEgsl",
-        category: "entertainment"
-      }
-    ];
-
-    const player = document.getElementById("tvPlayer");
-    const listContainer = document.getElementById("channelList");
-
-    function loadChannels(filter = "entertainment") {
-      listContainer.innerHTML = "";
-      channels.filter(c => c.category === filter).forEach(channel => {
-        const btn = document.createElement("div");
-        btn.className = "channel-btn";
-        btn.onclick = () => playChannel(channel.url);
-
-        btn.innerHTML = `
-          <img src="${channel.logo}" alt="${channel.name}" />
-          <span>${channel.name}</span>
-        `;
-        listContainer.appendChild(btn);
+    function showCategory(categoryId) {
+      document.querySelectorAll('.channel-buttons').forEach(el => {
+        el.classList.remove('active');
       });
+      document.getElementById(categoryId).classList.add('active');
     }
 
-    function playChannel(url) {
-      player.src = url;
-      player.play();
+    function setChannel(url) {
+      const player = document.getElementById('mainPlayer');
+      if (url.includes("drive.google")) {
+        player.src = url;
+      } else {
+        player.src = "https://player.m3u8player.net/?url=" + encodeURIComponent(url);
+      }
     }
 
-    function filterCategory(cat) {
-      loadChannels(cat);
-    }
-
-    window.onload = () => loadChannels();
+    // Load default category
+    showCategory('entertainment');
   </script>
+
 </body>
 </html>
