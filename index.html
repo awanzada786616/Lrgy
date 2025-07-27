@@ -1,108 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF‑8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wasi TV</title>
   <style>
-    body { margin:0; background:#003366; color:white; font-family:Arial,sans-serif; }
-    header { background:#00264d; text-align:center; padding:15px; font-size:24px; }
-    nav { display:flex; justify-content:center; background:#0055cc; padding:10px; gap:20px; flex-wrap:wrap; }
-    nav button { background:#007acc; color:#fff; border:none; padding:8px 16px; border-radius:20px; cursor:pointer; }
-    nav button:hover { background:#0094f4; }
-    .player-container { display:flex; justify-content:center; margin:20px; position:relative; }
-    video, iframe { width:90vw; max-width:1000px; height:56vw; max-height:560px; border-radius:10px; background:#000; }
-    iframe { display:none; border:none; }
-    .channel-grid { display:flex; flex-wrap:wrap; justify-content:center; gap:20px; padding:20px; }
-    .channel-button { background:#0055cc; border:none; padding:10px; width:140px; text-align:center; border-radius:10px; color:#fff; cursor:pointer; }
-    .channel-button img { width:80px; height:50px; margin-bottom:5px; }
-    .channel-button:hover { background:#0080ff; }
-    footer { text-align:center; padding:10px; background:#00264d; font-size:14px; }
+    body {
+      margin: 0;
+      background: linear-gradient(to bottom, #1e3c72, #2a5298);
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    header {
+      padding: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      background-color: #0a2a55;
+    }
+    #videoPlayer {
+      width: 95%;
+      height: 400px;
+      background: black;
+      margin: 20px auto;
+    }
+    .channel-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+    .channel-btn {
+      background-color: #ffffff22;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 15px;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+      width: 120px;
+      text-align: center;
+    }
+    .channel-btn:hover {
+      background-color: #ffffff44;
+    }
+    .channel-btn img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto 5px;
+    }
+    footer {
+      margin-top: 30px;
+      padding: 15px;
+      background-color: #0a2a55;
+      font-size: 14px;
+    }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 </head>
 <body>
 
-  <header>📺 Wasi TV – Live Streaming</header>
+  <header>Wasi TV - Syara Movie & Live Channels</header>
 
-  <nav>
-    <button onclick="filterChannels('all')">All</button>
-    <button onclick="filterChannels('entertainment')">Entertainment</button>
-    <button onclick="filterChannels('sports')">Sports</button>
-    <button onclick="filterChannels('islamic')">Islamic</button>
-  </nav>
+  <video id="videoPlayer" controls autoplay>
+    <source src="https://drive.google.com/uc?export=download&id=1sDNuQPbjP_jP9KM8LAAl8lfadNkaEgsl" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
 
-  <div class="player-container">
-    <video id="videoPlayer" controls autoplay muted></video>
-    <iframe id="moviePlayer" allowfullscreen></iframe>
-  </div>
-
-  <div class="channel-grid" id="channelGrid">
-    <!-- Syara Movie (Google Drive) -->
-    <div class="channel-button entertainment" onclick="playStream('https://drive.google.com/file/d/1sDNuQPbjP_jP9KM8LAAl8lfadNkaEgsl/preview', true)">
-      <img src="https://i.postimg.cc/vm8Gw3NS/Picsart-25-07-27-22-04-38-093.jpg" alt="Syara Movie">
-      <span>Syara Movie</span>
-    </div>
-
-    <!-- Hum TV -->
-    <div class="channel-button entertainment" onclick="playStream('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/humTV-abr/playlist.m3u8')">
-      <img src="https://i.postimg.cc/02qNL5mx/Hum-TV-2013.png" alt="Hum TV">
-      <span>Hum TV</span>
-    </div>
-
-    <!-- Ten Sports -->
-    <div class="channel-button sports" onclick="playStream('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/157-3H/playlist.m3u8')">
+  <div class="channel-list">
+    <button class="channel-btn" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/157-3H/playlist.m3u8')">
       <img src="https://i.postimg.cc/y8188fvb/Ten-Sports-Logo.png" alt="Ten Sports">
-      <span>Ten Sports</span>
-    </div>
+      Ten Sports
+    </button>
 
-    <!-- Makkah TV -->
-    <div class="channel-button islamic" onclick="playStream('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/141M/playlist.m3u8')">
+    <button class="channel-btn" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/humTV-abr/playlist.m3u8')">
+      <img src="https://i.postimg.cc/02qNL5mx/Hum-TV-2013.png" alt="Hum TV">
+      Hum TV
+    </button>
+
+    <button class="channel-btn" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/141M/playlist.m3u8')">
       <img src="https://i.postimg.cc/mrrk8d9H/unnamed.png" alt="Makkah TV">
-      <span>Makkah TV</span>
-    </div>
+      Makkah TV
+    </button>
+
+    <button class="channel-btn" onclick="playChannel('https://drive.google.com/uc?export=download&id=1sDNuQPbjP_jP9KM8LAAl8lfadNkaEgsl')">
+      <img src="https://i.postimg.cc/PrdNDPg9/movie-icon.png" alt="Syara Movie">
+      Syara Movie
+    </button>
   </div>
 
-  <footer>All rights reserved – Wasi TV</footer>
+  <footer>
+    All rights reserved Wasi TV
+  </footer>
 
   <script>
-    const video = document.getElementById('videoPlayer');
-    const iframe = document.getElementById('moviePlayer');
-
-    function playStream(url, isDrive = false) {
-      // Stop any playing media
-      video.pause();
-      video.src = '';
-      video.style.display = 'none';
-      iframe.style.display = 'none';
-
-      if (isDrive) {
-        iframe.src = url;
-        iframe.style.display = 'block';
-      } else {
-        if (Hls.isSupported()) {
-          const hls = new Hls();
-          hls.loadSource(url);
-          hls.attachMedia(video);
-          hls.on(Hls.Events.MANIFEST_PARSED, function() { video.play(); });
-        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-          video.src = url;
-          video.play();
-        } else {
-          alert('Your browser does not support this stream.');
-        }
-        video.style.display = 'block';
-      }
+    function playChannel(url) {
+      const video = document.getElementById('videoPlayer');
+      video.src = url;
+      video.play();
     }
-
-    function filterChannels(category) {
-      document.querySelectorAll('.channel-button').forEach(btn => {
-        btn.style.display = (category === 'all' || btn.classList.contains(category)) ? 'flex' : 'none';
-      });
-    }
-
-    // Default load Syara Movie
-    window.addEventListener('load', () => playStream('https://drive.google.com/file/d/1sDNuQPbjP_jP9KM8LAAl8lfadNkaEgsl/preview', true));
   </script>
 
 </body>
