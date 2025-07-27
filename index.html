@@ -2,197 +2,205 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Wasi TV</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wasi TV Panel</title>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <style>
     * {
-      margin: 0;
-      padding: 0;
       box-sizing: border-box;
     }
 
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: #fff;
-      display: flex;
-      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #1e3c72, #2a5298);
+      color: white;
     }
 
-    /* Sidebar */
+    header {
+      background: #111;
+      padding: 10px 20px;
+      text-align: center;
+      font-size: 2em;
+      font-weight: bold;
+      text-shadow: 0 0 10px #fff;
+    }
+
+    .container {
+      display: flex;
+    }
+
     .sidebar {
       width: 200px;
-      background-color: rgba(0, 0, 0, 0.6);
+      background: #000000aa;
       padding: 20px;
-      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      height: 100vh;
+      position: fixed;
+      top: 60px;
+      left: 0;
     }
 
-    .sidebar h2 {
-      font-size: 22px;
-      margin-bottom: 20px;
-      color: #00f2fe;
-    }
-
-    .sidebar ul {
-      list-style: none;
-    }
-
-    .sidebar ul li {
-      margin: 15px 0;
-      padding: 10px;
-      border-radius: 8px;
-      background-color: rgba(255,255,255,0.05);
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .sidebar ul li:hover {
-      background-color: rgba(255,255,255,0.15);
-    }
-
-    /* Main */
-    .main-content {
-      flex: 1;
-      padding: 30px;
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 30px;
-    }
-
-    .video-container {
-      max-width: 800px;
-      margin: 0 auto;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 0 15px rgba(0,0,0,0.4);
-    }
-
-    iframe {
+    .main {
+      margin-left: 220px;
+      padding: 20px;
       width: 100%;
-      height: 400px;
-      border: none;
     }
 
-    .channel-buttons {
+    .channels {
       display: flex;
-      justify-content: center;
-      gap: 20px;
       flex-wrap: wrap;
-      margin-top: 30px;
+      gap: 20px;
+      justify-content: center;
     }
 
     .channel {
-      background: rgba(255,255,255,0.08);
-      padding: 15px;
-      border-radius: 15px;
-      width: 100px;
-      transition: 0.3s;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.3s;
     }
 
     .channel:hover {
-      background: rgba(255,255,255,0.2);
-      cursor: pointer;
+      transform: scale(1.05);
     }
 
     .channel img {
-      width: 60px;
-      height: 60px;
+      width: 100px;
+      height: 70px;
       object-fit: contain;
-      margin-bottom: 10px;
+      background: white;
+      border-radius: 10px;
+      padding: 5px;
+      box-shadow: 0 0 10px rgba(255,255,255,0.4);
+    }
+
+    .video-wrapper {
+      max-width: 800px;
+      margin: 20px auto;
+      background: black;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    #video {
+      width: 100%;
+      height: 450px;
+      border: none;
+      border-radius: 12px;
     }
 
     .note {
-      margin-top: 25px;
       background: white;
-      color: #000;
-      display: inline-block;
+      color: black;
       padding: 10px 20px;
-      border-radius: 25px;
-      font-weight: 600;
-      font-size: 14px;
-    }
-
-    .footer {
-      margin-top: 50px;
-      font-size: 14px;
-      opacity: 0.8;
-      border-top: 1px solid rgba(255,255,255,0.2);
-      padding-top: 20px;
+      border-radius: 10px;
+      font-size: 1.1em;
+      text-align: center;
+      max-width: 600px;
+      margin: 20px auto;
     }
 
     @media (max-width: 768px) {
-      body {
-        flex-direction: column;
-      }
-
       .sidebar {
-        width: 100%;
-        text-align: center;
-        border-right: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        display: none;
       }
 
-      .main-content {
-        padding: 20px;
+      .main {
+        margin: 0;
       }
 
-      .channel {
-        width: 80px;
+      #video {
+        height: 240px;
       }
 
       .channel img {
-        width: 50px;
-        height: 50px;
+        width: 80px;
+        height: 60px;
       }
     }
   </style>
 </head>
 <body>
 
-  <div class="sidebar">
-    <h2>📺 Wasi TV</h2>
-    <ul>
-      <li>Home</li>
-      <li>Live TV</li>
-      <li>Islamic</li>
-      <li>Entertainment</li>
-      <li>Support</li>
-    </ul>
-  </div>
+  <header>📺 Wasi TV</header>
 
-  <div class="main-content">
-    <h1>Welcome to Wasi TV</h1>
-
-    <div class="video-container">
-      <iframe src="https://your-live-stream-link.com" allowfullscreen></iframe>
+  <div class="container">
+    <div class="sidebar">
+      <h3>Menu</h3>
+      <ul style="list-style: none; padding-left: 0;">
+        <li><a href="#" style="color:white; text-decoration:none;">🏠 Home</a></li>
+        <li><a href="#" style="color:white; text-decoration:none;">🔥 Trending</a></li>
+        <li><a href="#" style="color:white; text-decoration:none;">⚙ Settings</a></li>
+      </ul>
     </div>
 
-    <div class="channel-buttons">
-      <div class="channel">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Makkah_Live.svg/1024px-Makkah_Live.svg.png" alt="Makkah Live">
-        <div>Makkah</div>
-      </div>
-      <div class="channel">
-        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/e9/Hum_TV_Logo.svg/1024px-Hum_TV_Logo.svg.png" alt="Hum TV">
-        <div>Hum TV</div>
-      </div>
-      <div class="channel">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Madinah_Live.svg/1024px-Madinah_Live.svg.png" alt="Madinah Live">
-        <div>Madinah</div>
-      </div>
-    </div>
+    <div class="main">
+      <div class="channels" id="channels"></div>
 
-    <div class="note">NEW CHANNELS COMING SOON (ONLY ON WASI TV)</div>
+      <div class="video-wrapper">
+        <video id="video" controls autoplay></video>
+      </div>
 
-    <div class="footer">
-      © 2025 Wasi TV — Powered by <strong>wasismmpannel.online</strong><br>
-      Need Help? WhatsApp us at <strong>+923175768178</strong>
+      <div class="note">📢 Works free on Jazz Network without any data balance!</div>
     </div>
   </div>
+
+  <script>
+    const channels = [
+      {
+        name: "Ten Sports",
+        url: "https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/157-3H/playlist.m3u8",
+        logo: "https://i.postimg.cc/y8188fvb/Ten-Sports-Logo.png"
+      },
+      {
+        name: "Makkah Live",
+        url: "https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/141M/playlist.m3u8",
+        logo: "https://i.postimg.cc/mrrk8d9H/unnamed.png"
+      },
+      {
+        name: "Hum TV",
+        url: "https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/humTV-abr/playlist.m3u8",
+        logo: "https://i.postimg.cc/02qNL5mx/Hum-TV-2013.png"
+      }
+    ];
+
+    const channelsDiv = document.getElementById("channels");
+    const video = document.getElementById("video");
+    let hls;
+
+    function playChannel(url) {
+      if (hls) {
+        hls.destroy();
+      }
+
+      if (Hls.isSupported()) {
+        hls = new Hls();
+        hls.loadSource(url);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, function () {
+          video.play();
+        });
+      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = url;
+        video.addEventListener('loadedmetadata', function () {
+          video.play();
+        });
+      }
+    }
+
+    channels.forEach(channel => {
+      const div = document.createElement("div");
+      div.className = "channel";
+      div.innerHTML = `
+        <img src="${channel.logo}" alt="${channel.name}">
+        <div>${channel.name}</div>
+      `;
+      div.addEventListener("click", () => playChannel(channel.url));
+      channelsDiv.appendChild(div);
+    });
+
+    playChannel(channels[0].url);
+  </script>
 
 </body>
 </html>
