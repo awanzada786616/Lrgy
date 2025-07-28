@@ -1,105 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Wasi TV</title>
   <style>
     body {
       margin: 0;
-      background: linear-gradient(to bottom, #1e3c72, #2a5298);
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #1e3c72, #2a5298);
       color: white;
-      font-family: Arial, sans-serif;
+    }
+    .header {
+      text-align: center;
+      padding: 20px 0 10px;
+    }
+    .header img {
+      height: 60px;
+    }
+    .header h1 {
+      margin: 10px 0 0;
+      font-size: 30px;
+    }
+
+    .marquee-container {
+      background: #001f3f;
+      color: #00e5ff;
+      padding: 8px;
+      font-weight: 500;
+      font-size: 16px;
+      border-top: 1px solid #00e5ff;
+      border-bottom: 1px solid #00e5ff;
       text-align: center;
     }
-    header {
-      padding: 20px;
-      font-size: 28px;
-      font-weight: bold;
-      background-color: #0a2a55;
-    }
-    #videoPlayer {
-      width: 95%;
-      height: 400px;
-      background: black;
-      margin: 20px auto;
-    }
-    .channel-list {
+
+    .nav {
       display: flex;
-      flex-wrap: wrap;
       justify-content: center;
       gap: 20px;
+      padding: 10px;
+      background-color: #00000070;
+      flex-wrap: wrap;
+    }
+    .nav button {
+      padding: 8px 16px;
+      background-color: #ffffff22;
+      color: white;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .nav button:hover {
+      background-color: #ffffff55;
+    }
+
+    .video-container {
+      display: flex;
+      justify-content: center;
+      margin: 20px auto;
+      width: 100%;
+    }
+    iframe {
+      width: 90%;
+      height: 220px;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #000;
+    }
+
+    .channels {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
       padding: 20px;
     }
-    .channel-btn {
-      background-color: #ffffff22;
-      border: none;
-      border-radius: 12px;
-      padding: 10px 15px;
-      color: white;
-      cursor: pointer;
-      transition: 0.3s;
+
+    .channel {
+      background-color: silver;
+      padding: 10px;
+      border-radius: 10px;
       width: 120px;
       text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s;
     }
-    .channel-btn:hover {
-      background-color: #ffffff44;
-    }
-    .channel-btn img {
-      width: 60px;
+
+    .channel img {
+      max-width: 100%;
       height: 60px;
       object-fit: contain;
-      display: block;
-      margin: 0 auto 5px;
     }
+
+    .channel:hover {
+      transform: scale(1.05);
+    }
+
     footer {
-      margin-top: 30px;
-      padding: 15px;
-      background-color: #0a2a55;
+      text-align: center;
+      padding: 20px;
       font-size: 14px;
+      color: #ddd;
     }
   </style>
 </head>
 <body>
 
-  <header>Wasi TV - Syara Movie & Live Channels</header>
-
-  <video id="videoPlayer" controls autoplay>
-    <source src="https://drive.google.com/uc?export=download&id=1sDNuQPbjP_jP9KM8LAAl8lfadNkaEgsl" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-
-  <div class="channel-list">
-    <button class="channel-btn" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/157-3H/playlist.m3u8')">
-      <img src="https://i.postimg.cc/y8188fvb/Ten-Sports-Logo.png" alt="Ten Sports">
-      Ten Sports
-    </button>
-
-    <button class="channel-btn" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/humTV-abr/playlist.m3u8')">
-      <img src="https://i.postimg.cc/02qNL5mx/Hum-TV-2013.png" alt="Hum TV">
-      Hum TV
-    </button>
-
-    <button class="channel-btn" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/141M/playlist.m3u8')">
-      <img src="https://i.postimg.cc/mrrk8d9H/unnamed.png" alt="Makkah TV">
-      Makkah TV
-    </button>
-
-    <button class="channel-btn" onclick="playChannel('https://drive.google.com/uc?export=download&id=1sDNuQPbjP_jP9KM8LAAl8lfadNkaEgsl')">
-      <img src="https://i.postimg.cc/PrdNDPg9/movie-icon.png" alt="Syara Movie">
-      Syara Movie
-    </button>
+  <div class="header">
+    <img src="https://i.postimg.cc/j5pdYZCF/20250727-161925.png" alt="Wasi TV Logo" />
+    <h1>Wasi TV</h1>
   </div>
 
+  <div class="marquee-container">
+    <marquee behavior="scroll" direction="left" scrollamount="5">
+      📺 Live Now: Enjoy Wasi TV with Islamic, Sports, and Entertainment Channels | Click any channel below to start watching instantly!
+    </marquee>
+  </div>
+
+  <div class="nav">
+    <button onclick="filterChannels('all')">All</button>
+    <button onclick="filterChannels('islamic')">Islamic</button>
+    <button onclick="filterChannels('sports')">Sports</button>
+    <button onclick="filterChannels('entertainment')">Entertainment</button>
+  </div>
+
+  <div class="video-container">
+    <iframe id="player" src="" allowfullscreen></iframe>
+  </div>
+
+  <div class="channels">
+    <div class="channel sports" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/157-3H/playlist.m3u8')">
+      <img src="https://i.postimg.cc/y8188fvb/Ten-Sports-Logo.png" alt="Ten Sports" />
+      <div>Ten Sports</div>
+    </div>
+
+    <div class="channel islamic" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/141M/playlist.m3u8')">
+      <img src="https://i.postimg.cc/mrrk8d9H/unnamed.png" alt="Makkah TV" />
+      <div>Makkah TV</div>
+    </div>
+
+    <div class="channel entertainment" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/humTV-abr/playlist.m3u8')">
+      <img src="https://i.postimg.cc/02qNL5mx/Hum-TV-2013.png" alt="Hum TV" />
+      <div>Hum TV</div>
+    </div>
+    <div class="channel sports" onclick="playChannel('https://cdn10lhr.tamashaweb.com:8087/jazzauth/WCL25-abr/live/WCL_360p/chunks.m3u8?nimblesessionid=31047095&wmsAuthSign=c2VydmVyX3RpbWU9Ny8yNy8yMDI1IDI6MjA6MDkgUE0maGFzaF92YWx1ZT1jbHMrMDVIUVZnQlZ0NXV5bmNtMmJ3PT0mdmFsaWRtaW51dGVzPTEw')">
+      <img src="https://i.postimg.cc/28J6pSp9/images-27-removebg-preview.png" alt="wcl live" />
+      <div>Wcl live</div>
+    </div>
+        <div class="channel entertainment" onclick="playChannel('https://cdn23lhr.tamashaweb.com:8087/jazzauth/Green_Entertainment-abr/live/vsat-green-M/chunks.m3u8?nimblesessionid=28141090&wmsAuthSign=c2VydmVyX3RpbWU9Ny8yNy8yMDI1IDI6NTA6MzcgUE0maGFzaF92YWx1ZT1PcnFLd2VZVkZ0NkxxMXVnTWsyWGR3PT0mdmFsaWRtaW51dGVzPTEw')">
+      <img src="https://i.postimg.cc/fb4Wqq4V/images-28-1.png" alt="Green Tv" />
+      <div>Green Tv</div>
+    </div>
+   </div>
+
   <footer>
-    All rights reserved Wasi TV
+    © 2025 Wasi TV - All rights reserved.
   </footer>
 
   <script>
     function playChannel(url) {
-      const video = document.getElementById('videoPlayer');
-      video.src = url;
-      video.play();
+      document.getElementById('player').src = url;
+    }
+
+    function filterChannels(category) {
+      const all = document.querySelectorAll('.channel');
+      all.forEach(c => {
+        if (category === 'all') {
+          c.style.display = 'inline-block';
+        } else {
+          c.style.display = c.classList.contains(category) ? 'inline-block' : 'none';
+        }
+      });
     }
   </script>
 
