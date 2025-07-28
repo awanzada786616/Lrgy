@@ -23,16 +23,26 @@
       justify-content: center;
       flex-direction: column;
       z-index: 9999;
+      overflow: hidden;
     }
+
     #splash img {
-      width: 160px;
-      height: auto;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
     }
+
     .dots-loading {
       margin-top: 20px;
       display: flex;
       gap: 5px;
+      z-index: 1;
     }
+
     .dots-loading div {
       width: 10px;
       height: 10px;
@@ -40,30 +50,33 @@
       border-radius: 50%;
       animation: bounce 1.2s infinite ease-in-out;
     }
+
     .dots-loading div:nth-child(2) {
       animation-delay: 0.2s;
     }
+
     .dots-loading div:nth-child(3) {
       animation-delay: 0.4s;
     }
+
     @keyframes bounce {
       0%, 80%, 100% { transform: scale(0); }
       40% { transform: scale(1); }
     }
 
-    /* hide content until splash gone */
     #main-content {
       display: none;
     }
 
-    /* 🟦 Your original CSS below this line remains same */
     .header {
       text-align: center;
       padding: 20px 0 10px;
     }
+
     .header img {
       height: 60px;
     }
+
     .header h1 {
       margin: 10px 0 0;
       font-size: 30px;
@@ -88,6 +101,7 @@
       background-color: #00000070;
       flex-wrap: wrap;
     }
+
     .nav button {
       padding: 8px 16px;
       background-color: #ffffff22;
@@ -96,6 +110,7 @@
       cursor: pointer;
       border-radius: 5px;
     }
+
     .nav button:hover {
       background-color: #ffffff55;
     }
@@ -106,6 +121,7 @@
       margin: 20px auto;
       width: 100%;
     }
+
     iframe {
       width: 90%;
       height: 220px;
@@ -154,7 +170,7 @@
 
   <!-- 🔥 Splash Screen -->
   <div id="splash">
-    <img src="https://i.postimg.cc/FRVN1sTG/20250728-175556.jpg" alt="Splash Image" />
+    <img src="file:///android_asset/wasi_splash.png" alt="Splash Image" />
     <div class="dots-loading">
       <div></div><div></div><div></div>
     </div>
