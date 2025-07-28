@@ -12,7 +12,6 @@
       color: white;
     }
 
-    /* 🔥 Splash screen styles */
     #splash {
       position: fixed;
       width: 100%;
@@ -230,7 +229,9 @@
         <img src="https://i.postimg.cc/q7BY15zj/pakistan-8xm-television-channel-streaming-media-non-stop-6ac08f34db0e17fea8bae92e1f230a47.png" alt="8xm Tv" />
         <div>8xm</div>
       </div>
-            <div class="channel entertainment" onclick="playchannel('https://cdn21lhr.tamashaweb.com:8087/jazzauth/ARYdigital-abr/live/vsat-ary-L/chunks.m3u8')">
+
+      <!-- ✅ FIXED ARY Digital Channel -->
+      <div class="channel entertainment" onclick="playChannel('https://cdn21lhr.tamashaweb.com:8087/jazzauth/ARYdigital-abr/live/vsat-ary-L/chunks.m3u8')">
         <img src="https://i.postimg.cc/dVSwF7xM/Ary-Digital-Logo.png" alt="Ary digital" />
         <div>Ary digital</div>
       </div>
@@ -257,7 +258,6 @@
       });
     }
 
-    // 🎬 Hide splash after 3 seconds
     setTimeout(() => {
       document.getElementById('splash').style.display = "none";
       document.getElementById('main-content').style.display = "block";
