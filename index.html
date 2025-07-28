@@ -55,18 +55,22 @@
     }
 
     .video-container {
-      display: flex;
-      justify-content: center;
-      margin: 20px auto;
-      width: 100%;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+   }
+
+iframe {
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  border: none;
+  display: block;
+  border-radius: 10px;
     }
-    iframe {
-      width: 99%;
-      height: 220px;
-      border: none;
-      border-radius: 10px;
-      box-shadow: 0 0 10px #000;
-    }
+
 
     .channels {
       display: flex;
