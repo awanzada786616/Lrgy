@@ -7,11 +7,12 @@
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #1e3c72, #2a5298);
+      background: black;
+      font-family: sans-serif;
       color: white;
     }
 
+    /* Splash Screen */
     #splash {
       position: fixed;
       width: 100%;
@@ -22,7 +23,6 @@
       justify-content: center;
       flex-direction: column;
       z-index: 9999;
-      overflow: hidden;
     }
 
     #splash img {
@@ -39,7 +39,6 @@
       margin-top: 20px;
       display: flex;
       gap: 5px;
-      z-index: 1;
     }
 
     .dots-loading div {
@@ -63,76 +62,25 @@
       40% { transform: scale(1); }
     }
 
+    /* Main content after splash */
     #main-content {
       display: none;
     }
 
     .header {
       text-align: center;
-      padding: 20px 0 10px;
+      padding: 10px;
+      background: #111;
     }
 
     .header img {
       height: 60px;
     }
 
-    .header h1 {
-      margin: 10px 0 0;
-      font-size: 30px;
-    }
-
-    .marquee-container {
-      background: #001f3f;
-      color: #00e5ff;
-      padding: 8px;
-      font-weight: 500;
-      font-size: 16px;
-      border-top: 1px solid #00e5ff;
-      border-bottom: 1px solid #00e5ff;
-      text-align: center;
-    }
-
-    .nav {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      padding: 10px;
-      background-color: #00000070;
-      flex-wrap: wrap;
-    }
-
-    .nav button {
-      padding: 8px 16px;
-      background-color: #ffffff22;
-      color: white;
-      border: 1px solid #ccc;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-
-    .nav button:hover {
-      background-color: #ffffff55;
-    }
-
-    .video-container {
-      display: flex;
-      justify-content: center;
-      margin: 20px auto;
-      width: 100%;
-    }
-
-    iframe {
-      width: 90%;
-      height: 220px;
-      border: none;
-      border-radius: 10px;
-      box-shadow: 0 0 10px #000;
-    }
-
     .channels {
       display: flex;
-      justify-content: center;
       flex-wrap: wrap;
+      justify-content: center;
       gap: 15px;
       padding: 20px;
     }
@@ -144,7 +92,6 @@
       width: 120px;
       text-align: center;
       cursor: pointer;
-      transition: transform 0.2s;
     }
 
     .channel img {
@@ -153,21 +100,21 @@
       object-fit: contain;
     }
 
-    .channel:hover {
-      transform: scale(1.05);
+    /* Hide iframe for now */
+    #player-container {
+      display: none;
     }
 
-    footer {
-      text-align: center;
-      padding: 20px;
-      font-size: 14px;
-      color: #ddd;
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
     }
   </style>
 </head>
 <body>
 
-  <!-- 🔥 Splash Screen -->
+  <!-- Splash Screen -->
   <div id="splash">
     <img src="https://i.postimg.cc/FRVN1sTG/20250728-175556.jpg" alt="Splash Image" />
     <div class="dots-loading">
@@ -175,114 +122,62 @@
     </div>
   </div>
 
-  <!-- 👇 Main App Content -->
+  <!-- Main Content -->
   <div id="main-content">
     <div class="header">
       <img src="https://i.postimg.cc/cJwz4trt/pngfind-com-website-clipart-png-6209136.png" alt="Wasi TV Logo" />
-      <h1>Wasi TV</h1>
-    </div>
-
-    <div class="marquee-container">
-      <marquee behavior="scroll" direction="left" scrollamount="5">
-        📺 Live Now: Enjoy Wasi TV with Islamic, Sports, and Entertainment Channels | Click any channel below to start watching instantly!
-      </marquee>
-    </div>
-
-    <div class="nav">
-      <button onclick="filterChannels('all')">All</button>
-      <button onclick="filterChannels('islamic')">Islamic</button>
-      <button onclick="filterChannels('sports')">Sports</button>
-      <button onclick="filterChannels('entertainment')">Entertainment</button>
-    </div>
-
-    <div class="video-container">
-      <iframe id="player" src="" allowfullscreen></iframe>
     </div>
 
     <div class="channels">
-      <div class="channel sports" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/157-3H/playlist.m3u8')">
+      <div class="channel" onclick="playFullScreen('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/157-3H/playlist.m3u8')">
         <img src="https://i.postimg.cc/y8188fvb/Ten-Sports-Logo.png" alt="Ten Sports" />
         <div>Ten Sports</div>
       </div>
 
-      <div class="channel islamic" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/141M/playlist.m3u8')">
+      <div class="channel" onclick="playFullScreen('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/141M/playlist.m3u8')">
         <img src="https://i.postimg.cc/mrrk8d9H/unnamed.png" alt="Makkah TV" />
         <div>Makkah TV</div>
       </div>
 
-      <div class="channel entertainment" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/humTV-abr/playlist.m3u8')">
-        <img src="https://i.postimg.cc/02qNL5mx/Hum-TV-2013.png" alt="Hum TV" />
-        <div>Hum TV</div>
-      </div>
-
-      <div class="channel sports" onclick="playChannel('https://cdn10lhr.tamashaweb.com:8087/jazzauth/WCL25-abr/live/WCL_360p/chunks.m3u8')">
-        <img src="https://i.postimg.cc/28J6pSp9/images-27-removebg-preview.png" alt="wcl live" />
-        <div>Wcl live</div>
-      </div>
-
-      <div class="channel entertainment" onclick="playChannel('https://cdn12isb.tamashaweb.com:8087/jazzauth/Green_Entertainment-abr/live/vsat-green-M/chunks.m3u8')">
-        <img src="https://i.postimg.cc/fb4Wqq4V/images-28-1.png" alt="Green Tv" />
-        <div>Green Tv</div>
-      </div>
-
-      <div class="channel entertainment" onclick="playChannel('https://cdn22lhr.tamashaweb.com:8087/jazzauth/8xm-abr/live/vsat-128M/chunks.m3u8')">
-        <img src="https://i.postimg.cc/q7BY15zj/pakistan-8xm-television-channel-streaming-media-non-stop-6ac08f34db0e17fea8bae92e1f230a47.png" alt="8xm Tv" />
-        <div>8xm</div>
-      </div>
-
-      <!-- ✅ FIXED ARY Digital Channel -->
-      <div class="channel entertainment" onclick="playChannel('https://cdn21lhr.tamashaweb.com:8087/jazzauth/ARYdigital-abr/live/vsat-ary-L/chunks.m3u8')">
-        <img src="https://i.postimg.cc/dVSwF7xM/Ary-Digital-Logo.png" alt="Ary digital" />
-        <div>Ary digital</div>
-      </div>
-      <div class="channel islamic" onclick="playChannel('https://cdn05khi.tamashaweb.com:8087/jazzauth/Madni-abr/live/vsat-94M/chunks.m3u8')">
-        <img src="https://i.postimg.cc/NGVnQ6gk/images-1-26.jpg" alt="Madni tvl" />
-        <div>Madni tv</div>
-      </div>
-        <div class="channel entertainment" onclick="playChannel('https://cdn23lhr.tamashaweb.com:8087/jazzauth/GeoEntertainment-abr/live/122M/chunks.m3u8')">
-        <img src="https://i.postimg.cc/q7st8jsz/Geo-TV.png" alt="Geo " />
-        <div>Geo</div>
-      </div>
-       <div class="channel entertainment" onclick="playChannel('https://cdn23lhr.tamashaweb.com:8087/jazzauth/hummasala-abr/live/vsat-118M/chunks.m3u8')">
-        <img src="https://i.postimg.cc/jdTgVQ4K/images-1-25.jpg" alt="Hum masala" />
-        <div>Hum masla</div>
-      </div>
-        <div class="channel entertainment" onclick="playChannel('https://cdn21lhr.tamashaweb.com:8087/jazzauth/ExpressEntertainment-abr/live/vsat-83M/chunks.m3u8')">
-        <img src="https://i.postimg.cc/ncktNL7R/images-1-27.jpg" alt="Express" />
-        <div>Express</div>
-      </div>
-      <div class="channel entertainment" onclick="playChannel('https://cdn12isb.tamashaweb.com:8087/jazzauth/LahoreRung-abr/live/vsat-86M/chunks.m3u8')">
-        <img src="https://i.postimg.cc/W4659dxS/channels4-profile.jpg" alt="Lahore rang" />
-        <div>Lahore rang</div>
-      </div>
-      </div>
+      <!-- Add more channels here as needed -->
     </div>
-
-    <footer>
-      © 2025 Wasi TV - All rights reserved.
-    </footer>
   </div>
 
   <script>
-    function playChannel(url) {
-      document.getElementById('player').src = url;
-    }
-
-    function filterChannels(category) {
-      const all = document.querySelectorAll('.channel');
-      all.forEach(c => {
-        if (category === 'all') {
-          c.style.display = 'inline-block';
-        } else {
-          c.style.display = c.classList.contains(category) ? 'inline-block' : 'none';
-        }
-      });
-    }
-
+    // Hide splash after 3 sec and show main
     setTimeout(() => {
       document.getElementById('splash').style.display = "none";
       document.getElementById('main-content').style.display = "block";
     }, 3000);
+
+    // Open video fullscreen
+    function playFullScreen(url) {
+      const win = window.open();
+      win.document.write(`
+        <html>
+        <head>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+          <style>
+            body, html {
+              margin: 0;
+              padding: 0;
+              background: black;
+              height: 100%;
+              overflow: hidden;
+            }
+            video {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+          </style>
+        </head>
+        <body>
+          <video src="${url}" controls autoplay></video>
+        </body>
+        </html>
+      `);
+    }
   </script>
 
 </body>
