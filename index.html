@@ -169,57 +169,58 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.6);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 9999;
+  justify-content: center;
+  z-index: 10000;
 }
 
 .dialog-box {
-  background-color: #fff;
+  background: #fff;
   padding: 20px 30px;
-  border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.4);
-  text-align: center;
-  max-width: 300px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   font-family: 'Segoe UI', sans-serif;
+  text-align: center;
 }
 
 .dialog-box p {
-  margin-bottom: 20px;
+  margin: 0 0 15px;
   font-size: 16px;
-  color: #222;
 }
 
 .dialog-box button {
-  background-color: #007BFF;
+  background-color: #007bff;
   color: white;
-  padding: 8px 18px;
   border: none;
-  border-radius: 8px;
+  padding: 10px 20px;
+  border-radius: 5px;
   font-size: 15px;
   cursor: pointer;
 }
 
 .dialog-box button:hover {
   background-color: #0056b3;
-      }
+}
 
 }
 
   </style>
 </head>
 <body>
-  <!-- Update Dialog Box -->
-<div id="update-dialog">
-  <div class="dialog-box">
-    <p><strong>📺 Wasi TV Update:</strong><br>
-      New channels added: <span id="channel-names">Geo TV, ARY Digital, Hum TV</span>
-    </p>
-    <button onclick="closeDialog()">OK</button>
-  </div>
-</div>
+  ‎<!-- Update Dialog Box -->
+‎<div id="update-dialog">
+‎  <div class="dialog-box">
+‎    <p><strong>📺 Wasi TV Update:</strong><br>
+‎      New channels added: <span id="channel-names">Geo TV, ARY Digital, Hum TV</span>
+‎    </p>
+‎    <button onclick="closeDialog()">OK</button>
+‎  </div>
+‎</div>
+‎
+
+‎
 
 <!-- Link external CSS and JS -->
 <link rel="stylesheet" href="update-dialog.css">
@@ -349,12 +350,13 @@
       document.getElementById('main-content').style.display = "block";
     }, 3000);
   </script>
+// Function to close the dialog box
 function closeDialog() {
   document.getElementById('update-dialog').style.display = 'none';
 }
 
-// Automatically show dialog when page loads
-window.onload = function() {
+// Automatically show the dialog when the page loads
+window.onload = function () {
   document.getElementById('update-dialog').style.display = 'flex';
 };
 </body>
