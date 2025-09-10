@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wasi TV</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0f172a, #1e3c72, #2a5298);
+      color: white;
+    }
+    /* Splash */
+    #splash {
+      position: fixed;
+      inset: 0;
+      background: #0a082b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 9999;
+    }
+    #splash img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      filter: brightness(0.6);
+    }
+    .dots-loading {
+      display: flex;
+      gap: 8px;
+      z-index: 1;
+    }
+    .dots-loading div {
+      width: 12px;
+      height: 12px;
+      background: #ff5500;
+      border-radius: 50%;
+      animation: bounce 1.2s infinite ease-in-out;
+    }
+    .dots-loading div:nth-child(2) { animation-delay: 0.2s; }
+    .dots-loading div:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce {
+      0%, 80%, 100% { transform: scale(0); }
+      40% { transform: scale(1); }
+    }
+    #main-content { display: none; }
+    /* Header */
+    .header {
+      text-align: center;
+      padding: 20px;
+    }
+    .header img { height: 65px; }
+    .header h1 { margin: 8px 0 0; font-size: 26px; letter-spacing: 1px; }
+    /* Marquee */
+    .marquee-container {
+      background: #001f3f;
+      color: #00e5ff;
+      overflow: hidden;
+      white-space: nowrap;
+      border-top: 1px solid #00e5ff;
+      border-bottom: 1px solid #00e5ff;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 8px 0;
+    }
+    .marquee {
+      display: inline-block;
+      padding-left: 100%;
+      animation: marquee 15s linear infinite;
+    }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+    /* Navigation */
+    .nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 12px;
+    }
+    .nav button {
+      padding: 8px 16px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.3s;
+    }
+    .nav button:hover {
+      background: #1d4ed8;
+      transform: translateY(-2px);
+    }
+    /* Video */
+    .video-container {
+      display: flex;
+      justify-content: center;
+      margin: 15px auto;
+      width: 100%;
+    }
+    iframe {
+      width: 92%;
+      height: 220px;
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+    /* Channels */
+    .channels {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 15px;
+      padding: 15px;
+    }
+    .channel {
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.3s, background 0.3s;
+    }
+    .channel:hover {
+      transform: scale(1.05);
+      background: rgba(255,255,255,0.2);
+    }
+    .channel img {
+      width: 100%;
+      height: 50px;
+      object-fit: contain;
+      margin-bottom: 6px;
+    }
+    .channel div { font-size: 13px; font-weight: 600; }
+    footer {
+      text-align: center;
+      padding: 15px;
+      font-size: 13px;
+      color: #bbb;
+      border-top: 1px solid rgba(255,255,255,0.2);
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Splash -->
+  <div id="splash">
+    <img src="https://i.postimg.cc/5NmSmbpx/20250729-161340.jpg" alt="Splash Image" />
+    <div class="dots-loading">
+      <div></div><div></div><div></div>
+    </div>
+  </div>
+  <!-- Main Content -->
+  <div id="main-content">
+    <div class="header">
+      <img src="https://i.postimg.cc/cJwz4trt/pngfind-com-website-clipart-png-6209136.png" alt="Wasi TV Logo" />
+      <h1>Wasi TV</h1>
+    </div>
+    <div class="marquee-container">
+      <div class="marquee">
+        📺 Live Now: Enjoy Wasi TV with Islamic, Sports, and Entertainment Channels | Click any channel below to start watching instantly!
+      </div>
+    </div>
+    <div class="nav">
+      <button onclick="filterChannels('all')">All</button>
+      <button onclick="filterChannels('islamic')">Islamic</button>
+      <button onclick="filterChannels('sports')">Sports</button>
+      <button onclick="filterChannels('entertainment')">Entertainment</button>
+    </div>
+    <div class="video-container">
+      <iframe id="player" src="" allowfullscreen></iframe>
+    </div>
+    <div class="channels">
+      <div class="channel sports" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/157-3H/playlist.m3u8')">
+        <img src="https://i.postimg.cc/y8188fvb/Ten-Sports-Logo.png" alt="Ten Sports" />
+        <div>Ten Sports</div>
+      </div>
+      <div class="channel islamic" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/141M/playlist.m3u8')">
+        <img src="https://i.postimg.cc/mrrk8d9H/unnamed.png" alt="Makkah TV" />
+        <div>Makkah TV</div>
+      </div>
+      <div class="channel entertainment" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/humTV-abr/playlist.m3u8')">
+        <img src="https://i.postimg.cc/02qNL5mx/Hum-TV-2013.png" alt="Hum TV" />
+        <div>Hum TV</div>
+      </div>
+      <div class="channel sports" onclick="playChannel('https://cdn01isb-n.tamashaweb.com:8087/jazzauth/ASIACUP2025-abr/live/ASIACUP2025-promo/chunks.m3u8')">
+        <img src="https://i.postimg.cc/W1RMwSRx/1756208066219.webp" alt="Asia Cup" />
+        <div>Asia Cup</div>
+      </div>
+      <div class="channel entertainment" onclick="playChannel('https://cdn12isb.tamashaweb.com:8087/jazzauth/Green_Entertainment-abr/live/vsat-green-M/chunks.m3u8')">
+        <img src="https://i.postimg.cc/fb4Wqq4V/images-28-1.png" alt="Green TV" />
+        <div>Green TV</div>
+      </div>
+      <div class="channel entertainment" onclick="playChannel('https://cdn22lhr.tamashaweb.com:8087/jazzauth/8xm-abr/live/vsat-128M/chunks.m3u8')">
+        <img src="https://i.postimg.cc/q7BY15zj/pakistan-8xm-television-channel-streaming-media-non-stop-6ac08f34db0e17fea8bae92e1f230a47.png" alt="8xm" />
+        <div>8xm</div>
+      </div>
+      <div class="channel entertainment" onclick="playChannel('https://cdn21lhr.tamashaweb.com:8087/jazzauth/ARYdigital-abr/live/vsat-ary-L/chunks.m3u8')">
+        <img src="https://i.postimg.cc/dVSwF7xM/Ary-Digital-Logo.png" alt="Ary Digital" />
+        <div>Ary Digital</div>
+      </div>
+      <div class="channel islamic" onclick="playChannel('https://cdn05khi.tamashaweb.com:8087/jazzauth/Madni-abr/live/vsat-94M/chunks.m3u8')">
+        <img src="https://i.postimg.cc/NGVnQ6gk/images-1-26.jpg" alt="Madni TV" />
+        <div>Madni TV</div>
+      </div>
+      <div class="channel entertainment" onclick="playChannel('https://cdn22lhr.tamashaweb.com:8087/jazzauth/GeoEntertainment-abr/live/vsat-geotv-H/chunks.m3u8')">
+        <img src="https://i.postimg.cc/q7st8jsz/Geo-TV.png" alt="Geo" />
+        <div>Geo</div>
+      </div>
+      <div class="channel entertainment" onclick="playChannel('https://cdn23lhr.tamashaweb.com:8087/jazzauth/hummasala-abr/live/vsat-118M/chunks.m3u8')">
+        <img src="https://i.postimg.cc/jdTgVQ4K/images-1-25.jpg" alt="Hum Masala" />
+        <div>Hum Masala</div>
+      </div>
+      <div class="channel entertainment" onclick="playChannel('https://cdn21lhr.tamashaweb.com:8087/jazzauth/ExpressEntertainment-abr/live/vsat-83M/chunks.m3u8')">
+        <img src="https://i.postimg.cc/ncktNL7R/images-1-27.jpg" alt="Express" />
+        <div>Express</div>
+      </div>
+      <div class="channel entertainment" onclick="playChannel('https://cdn12isb.tamashaweb.com:8087/jazzauth/LahoreRung-abr/live/vsat-86M/chunks.m3u8')">
+        <img src="https://i.postimg.cc/W4659dxS/channels4-profile.jpg" alt="Lahore Rang" />
+        <div>Lahore Rang</div>
+      </div>
+      <div class="channel sports" onclick="playChannel('‎https://vodnewv2.in-maa-1.linodeobjects.com/promos/Tapmadpromo/master.m3u8
+‎')">
+        <img src="https://i.postimg.cc/d1KjC30v/images-2-16.jpg" alt="Eng vs south africa" />
+        <div>Pakistan tour of West Indies</div>
+      </div>
+    </div>
+    <footer>
+      © 2025 Wasi TV - All rights reserved.
+    </footer>
+  </div>
+  <script>
+    function playChannel(url) {
+      document.getElementById('player').src = url;
+    }
+    function filterChannels(category) {
+      document.querySelectorAll('.channel').forEach(c => {
+        c.style.display = (category === 'all' || c.classList.contains(category)) ? 'block' : 'none';
+      });
+    }
+    setTimeout(() => {
+      document.getElementById('splash').style.display = "none";
+      document.getElementById('main-content').style.display = "block";
+    }, 2500);
+  </script>
+</body>
+  </html>
