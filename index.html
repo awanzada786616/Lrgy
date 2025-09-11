@@ -57,17 +57,33 @@
     }
     .header img { height: 65px; }
     .header h1 { margin: 8px 0 0; font-size: 26px; letter-spacing: 1px; }
-    /* Marquee */
+    /* Player with marquee */
+    .player-container {
+      position: relative;
+      width: 92%;
+      margin: 15px auto;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+    iframe {
+      width: 100%;
+      height: 220px;
+      border: none;
+      display: block;
+    }
     .marquee-container {
-      background: #001f3f;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0, 31, 63, 0.8);
       color: #00e5ff;
       overflow: hidden;
       white-space: nowrap;
       border-top: 1px solid #00e5ff;
-      border-bottom: 1px solid #00e5ff;
       font-weight: 600;
       font-size: 14px;
-      padding: 8px 0;
+      padding: 6px 0;
     }
     .marquee {
       display: inline-block;
@@ -99,20 +115,6 @@
     .nav button:hover {
       background: #1d4ed8;
       transform: translateY(-2px);
-    }
-    /* Video */
-    .video-container {
-      display: flex;
-      justify-content: center;
-      margin: 15px auto;
-      width: 100%;
-    }
-    iframe {
-      width: 92%;
-      height: 220px;
-      border: none;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     }
     /* Channels */
     .channels {
@@ -164,20 +166,22 @@
       <img src="https://i.postimg.cc/cJwz4trt/pngfind-com-website-clipart-png-6209136.png" alt="Wasi TV Logo" />
       <h1>Wasi TV</h1>
     </div>
-    <div class="marquee-container">
-      <div class="marquee">
-        📺 Live Now: Enjoy Wasi TV with Islamic, Sports, and Entertainment Channels | Click any channel below to start watching instantly!
-      </div>
-    </div>
     <div class="nav">
       <button onclick="filterChannels('all')">All</button>
       <button onclick="filterChannels('islamic')">Islamic</button>
       <button onclick="filterChannels('sports')">Sports</button>
       <button onclick="filterChannels('entertainment')">Entertainment</button>
     </div>
-    <div class="video-container">
+    <!-- Player + Marquee -->
+    <div class="player-container">
       <iframe id="player" src="" allowfullscreen></iframe>
+      <div class="marquee-container">
+        <div class="marquee">
+          📺 Live Now: Enjoy Wasi TV with Islamic, Sports, and Entertainment Channels | Click any channel below to start watching instantly!
+        </div>
+      </div>
     </div>
+    <!-- Channels -->
     <div class="channels">
       <div class="channel sports" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/157-3H/playlist.m3u8')">
         <img src="https://i.postimg.cc/y8188fvb/Ten-Sports-Logo.png" alt="Ten Sports" />
@@ -227,8 +231,7 @@
         <img src="https://i.postimg.cc/W4659dxS/channels4-profile.jpg" alt="Lahore Rang" />
         <div>Lahore Rang</div>
       </div>
-      <div class="channel sports" onclick="playChannel('‎https://vodnewv2.in-maa-1.linodeobjects.com/promos/Tapmadpromo/master.m3u8
-‎')">
+      <div class="channel sports" onclick="playChannel('https://vodnewv2.in-maa-1.linodeobjects.com/promos/Tapmadpromo/master.m3u8')">
         <img src="https://i.postimg.cc/d1KjC30v/images-2-16.jpg" alt="Eng vs south africa" />
         <div>Pakistan tour of West Indies</div>
       </div>
@@ -252,4 +255,4 @@
     }, 2500);
   </script>
 </body>
-  </html>
+</html>
