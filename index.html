@@ -11,6 +11,7 @@
       background: linear-gradient(135deg, #0f172a, #1e3c72, #2a5298);
       color: white;
     }
+
     /* Splash */
     #splash {
       position: fixed;
@@ -50,6 +51,7 @@
       40% { transform: scale(1); }
     }
     #main-content { display: none; }
+
     /* Header */
     .header {
       text-align: center;
@@ -57,16 +59,27 @@
     }
     .header img { height: 65px; }
     .header h1 { margin: 8px 0 0; font-size: 26px; letter-spacing: 1px; }
-    /* Player full screen */
+
+    /* Player full width top */
     .player-container {
       position: relative;
       width: 100%;
-      height: 100vh; /* full screen */
-      margin: 0;
-      border-radius: 0;
+      height: 45vh; /* adjust height */
       overflow: hidden;
-      box-shadow: none;
+      border-radius: 0;
+      margin: 0 auto 15px;
     }
+    .player-container iframe {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100vw;
+      height: 100vh;
+      transform: translate(-50%, -50%);
+      border: none;
+      object-fit: cover;
+    }
+
     /* Spinner */
     .spinner {
       position: absolute;
@@ -86,12 +99,8 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
-    iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      display: block;
-    }
+
+    /* Marquee */
     .marquee-container {
       position: absolute;
       bottom: 0;
@@ -114,6 +123,7 @@
       0% { transform: translateX(0); }
       100% { transform: translateX(-100%); }
     }
+
     /* Navigation */
     .nav {
       display: flex;
@@ -136,33 +146,41 @@
       background: #1d4ed8;
       transform: translateY(-2px);
     }
-    /* Channels */
+
+    /* Channels Grid */
     .channels {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
       gap: 15px;
       padding: 15px;
+      justify-items: center;
     }
+
+    /* Circle channel logos */
     .channel {
-      background: rgba(255,255,255,0.1);
-      border-radius: 12px;
-      padding: 10px;
+      background: none;
       text-align: center;
       cursor: pointer;
-      transition: transform 0.3s, background 0.3s;
-    }
-    .channel:hover {
-      transform: scale(1.05);
-      background: rgba(255,255,255,0.2);
     }
     .channel img {
-      width: 100%;
-      height: 50px;
+      width: 70px;
+      height: 70px;
       object-fit: cover;
-      margin-bottom: 6px;
-      border-radius: 50%; /* gol logos */
+      border-radius: 50%;
+      border: 3px solid #2563eb;
+      transition: transform 0.3s, border-color 0.3s;
     }
-    .channel div { font-size: 13px; font-weight: 600; }
+    .channel img:hover {
+      transform: scale(1.1);
+      border-color: #ff5500;
+    }
+    .channel div {
+      margin-top: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: white;
+    }
+
     footer {
       text-align: center;
       padding: 15px;
@@ -181,18 +199,21 @@
       <div></div><div></div><div></div>
     </div>
   </div>
+
   <!-- Main Content -->
   <div id="main-content">
     <div class="header">
       <img src="https://i.postimg.cc/cJwz4trt/pngfind-com-website-clipart-png-6209136.png" alt="Wasi TV Logo" />
       <h1>Wasi TV</h1>
     </div>
+
     <div class="nav">
       <button onclick="filterChannels('all')">All</button>
       <button onclick="filterChannels('islamic')">Islamic</button>
       <button onclick="filterChannels('sports')">Sports</button>
       <button onclick="filterChannels('entertainment')">Entertainment</button>
     </div>
+
     <!-- Player + Marquee -->
     <div class="player-container">
       <div class="spinner" id="spinner"></div>
@@ -203,6 +224,7 @@
         </div>
       </div>
     </div>
+
     <!-- Channels -->
     <div class="channels">
       <div class="channel sports" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/157-3H/playlist.m3u8')">
@@ -254,23 +276,22 @@
         <div>Lahore Rang</div>
       </div>
       <div class="channel sports" onclick="playChannel('https://vodnewv2.in-maa-1.linodeobjects.com/promos/Tapmadpromo/master.m3u8')">
-        <img src="https://i.postimg.cc/d1KjC30v/images-2-16.jpg" alt="Eng vs south africa" />
+        <img src="https://i.postimg.cc/d1KjC30v/images-2-16.jpg" alt="Pak vs WI" />
         <div>Pakistan tour of West Indies</div>
       </div>
     </div>
+
     <footer>
       © 2025 Wasi TV - All rights reserved.
     </footer>
   </div>
+
   <script>
     function playChannel(url) {
       const player = document.getElementById('player');
       const spinner = document.getElementById('spinner');
-      
-      spinner.style.display = "block"; // Show spinner
+      spinner.style.display = "block";
       player.src = url;
-  
-      // Hide spinner jab iframe load ho jaye
       player.onload = () => {
         spinner.style.display = "none";
       };
