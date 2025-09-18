@@ -80,24 +80,41 @@
       object-fit: cover;
     }
 
-    /* Spinner */
+    /* Watermark Wasi TV logo */
+    .watermark {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 10;
+      width: 80px;
+      opacity: 0.85;
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    /* Custom Wasi Spinner */
     .spinner {
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 50px;
-      height: 50px;
-      margin: -25px 0 0 -25px;
-      border: 5px solid rgba(255,255,255,0.3);
-      border-top: 5px solid #ff5500;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
+      width: 80px;
+      height: 80px;
+      margin: -40px 0 0 -40px;
       display: none;
       z-index: 5;
+      animation: pulse 1.5s infinite;
     }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    .spinner img {
+      width: 100%;
+      height: auto;
+    }
+    @keyframes pulse {
+      0% { transform: scale(0.9); opacity: 0.7; }
+      50% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(0.9); opacity: 0.7; }
     }
 
     /* Marquee */
@@ -212,36 +229,54 @@
       <button onclick="filterChannels('islamic')">Islamic</button>
       <button onclick="filterChannels('sports')">Sports</button>
       <button onclick="filterChannels('entertainment')">Entertainment</button>
+      <button onclick="filterChannels('news')">News</button>
+      <button onclick="filterChannels('cartoon')">Cartoon</button>
     </div>
 
     <!-- Player + Marquee -->
     <div class="player-container">
-      <div class="spinner" id="spinner"></div>
+      <!-- Spinner Wasi TV -->
+      <div class="spinner" id="spinner">
+        <img src="https://i.postimg.cc/cJwz4trt/pngfind-com-website-clipart-png-6209136.png" alt="Loading Wasi TV" />
+      </div>
       <iframe id="player" src="" allowfullscreen></iframe>
+
+      <!-- Watermark Wasi TV -->
+      <img class="watermark" src="https://i.postimg.cc/cJwz4trt/pngfind-com-website-clipart-png-6209136.png" alt="Wasi Watermark" />
+
       <div class="marquee-container">
         <div class="marquee">
-          کارٹون نیٹورک ٹی وی ابھی آپ ڈیٹ میں ہے کل تک چل جائے گا سٹریم روکنے کیلیے معزرت 
+          اگر آپکو ویسی ٹی وی میں کوئی چیز اور ایڈ کروانی ہو تو رابطہ کریں 03376143010 آپکے تعاون کا شکریہ
         </div>
       </div>
     </div>
 
     <!-- Channels -->
     <div class="channels">
+      <!-- Sports -->
       <div class="channel sports" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/157-3H/playlist.m3u8')">
         <img src="https://i.postimg.cc/y8188fvb/Ten-Sports-Logo.png" alt="Ten Sports" />
         <div>Ten Sports</div>
       </div>
+      <div class="channel sports" onclick="playChannel('https://cdn07khi.tamashaweb.com:8087/jazzauth/ASIACUP2025-abr/live/ASIACUP2025_720p/chunks.m3u8')">
+        <img src="https://i.postimg.cc/W1RMwSRx/1756208066219.webp" alt="Asia Cup" />
+        <div>Asia Cup</div>
+      </div>
+
+      <!-- Islamic -->
       <div class="channel islamic" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/141M/playlist.m3u8')">
         <img src="https://i.postimg.cc/mrrk8d9H/unnamed.png" alt="Makkah TV" />
         <div>Makkah TV</div>
       </div>
+      <div class="channel islamic" onclick="playChannel('https://cdn05khi.tamashaweb.com:8087/jazzauth/Madni-abr/live/vsat-94M/chunks.m3u8')">
+        <img src="https://i.postimg.cc/NGVnQ6gk/images-1-26.jpg" alt="Madni TV" />
+        <div>Madni TV</div>
+      </div>
+
+      <!-- Entertainment -->
       <div class="channel entertainment" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/humTV-abr/playlist.m3u8')">
         <img src="https://i.postimg.cc/02qNL5mx/Hum-TV-2013.png" alt="Hum TV" />
         <div>Hum TV</div>
-      </div>
-      <div class="channel sports" onclick="playChannel('https://cdn07khi.tamashaweb.com:8087/jazzauth/ASIACUP2025-abr/live/ASIACUP2025_480p/chunks.m3u8')">
-        <img src="https://i.postimg.cc/W1RMwSRx/1756208066219.webp" alt="Asia Cup" />
-        <div>Asia Cup</div>
       </div>
       <div class="channel entertainment" onclick="playChannel('https://cdn12isb.tamashaweb.com:8087/jazzauth/Green_Entertainment-abr/live/vsat-green-M/chunks.m3u8')">
         <img src="https://i.postimg.cc/fb4Wqq4V/images-28-1.png" alt="Green TV" />
@@ -254,10 +289,6 @@
       <div class="channel entertainment" onclick="playChannel('https://cdn21lhr.tamashaweb.com:8087/jazzauth/ARYdigital-abr/live/vsat-ary-L/chunks.m3u8')">
         <img src="https://i.postimg.cc/dVSwF7xM/Ary-Digital-Logo.png" alt="Ary Digital" />
         <div>Ary Digital</div>
-      </div>
-      <div class="channel islamic" onclick="playChannel('https://cdn05khi.tamashaweb.com:8087/jazzauth/Madni-abr/live/vsat-94M/chunks.m3u8')">
-        <img src="https://i.postimg.cc/NGVnQ6gk/images-1-26.jpg" alt="Madni TV" />
-        <div>Madni TV</div>
       </div>
       <div class="channel entertainment" onclick="playChannel('https://cdn22lhr.tamashaweb.com:8087/jazzauth/GeoEntertainment-abr/live/vsat-geotv-H/chunks.m3u8')">
         <img src="https://i.postimg.cc/q7st8jsz/Geo-TV.png" alt="Geo" />
@@ -275,8 +306,9 @@
         <img src="https://i.postimg.cc/W4659dxS/channels4-profile.jpg" alt="Lahore Rang" />
         <div>Lahore Rang</div>
       </div>
-      <!-- Fixed Cartoon Network -->
-      <div class="channel sports" onclick="playChannel('https://cdn5.mjunoon.tv:8087/web/cartoon-network-87/live/87M/chunks.m3u8')">
+
+      <!-- Cartoon -->
+      <div class="channel cartoon" onclick="playChannel('https://cdn5.mjunoon.tv:8087/web/cartoon-network-87/live/87M/chunks.m3u8')">
         <img src="https://i.postimg.cc/tgYQHqG4/images-30.png" alt="Cartoon Network urdu" />
         <div>Cartoon Network Urdu</div>
       </div>
