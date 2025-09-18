@@ -57,18 +57,38 @@
     }
     .header img { height: 65px; }
     .header h1 { margin: 8px 0 0; font-size: 26px; letter-spacing: 1px; }
-    /* Player with marquee */
+    /* Player full screen */
     .player-container {
       position: relative;
-      width: 92%;
-      margin: 15px auto;
-      border-radius: 12px;
+      width: 100%;
+      height: 100vh; /* full screen */
+      margin: 0;
+      border-radius: 0;
       overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      box-shadow: none;
+    }
+    /* Spinner */
+    .spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 50px;
+      height: 50px;
+      margin: -25px 0 0 -25px;
+      border: 5px solid rgba(255,255,255,0.3);
+      border-top: 5px solid #ff5500;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      display: none;
+      z-index: 5;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
     iframe {
       width: 100%;
-      height: 220px;
+      height: 100%;
       border: none;
       display: block;
     }
@@ -76,11 +96,11 @@
       position: absolute;
       bottom: 0;
       width: 100%;
-      background: rgba(0, 31, 63, 0.8);
-      color: #00e5ff;
+      background: #ffffff;
+      color: #111;
       overflow: hidden;
       white-space: nowrap;
-      border-top: 1px solid #00e5ff;
+      border-top: 1px solid #ccc;
       font-weight: 600;
       font-size: 14px;
       padding: 6px 0;
@@ -138,8 +158,9 @@
     .channel img {
       width: 100%;
       height: 50px;
-      object-fit: contain;
+      object-fit: cover;
       margin-bottom: 6px;
+      border-radius: 50%; /* gol logos */
     }
     .channel div { font-size: 13px; font-weight: 600; }
     footer {
@@ -174,6 +195,7 @@
     </div>
     <!-- Player + Marquee -->
     <div class="player-container">
+      <div class="spinner" id="spinner"></div>
       <iframe id="player" src="" allowfullscreen></iframe>
       <div class="marquee-container">
         <div class="marquee">
@@ -242,7 +264,16 @@
   </div>
   <script>
     function playChannel(url) {
-      document.getElementById('player').src = url;
+      const player = document.getElementById('player');
+      const spinner = document.getElementById('spinner');
+      
+      spinner.style.display = "block"; // Show spinner
+      player.src = url;
+  
+      // Hide spinner jab iframe load ho jaye
+      player.onload = () => {
+        spinner.style.display = "none";
+      };
     }
     function filterChannels(category) {
       document.querySelectorAll('.channel').forEach(c => {
