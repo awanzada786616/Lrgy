@@ -21,6 +21,9 @@
   <!-- Favicon -->
   <link rel="icon" href="https://i.postimg.cc/cJwz4trt/pngfind-com-website-clipart-png-6209136.png" type="image/png">
 
+  <!-- Google Urdu Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
+
   <!-- Structured Data -->
   <script type="application/ld+json">
   {
@@ -164,8 +167,9 @@
       white-space: nowrap;
       border-top: 1px solid #ccc;
       font-weight: 600;
-      font-size: 14px;
+      font-size: 16px;
       padding: 6px 0;
+      font-family: 'Noto Nastaliq Urdu', serif; /* ✅ Urdu font applied only here */
     }
     .marquee {
       display: inline-block;
@@ -358,37 +362,6 @@
     <footer>
       © 2025 Wasi TV - All rights reserved.
       <p>Wasi TV provides free access to live Pakistani TV channels including sports, news, Islamic, entertainment and cartoon networks online.</p>
-    </footer>
-  </div>
-
-  <script>
-    function playChannel(url) {
-      const player = document.getElementById('player');
-      const spinner = document.getElementById('spinner');
-      spinner.style.display = "block";
-      player.src = url;
-      player.onload = () => {
-        spinner.style.display = "none";
-      };
-    }
-    function filterChannels(category) {
-      document.querySelectorAll('.channel').forEach(c => {
-        c.style.display = (category === 'all' || c.classList.contains(category)) ? 'block' : 'none';
-      });
-    }
-    setTimeout(() => {
-      document.getElementById('splash').style.display = "none";
-      document.getElementById('main-content').style.display = "block";
-    }, 2500);
-  </script>
-</body>
-</html>toon Network urdu" />
-        <div>Cartoon Network Urdu</div>
-      </div>
-    </div>
-
-    <footer>
-      © 2025 Wasi TV - All rights reserved.
     </footer>
   </div>
 
