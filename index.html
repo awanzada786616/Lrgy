@@ -3,7 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Wasi TV</title>
+  <title>Wasi TV - Live Pakistani TV Channels Online</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Wasi TV - Watch live Pakistani TV channels online including sports, news, Islamic, entertainment, and cartoons. HD quality streaming available free.">
+  <meta name="keywords" content="Wasi TV, Live TV Pakistan, Sports TV, Islamic TV, Entertainment TV, News TV, Cartoon Channels, Free Live Streaming">
+  <meta name="author" content="Wasi TV">
+  <link rel="canonical" href="https://wasitv.vercel.app/">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Wasi TV - Live Pakistani Channels">
+  <meta property="og:description" content="Watch live TV channels including Sports, Islamic, Entertainment, News and Cartoons on Wasi TV.">
+  <meta property="og:image" content="https://i.postimg.cc/cJwz4trt/pngfind-com-website-clipart-png-6209136.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wasitv.vercel.app/">
+
+  <!-- Favicon -->
+  <link rel="icon" href="https://i.postimg.cc/cJwz4trt/pngfind-com-website-clipart-png-6209136.png" type="image/png">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Wasi TV",
+    "url": "https://wasitv.vercel.app",
+    "description": "Watch Live Pakistani TV Channels including Sports, News, Islamic, Entertainment and Cartoons on Wasi TV.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Wasi TV",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://i.postimg.cc/cJwz4trt/pngfind-com-website-clipart-png-6209136.png"
+      }
+    }
+  }
+  </script>
+
   <style>
     body {
       margin: 0;
@@ -206,12 +242,17 @@
       border-top: 1px solid rgba(255,255,255,0.2);
       margin-top: 15px;
     }
+    footer p {
+      font-size: 12px;
+      margin: 5px 0 0;
+      color: #aaa;
+    }
   </style>
 </head>
 <body>
   <!-- Splash -->
   <div id="splash">
-    <img src="https://i.postimg.cc/5NmSmbpx/20250729-161340.jpg" alt="Splash Image" />
+    <img src="https://i.postimg.cc/5NmSmbpx/20250729-161340.jpg" alt="Splash Screen Wasi TV" />
     <div class="dots-loading">
       <div></div><div></div><div></div>
     </div>
@@ -242,7 +283,7 @@
       <iframe id="player" src="" allowfullscreen></iframe>
 
       <!-- Watermark Wasi TV -->
-      <img class="watermark" src="https://i.postimg.cc/cJwz4trt/pngfind-com-website-clipart-png-6209136.png" alt="Wasi Watermark" />
+      <img class="watermark" src="https://i.postimg.cc/cJwz4trt/pngfind-com-website-clipart-png-6209136.png" alt="Wasi TV Watermark" />
 
       <div class="marquee-container">
         <div class="marquee">
@@ -255,61 +296,93 @@
     <div class="channels">
       <!-- Sports -->
       <div class="channel sports" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/157-3H/playlist.m3u8')">
-        <img src="https://i.postimg.cc/y8188fvb/Ten-Sports-Logo.png" alt="Ten Sports" />
+        <img src="https://i.postimg.cc/y8188fvb/Ten-Sports-Logo.png" alt="Ten Sports Live" />
         <div>Ten Sports</div>
       </div>
       <div class="channel sports" onclick="playChannel('https://cdn07khi.tamashaweb.com:8087/jazzauth/ASIACUP2025-abr/live/ASIACUP2025_360p/chunks.m3u8')">
-        <img src="https://i.postimg.cc/W1RMwSRx/1756208066219.webp" alt="Asia Cup" />
+        <img src="https://i.postimg.cc/W1RMwSRx/1756208066219.webp" alt="Asia Cup Live" />
         <div>Asia Cup</div>
       </div>
 
       <!-- Islamic -->
       <div class="channel islamic" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/141M/playlist.m3u8')">
-        <img src="https://i.postimg.cc/mrrk8d9H/unnamed.png" alt="Makkah TV" />
+        <img src="https://i.postimg.cc/mrrk8d9H/unnamed.png" alt="Makkah TV Live" />
         <div>Makkah TV</div>
       </div>
       <div class="channel islamic" onclick="playChannel('https://cdn05khi.tamashaweb.com:8087/jazzauth/Madni-abr/live/vsat-94M/chunks.m3u8')">
-        <img src="https://i.postimg.cc/NGVnQ6gk/images-1-26.jpg" alt="Madni TV" />
+        <img src="https://i.postimg.cc/NGVnQ6gk/images-1-26.jpg" alt="Madni TV Live" />
         <div>Madni TV</div>
       </div>
 
       <!-- Entertainment -->
       <div class="channel entertainment" onclick="playChannel('https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/humTV-abr/playlist.m3u8')">
-        <img src="https://i.postimg.cc/02qNL5mx/Hum-TV-2013.png" alt="Hum TV" />
+        <img src="https://i.postimg.cc/02qNL5mx/Hum-TV-2013.png" alt="Hum TV Live" />
         <div>Hum TV</div>
       </div>
       <div class="channel entertainment" onclick="playChannel('https://cdn12isb.tamashaweb.com:8087/jazzauth/Green_Entertainment-abr/live/vsat-green-M/chunks.m3u8')">
-        <img src="https://i.postimg.cc/fb4Wqq4V/images-28-1.png" alt="Green TV" />
+        <img src="https://i.postimg.cc/fb4Wqq4V/images-28-1.png" alt="Green TV Live" />
         <div>Green TV</div>
       </div>
       <div class="channel entertainment" onclick="playChannel('https://cdn22lhr.tamashaweb.com:8087/jazzauth/8xm-abr/live/vsat-128H/chunks.m3u8')">
-        <img src="https://i.postimg.cc/q7BY15zj/pakistan-8xm-television-channel-streaming-media-non-stop-6ac08f34db0e17fea8bae92e1f230a47.png" alt="8xm" />
+        <img src="https://i.postimg.cc/q7BY15zj/pakistan-8xm-television-channel-streaming-media-non-stop-6ac08f34db0e17fea8bae92e1f230a47.png" alt="8xm Music TV" />
         <div>8xm</div>
       </div>
       <div class="channel entertainment" onclick="playChannel('https://cdn21lhr.tamashaweb.com:8087/jazzauth/ARYdigital-abr/live/vsat-ary-L/chunks.m3u8')">
-        <img src="https://i.postimg.cc/dVSwF7xM/Ary-Digital-Logo.png" alt="Ary Digital" />
+        <img src="https://i.postimg.cc/dVSwF7xM/Ary-Digital-Logo.png" alt="ARY Digital Live" />
         <div>Ary Digital</div>
       </div>
       <div class="channel entertainment" onclick="playChannel('https://cdn22lhr.tamashaweb.com:8087/jazzauth/GeoEntertainment-abr/live/vsat-geotv-H/chunks.m3u8')">
-        <img src="https://i.postimg.cc/q7st8jsz/Geo-TV.png" alt="Geo" />
+        <img src="https://i.postimg.cc/q7st8jsz/Geo-TV.png" alt="Geo Entertainment Live" />
         <div>Geo</div>
       </div>
       <div class="channel entertainment" onclick="playChannel('https://cdn23lhr.tamashaweb.com:8087/jazzauth/hummasala-abr/live/vsat-118M/chunks.m3u8')">
-        <img src="https://i.postimg.cc/jdTgVQ4K/images-1-25.jpg" alt="Hum Masala" />
+        <img src="https://i.postimg.cc/jdTgVQ4K/images-1-25.jpg" alt="Hum Masala Live" />
         <div>Hum Masala</div>
       </div>
       <div class="channel entertainment" onclick="playChannel('https://cdn21lhr.tamashaweb.com:8087/jazzauth/ExpressEntertainment-abr/live/vsat-83M/chunks.m3u8')">
-        <img src="https://i.postimg.cc/ncktNL7R/images-1-27.jpg" alt="Express" />
+        <img src="https://i.postimg.cc/ncktNL7R/images-1-27.jpg" alt="Express Entertainment Live" />
         <div>Express</div>
       </div>
       <div class="channel entertainment" onclick="playChannel('https://cdn12isb.tamashaweb.com:8087/jazzauth/LahoreRung-abr/live/vsat-86M/chunks.m3u8')">
-        <img src="https://i.postimg.cc/W4659dxS/channels4-profile.jpg" alt="Lahore Rang" />
+        <img src="https://i.postimg.cc/W4659dxS/channels4-profile.jpg" alt="Lahore Rang TV" />
         <div>Lahore Rang</div>
       </div>
 
       <!-- Cartoon -->
       <div class="channel cartoon" onclick="playChannel('https://cdn5.mjunoon.tv:8087/web/cartoon-network-87/live/87M/chunks.m3u8')">
-        <img src="https://i.postimg.cc/tgYQHqG4/images-30.png" alt="Cartoon Network urdu" />
+        <img src="https://i.postimg.cc/tgYQHqG4/images-30.png" alt="Cartoon Network Urdu Live" />
+        <div>Cartoon Network Urdu</div>
+      </div>
+    </div>
+
+    <footer>
+      © 2025 Wasi TV - All rights reserved.
+      <p>Wasi TV provides free access to live Pakistani TV channels including sports, news, Islamic, entertainment and cartoon networks online.</p>
+    </footer>
+  </div>
+
+  <script>
+    function playChannel(url) {
+      const player = document.getElementById('player');
+      const spinner = document.getElementById('spinner');
+      spinner.style.display = "block";
+      player.src = url;
+      player.onload = () => {
+        spinner.style.display = "none";
+      };
+    }
+    function filterChannels(category) {
+      document.querySelectorAll('.channel').forEach(c => {
+        c.style.display = (category === 'all' || c.classList.contains(category)) ? 'block' : 'none';
+      });
+    }
+    setTimeout(() => {
+      document.getElementById('splash').style.display = "none";
+      document.getElementById('main-content').style.display = "block";
+    }, 2500);
+  </script>
+</body>
+</html>toon Network urdu" />
         <div>Cartoon Network Urdu</div>
       </div>
     </div>
