@@ -48,7 +48,7 @@
       margin: 0;
       font-family: 'Poppins', sans-serif;
       background: linear-gradient(135deg, #0a0f29, #101c4d, #162b66, #0d1b3d);
-color: white;
+      color: white;
     }
 
     /* Splash */
@@ -204,6 +204,21 @@ color: white;
       transform: translateY(-2px);
     }
 
+    /* ✅ WhatsApp Button Style */
+    .whatsapp-btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #25D366;
+      color: white;
+      font-weight: bold;
+      border-radius: 25px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .whatsapp-btn:hover {
+      background: #1ebe5c;
+    }
+
     /* Channels Grid */
     .channels {
       display: grid;
@@ -276,6 +291,13 @@ color: white;
       <button onclick="filterChannels('entertainment')">Entertainment</button>
       <button onclick="filterChannels('news')">News</button>
       <button onclick="filterChannels('cartoon')">Cartoon</button>
+    </div>
+
+    <!-- ✅ WhatsApp Group Button -->
+    <div style="text-align:center; margin: 10px 0;">
+      <a href="https://chat.whatsapp.com/IbWWO9mim0rGCmVcA11CWI?mode=ems_copy_t" target="_blank" class="whatsapp-btn">
+        Join WhatsApp Group
+      </a>
     </div>
 
     <!-- Player + Marquee -->
