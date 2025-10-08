@@ -3,182 +3,139 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Saiyaara Movie Player</title>
+<title>Ehd-e-Wafa Series Player</title>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@1.4.0/dist/hls.min.js"></script>
 <style>
   body {
-    margin:0;
-    background:#000;
-    color:#fff;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
+    margin: 0;
+    background: #0b0e17;
+    color: #f0f0f0;
+    font-family: system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  h1 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #06b6d4;
+  }
+  .container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+    width: 100%;
+    max-width: 1000px;
+  }
+  .card {
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform .2s, background .2s;
+  }
+  .card:hover {
+    background: rgba(255,255,255,0.1);
+    transform: scale(1.03);
+  }
+  .thumb {
+    width: 100%;
+    height: 120px;
+    background: #111;
+    object-fit: cover;
+    display: block;
+  }
+  .title {
+    padding: 10px;
+    font-size: 15px;
+    text-align: center;
   }
   .player {
-    width:90%;
-    max-width:800px;
-    position:relative;
+    margin-top: 30px;
+    width: 100%;
+    max-width: 800px;
   }
   video {
-    width:100%;
-    height:auto;
-    background:#000;
-    border-radius:10px;
-    display:none; /* hidden until play */
+    width: 100%;
+    border-radius: 10px;
+    background: #000;
   }
-  .poster {
-    width:100%;
-    height:auto;
-    cursor:pointer;
-    border-radius:10px;
-  }
-  .play-btn {
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%, -50%);
-    font-size:60px;
-    color:white;
-    cursor:pointer;
-    opacity:0.8;
-  }
-  .controls {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-top:10px;
-  }
-  .btn {
-    background:rgba(255,255,255,0.1);
-    border:none;
-    color:#fff;
-    padding:8px 12px;
-    cursor:pointer;
-    border-radius:4px;
-  }
-  .progress {
-    flex:1;
-    margin: 0 10px;
-    height:6px;
-    background:rgba(255,255,255,0.2);
-    border-radius:3px;
-    cursor:pointer;
-    position:relative;
-  }
-  .progress .bar {
-    height:100%;
-    background:#06b6d4;
-    width:0%;
-    border-radius:3px;
-  }
-  .time { font-size:14px; }
 </style>
 </head>
 <body>
 
+<h1>🎥 Ehd-e-Wafa — All Episodes</h1>
+
+<!-- Episodes Grid -->
+<div class="container" id="episodeList"></div>
+
+<!-- Player Section -->
 <div class="player">
-  <!-- 👇 Replace this image link with your movie poster -->
-  <img id="poster" class="poster" src="https://i.ibb.co/SsZYmC4/saiyaara-poster.jpg" alt="Saiyaara Movie Poster" />
-  <div class="play-btn" id="playIcon">▶</div>
-
+  <h2 id="nowPlaying" style="text-align:center; margin-bottom:10px; color:#7dd3fc;">Select an episode to play</h2>
   <video id="video" controls playsinline></video>
-
-  <div class="controls">
-    <button class="btn" id="playPause">Play</button>
-    <div class="time" id="curTime">00:00</div>
-    <div class="progress" id="progress">
-      <div class="bar" id="progressBar"></div>
-    </div>
-    <div class="time" id="durTime">00:00</div>
-    <button class="btn" id="muteBtn">Mute</button>
-    <button class="btn" id="fullBtn">Fullscreen</button>
-  </div>
 </div>
 
 <script>
-const src = "https://streamfe4.nayatel.com/content/data1/bollywood/Saiyaara.1080p-HD.mp4/chunk.m3u8";
+// Your episode data
+const episodes = [
+  {
+    title: "Episode 1",
+    src: "https://cdn03lhr.tamashaweb.com:8087/hls/100075/Drama-Ehd-e-Wafa-Episode-1/smil:mpfour.smil/360p.mp4_chunk.m3u8",
+    thumb: "" // 🔹 yahan apni image link daal do
+  },
+  {
+    title: "Episode 2",
+    src: "https://cdn01isb.tamashaweb.com:8087/hls/100075/Drama-Ehd-e-Wafa-Episode-2/smil:mpfour.smil/360p.mp4_chunk.m3u8",
+    thumb: "" // 🔹 image link yahan daal do
+  },
+  {
+    title: "Episode 3",
+    src: "https://cdn01isb.tamashaweb.com:8087/hls/100075/Drama-Ehd-e-Wafa-Episode-3/smil:mpfour.smil/360p.mp4_chunk.m3u8",
+    thumb: "" // 🔹 image link yahan daal do
+  }
+];
 
-const poster = document.getElementById('poster');
-const playIcon = document.getElementById('playIcon');
+const listEl = document.getElementById('episodeList');
 const video = document.getElementById('video');
-const playPause = document.getElementById('playPause');
-const curTimeEl = document.getElementById('curTime');
-const durTimeEl = document.getElementById('durTime');
-const progress = document.getElementById('progress');
-const progressBar = document.getElementById('progressBar');
-const muteBtn = document.getElementById('muteBtn');
-const fullBtn = document.getElementById('fullBtn');
+const nowPlaying = document.getElementById('nowPlaying');
+let hls = null;
 
-function formatTime(s) {
-  if (!isFinite(s)) return "00:00";
-  const m = Math.floor(s / 60).toString().padStart(2, '0');
-  const sec = Math.floor(s % 60).toString().padStart(2, '0');
-  return `${m}:${sec}`;
-}
+// Render cards
+episodes.forEach((ep, i) => {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = `
+    <img class="thumb" src="${ep.thumb || 'https://via.placeholder.com/300x180?text=Episode+' + (i+1)}" alt="${ep.title}">
+    <div class="title">${ep.title}</div>
+  `;
+  card.addEventListener('click', () => playEpisode(ep));
+  listEl.appendChild(card);
+});
 
-// Load the stream when user clicks the image
-poster.addEventListener('click', () => {
-  poster.style.display = 'none';
-  playIcon.style.display = 'none';
-  video.style.display = 'block';
+// Play episode
+function playEpisode(ep) {
+  nowPlaying.textContent = "Now Playing: " + ep.title;
+  if (hls) {
+    hls.destroy();
+    hls = null;
+  }
 
   if (video.canPlayType('application/vnd.apple.mpegurl')) {
-    video.src = src;
+    video.src = ep.src;
     video.play();
   } else if (Hls.isSupported()) {
-    const hls = new Hls();
-    hls.loadSource(src);
+    hls = new Hls();
+    hls.loadSource(ep.src);
     hls.attachMedia(video);
-    hls.on(Hls.Events.MANIFEST_PARSED, () => {
-      video.play();
-    });
+    hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
   } else {
-    video.src = src;
+    video.src = ep.src;
     video.play();
   }
-});
-
-// Controls
-playPause.addEventListener('click', () => {
-  if (video.paused) {
-    video.play();
-    playPause.textContent = "Pause";
-  } else {
-    video.pause();
-    playPause.textContent = "Play";
-  }
-});
-
-video.addEventListener('timeupdate', () => {
-  curTimeEl.textContent = formatTime(video.currentTime);
-  if (video.duration) {
-    const pct = (video.currentTime / video.duration) * 100;
-    progressBar.style.width = pct + "%";
-  }
-});
-video.addEventListener('loadedmetadata', () => {
-  durTimeEl.textContent = formatTime(video.duration);
-});
-
-progress.addEventListener('click', (e) => {
-  const rect = progress.getBoundingClientRect();
-  const pos = (e.clientX - rect.left) / rect.width;
-  if (video.duration) video.currentTime = pos * video.duration;
-});
-
-muteBtn.addEventListener('click', () => {
-  video.muted = !video.muted;
-  muteBtn.textContent = video.muted ? "Unmute" : "Mute";
-});
-
-fullBtn.addEventListener('click', () => {
-  if (!document.fullscreenElement) {
-    video.requestFullscreen?.();
-  } else {
-    document.exitFullscreen?.();
-  }
-});
+}
 </script>
+
 </body>
 </html>
