@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Live Sports Home - Demo</title>
+  <title>Live Sports Home - Clean Player</title>
 
-  <!-- hls.js for playing m3u8 -->
+  <!-- hls.js for m3u8 -->
   <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.0/dist/hls.min.js"></script>
 
   <style>
@@ -45,8 +45,6 @@
     .player-header h4{margin:0; font-size:14px;}
     .close-btn{background:transparent;border:0;color:var(--muted); font-size:20px; cursor:pointer;}
     video{width:100%; height:320px; background:#000; display:block;}
-    .player-actions{padding:10px;}
-    .player-actions small{color:var(--muted);}
   </style>
 </head>
 <body>
@@ -108,9 +106,6 @@
         <button class="close-btn" id="closeBtn">✕</button>
       </div>
       <video id="video" controls playsinline webkit-playsinline></video>
-      <div class="player-actions">
-        <small id="streamUrl"></small>
-      </div>
     </div>
   </div>
 
@@ -154,7 +149,6 @@
     const modal=document.getElementById('modal');
     const video=document.getElementById('video');
     const playerTitle=document.getElementById('playerTitle');
-    const streamUrl=document.getElementById('streamUrl');
     const closeBtn=document.getElementById('closeBtn');
     let hls=null;
 
@@ -162,7 +156,6 @@
       card.onclick=()=>{
         const url=card.dataset.link;
         playerTitle.textContent=card.dataset.title;
-        streamUrl.textContent=url;
         modal.classList.add('open');
         if(hls){hls.destroy();hls=null;}
         video.pause(); video.removeAttribute('src'); video.load();
