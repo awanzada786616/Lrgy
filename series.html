@@ -491,59 +491,79 @@
   </style>
 </head>
 <body>
-‎<!-- ===== Footer Navigation Bar ===== -->
-‎<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-‎
-‎<style>
-‎  .footer {
-‎    position: fixed;
-‎    bottom: 0;
-‎    left: 0;
-‎    width: 100%;
-‎    background: #111;
-‎    display: flex;
-‎    justify-content: space-around;
-‎    align-items: center;
-‎    padding: 8px 0;
-‎    box-shadow: 0 -2px 5px rgba(0,0,0,0.3);
-‎    z-index: 999;
-‎  }
-‎
-‎  .footer a {
-‎    color: #bbb;
-‎    text-decoration: none;
-‎    font-size: 12px;
-‎    display: flex;
-‎    flex-direction: column;
-‎    align-items: center;
-‎    transition: 0.3s;
-‎  }
-‎
-‎  .footer a i {
-‎    font-size: 18px;
-‎    margin-bottom: 3px;
-‎  }
-‎
-‎  .footer a:hover,
-‎  .footer a.active {
-‎    color: #fff;
-‎  }
-‎</style>
-‎
-‎<div class="footer">
-‎  <a href="index.html" class="active">
-‎    <i class="fa-solid fa-house"></i>
-‎    <span>Home</span>
-‎  </a>
-‎  <a href="series.html">
-‎    <i class="fa-solid fa-tv"></i>
-‎    <span>Live Tv</span>
-‎  </a>
-‎  <a href="info.html">
-‎    <i class="fa-solid fa-circle-info"></i>
-‎    <span>info</span>
-‎  </a>
-‎</div>
+ <!-- ===== Footer Navigation Bar ===== -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+
+<style>
+  .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #111;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+  }
+
+  .footer a {
+    color: #bbb;
+    text-decoration: none;
+    font-size: 13px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: color 0.3s, transform 0.3s;
+  }
+
+  .footer a i {
+    font-size: 20px;
+    margin-bottom: 4px;
+  }
+
+  .footer a:hover,
+  .footer a.active {
+    color: #fff;
+    transform: scale(1.1);
+  }
+
+  /* Optional: Prevent footer from covering content */
+  body {
+    margin-bottom: 60px;
+  }
+
+  /* Responsive tweak for small screens */
+  @media (max-width: 480px) {
+    .footer a {
+      font-size: 11px;
+    }
+
+    .footer a i {
+      font-size: 18px;
+    }
+  }
+</style>
+
+<div class="footer">
+  <a href="index.html" class="active">
+    <i class="fa-solid fa-house"></i>
+    <span>Home</span>
+  </a>
+  <a href="series.html">
+    <i class="fa-solid fa-tv"></i>
+    <span>Live TV</span>
+  </a>
+  <a href="info.html">
+    <i class="fa-solid fa-circle-info"></i>
+    <span>Info</span>
+  </a>
+</div>
   <!-- Player spacer to prevent content jump when player becomes sticky -->
   <div class="player-spacer" id="playerSpacer"></div>
 
