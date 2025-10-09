@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Wasi Shorts Player</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wasi Shorts Player 🎬</title>
   <style>
-    * {margin:0; padding:0; box-sizing:border-box;}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     body {
       background: #000;
       overflow: hidden;
@@ -35,7 +39,7 @@
   <div id="loader" class="loader">Loading Shorts...</div>
 
   <script>
-    const apiKey = "AIzaSyCJ5f3o71_PJcI3q4NrdrtC7s9F2iVQVBw";
+    const apiKey = "AIzaSyCJ5f3o71_PJcI3q4NrdrtC7s9F2iVQVBw"; // 🔑 apni key yahan rakhni hai
     const query = "Pakistani Indian song #shorts";
     let videos = [];
     let currentIndex = 0;
@@ -43,14 +47,25 @@
 
     async function fetchShorts() {
       document.getElementById("loader").style.display = "block";
-      const res = await fetch(
-        `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=20&videoDuration=short&q=${encodeURIComponent(query)}&key=${apiKey}`
-      );
-      const data = await res.json();
-      document.getElementById("loader").style.display = "none";
-      videos = data.items.map(v => v.id.videoId);
-      if (videos.length > 0) showVideo(0);
-      else alert("No shorts found.");
+      try {
+        const res = await fetch(
+          `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=15&videoDuration=short&q=${encodeURIComponent(
+            query
+          )}&key=${apiKey}`
+        );
+        const data = await res.json();
+        document.getElementById("loader").style.display = "none";
+
+        videos = data.items.map((v) => v.id.videoId);
+        if (videos.length > 0) {
+          showVideo(0);
+        } else {
+          alert("No shorts found.");
+        }
+      } catch (e) {
+        console.error("API error:", e);
+        document.getElementById("loader").innerText = "Failed to load videos.";
+      }
     }
 
     function showVideo(index) {
@@ -58,35 +73,48 @@
       currentIndex = index;
       if (!iframe) {
         iframe = document.createElement("iframe");
+        iframe.allow =
+          "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
         document.body.appendChild(iframe);
       }
-      iframe.src = `https://www.youtube.com/embed/${videos[index]}?autoplay=1&mute=0&controls=0&modestbranding=1`;
+      iframe.src = `https://www.youtube.com/embed/${videos[index]}?autoplay=1&mute=0&controls=0&modestbranding=1&playsinline=1`;
     }
 
-    // Scroll or swipe navigation
-    let lastScroll = 0;
-    window.addEventListener("wheel", e => {
-      if (Date.now() - lastScroll < 800) return; // debounce
-      lastScroll = Date.now();
+    // ✅ Scroll system fix (debounced properly)
+    let scrolling = false;
+    window.addEventListener("wheel", (e) => {
+      if (scrolling) return;
+      scrolling = true;
       if (e.deltaY > 0) nextVideo();
       else prevVideo();
+      setTimeout(() => (scrolling = false), 600);
     });
 
-    // Swipe (mobile)
+    // ✅ Swipe on mobile
     let touchStartY = 0;
-    window.addEventListener("touchstart", e => (touchStartY = e.touches[0].clientY));
-    window.addEventListener("touchend", e => {
+    window.addEventListener("touchstart", (e) => {
+      touchStartY = e.touches[0].clientY;
+    });
+    window.addEventListener("touchend", (e) => {
       const diff = touchStartY - e.changedTouches[0].clientY;
-      if (Math.abs(diff) > 50) diff > 0 ? nextVideo() : prevVideo();
+      if (Math.abs(diff) > 60) {
+        if (diff > 0) nextVideo();
+        else prevVideo();
+      }
     });
 
     function nextVideo() {
-      if (currentIndex < videos.length - 1) showVideo(currentIndex + 1);
-      else fetchShorts(); // load more when reaching end
+      if (currentIndex < videos.length - 1) {
+        showVideo(currentIndex + 1);
+      } else {
+        fetchShorts(); // load new shorts when reaching end
+      }
     }
 
     function prevVideo() {
-      if (currentIndex > 0) showVideo(currentIndex - 1);
+      if (currentIndex > 0) {
+        showVideo(currentIndex - 1);
+      }
     }
 
     fetchShorts();
