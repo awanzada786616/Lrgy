@@ -1,107 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wasi TV - Loading...</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Wasi TV - Intro</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
-  <!-- Font Awesome -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-  />
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    height:100vh;display:flex;justify-content:center;align-items:center;
+    background:radial-gradient(circle at top left,#0a0a0a,#000);
+    font-family:"Poppins",sans-serif;color:#fff;overflow:hidden
+  }
+  .splash{text-align:center;opacity:0;animation:fadeIn 1.2s ease-out forwards;}
+  .logo{
+    font-size:3.5rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;
+    display:inline-block;opacity:0;transform:scale(0.6);
+    animation:logoIn 1.5s ease-out forwards 0.8s;
+  }
+  .tagline{
+    font-size:1.2rem;margin-top:12px;opacity:0;animation:fadeUp 1s ease forwards 2.5s;
+  }
+  .loader{
+    margin:40px auto 0;font-size:2rem;color:#00d0ff;opacity:0;
+    animation:spin 1.5s linear infinite, fadeIn 1s ease forwards 3.2s;
+  }
 
-  <style>
-    * {margin: 0; padding: 0; box-sizing: border-box;}
-    body {
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: radial-gradient(circle at top left, #1a1a1a, #000);
-      overflow: hidden;
-      font-family: "Poppins", sans-serif;
-      color: #fff;
-    }
+  /* keyframes */
+  @keyframes fadeIn{to{opacity:1}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+  @keyframes logoIn{
+    0%{opacity:0;transform:scale(0.6)}
+    60%{opacity:1;transform:scale(1.15)}
+    100%{opacity:1;transform:scale(1)}
+  }
+  @keyframes glowPulse{
+    0%,100%{text-shadow:0 0 15px #ff005c,0 0 30px #ff005c;}
+    50%{text-shadow:0 0 25px #00d0ff,0 0 40px #00d0ff;}
+  }
+  @keyframes fadeOutScreen{to{opacity:0;transform:scale(0.9)}}
+  .fade-out{animation:fadeOutScreen 1.5s ease forwards;}
 
-    .splash { text-align: center; animation: fadeIn 2s ease-out; }
-
-    .logo {
-      font-size: 3rem;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      text-shadow: 0 0 20px #ff005c, 0 0 40px #ff005c;
-      animation: glow 3s ease-in-out infinite;
-    }
-
-    @keyframes glow {
-      0%,100%{text-shadow:0 0 20px #ff005c,0 0 40px #ff005c,0 0 60px #ff005c;}
-      50%{text-shadow:0 0 10px #00d0ff,0 0 30px #00d0ff,0 0 50px #00d0ff;}
-    }
-
-    .tagline { font-size: 1.2rem; margin-top: 10px; opacity: 0.8; letter-spacing: 1px; }
-
-    .loader {
-      margin: 40px auto 0;
-      font-size: 2rem;
-      color: #00d0ff;
-      animation: spin 1.5s linear infinite;
-    }
-    @keyframes spin { 0%{transform:rotate(0deg);}100%{transform:rotate(360deg);} }
-
-    @keyframes fadeIn {0%{opacity:0;transform:scale(0.95);}100%{opacity:1;transform:scale(1);}}
-    @keyframes fadeOut {0%{opacity:1;transform:scale(1);}100%{opacity:0;transform:scale(0.95);}}
-    .fade-out { animation: fadeOut 1.5s ease forwards; }
-
-    .particle {
-      position: absolute; width: 6px; height: 6px; background: #fff;
-      border-radius: 50%; opacity: 0.2; animation: float 6s linear infinite;
-    }
-    @keyframes float {
-      0%{transform:translateY(0) scale(1);opacity:0.4;}
-      100%{transform:translateY(-100vh) scale(0);opacity:0;}
-    }
-  </style>
+  .particle{
+    position:absolute;width:6px;height:6px;background:#fff;border-radius:50%;
+    opacity:0.2;animation:float 6s linear infinite;
+  }
+  @keyframes float{
+    0%{transform:translateY(0) scale(1);opacity:0.4}
+    100%{transform:translateY(-100vh) scale(0);opacity:0}
+  }
+</style>
 </head>
 <body>
-  <!-- Floating Particles -->
-  <div class="particle" style="left:10%;animation-delay:0s;"></div>
-  <div class="particle" style="left:30%;animation-delay:1s;"></div>
-  <div class="particle" style="left:50%;animation-delay:2s;"></div>
-  <div class="particle" style="left:70%;animation-delay:3s;"></div>
-  <div class="particle" style="left:90%;animation-delay:4s;"></div>
 
-  <!-- Splash Content -->
-  <div class="splash" id="splash">
-    <div class="logo"><i class="fa-solid fa-tv"></i> Wasi TV</div>
-    <div class="tagline">Streaming Beyond Imagination</div>
-    <div class="loader"><i class="fa-solid fa-compact-disc"></i></div>
-  </div>
+<!-- floating particles -->
+<div class="particle" style="left:10%;animation-delay:0s"></div>
+<div class="particle" style="left:30%;animation-delay:1s"></div>
+<div class="particle" style="left:50%;animation-delay:2s"></div>
+<div class="particle" style="left:70%;animation-delay:3s"></div>
+<div class="particle" style="left:90%;animation-delay:4s"></div>
 
-  <!-- 🔊 Wasi TV Hosted Intro Sound -->
-  <audio id="introSound" preload="auto">
-    <source src="https://wasitv.vercel.app/%D9%88%DB%8C%D9%84%DA%A9%D9%85%20%D9%B9%D9%88%20%D9%88%DB%8C%D8%B3%DB%8C%20%D9%B9%DB%8C%20%D9%88%DB%8C.m4a" type="audio/mp4">
-  </audio>
+<!-- splash content -->
+<div class="splash" id="splash">
+  <div class="logo" id="logo"><i class="fa-solid fa-tv"></i> Wasi TV</div>
+  <div class="tagline">Streaming Beyond Imagination</div>
+  <div class="loader"><i class="fa-solid fa-compact-disc"></i></div>
+</div>
 
-  <script>
-    const sound = document.getElementById("introSound");
+<!-- your hosted intro sound -->
+<audio id="introSound" preload="auto">
+  <source src="https://wasitv.vercel.app/%D9%88%DB%8C%D9%84%DA%A9%D9%85%20%D9%B9%D9%88%20%D9%88%DB%8C%D8%B3%DB%8C%20%D9%B9%DB%8C%20%D9%88%DB%8C.m4a" type="audio/mp4">
+</audio>
 
-    // Try autoplay; fallback if blocked
-    window.addEventListener("load", () => {
-      sound.volume = 0.9;
-      sound.play().catch(() => {
-        document.body.addEventListener("click", () => sound.play(), { once: true });
-      });
+<script>
+  const splash=document.getElementById("splash");
+  const logo=document.getElementById("logo");
+  const sound=document.getElementById("introSound");
+
+  // play sound on load (or on first click if blocked)
+  window.addEventListener("load",()=>{
+    sound.volume=1.0;
+    sound.play().then(()=>{
+      // start logo glow synced with audio
+      logo.style.animation+=", glowPulse 2.5s ease-in-out infinite 1.2s";
+    }).catch(()=>{
+      document.body.addEventListener("click",()=>{
+        sound.play();
+        logo.style.animation+=", glowPulse 2.5s ease-in-out infinite 1.2s";
+      },{once:true});
     });
+  });
 
-    // Fade-out & redirect to home.html
-    setTimeout(() => {
-      document.getElementById("splash").classList.add("fade-out");
-      setTimeout(() => {
-        window.location.href = "home.html";
-      }, 1500);
-    }, 4000);
-  </script>
+  // fade out and redirect
+  setTimeout(()=>{
+    splash.classList.add("fade-out");
+    setTimeout(()=>window.location.href="home.html",1500);
+  },5500);  // adjust timing to match sound length
+</script>
 </body>
 </html>
