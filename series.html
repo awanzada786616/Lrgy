@@ -13,22 +13,72 @@
 
   <style>
     /* Add this CSS or modify your existing channels container */
-.channels-container {
+/* ✅ FIXED CHANNEL GRID LAYOUT CSS */
+.channel-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 15px;
+  gap: 16px;
+  justify-items: center;
   padding: 10px;
 }
-.channel {
-  background: #1a1a1a;
-  border-radius: 10px;
+
+.channel-item {
+  width: 100%;
+  max-width: 150px;
+  background: var(--dark-card);
+  border-radius: var(--border-radius);
+  padding: 12px;
   text-align: center;
-  padding: 10px;
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
-.channel img {
-  width: 70px;
-  height: 70px;
-  border-radius: 10px;
+
+.channel-item img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  transition: var(--transition);
+}
+
+.channel-item h4 {
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 1.3em;
+  color: var(--text-primary);
+  font-weight: 500;
+  word-wrap: break-word;
+}
+
+.channel-item:hover {
+  background: var(--dark-card-hover);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+}
+
+.channel-item.active {
+  background: var(--dark-card-hover);
+  outline: 2px solid var(--primary);
+}
+
+@media (max-width: 600px) {
+  .channel-grid {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 12px;
+  }
+
+  .channel-item img {
+    width: 65px;
+    height: 65px;
+  }
+
+  .channel-item h4 {
+    font-size: 12px;
+  }
 }
     :root {
       --primary: #e50914;
