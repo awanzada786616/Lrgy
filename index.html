@@ -79,23 +79,23 @@
     <div class="loader"><i class="fa-solid fa-compact-disc"></i></div>
   </div>
 
-  <!-- 🔊 Built-in Sound -->
+  <!-- 🔊 Wasi TV Hosted Intro Sound -->
   <audio id="introSound" preload="auto">
-    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_6a05fa8c2e.mp3" type="audio/mpeg">
+    <source src="https://wasitv.vercel.app/%D9%88%DB%8C%D9%84%DA%A9%D9%85%20%D9%B9%D9%88%20%D9%88%DB%8C%D8%B3%DB%8C%20%D9%B9%DB%8C%20%D9%88%DB%8C.m4a" type="audio/mp4">
   </audio>
 
   <script>
     const sound = document.getElementById("introSound");
 
-    // Try autoplay; fallback to click if blocked
+    // Try autoplay; fallback if blocked
     window.addEventListener("load", () => {
-      sound.volume = 0.8;
+      sound.volume = 0.9;
       sound.play().catch(() => {
         document.body.addEventListener("click", () => sound.play(), { once: true });
       });
     });
 
-    // Fade-out & redirect
+    // Fade-out & redirect to home.html
     setTimeout(() => {
       document.getElementById("splash").classList.add("fade-out");
       setTimeout(() => {
