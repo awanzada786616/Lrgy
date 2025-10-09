@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Wasi Shorts Tube 🎵</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #1e3c72, #2a5298);
+      color: #fff;
+      transition: background 0.3s, color 0.3s;
+    }
+    .light {
+      background: #f4f4f4;
+      color: #111;
+    }
+    header {
+      padding: 20px;
+      text-align: center;
+      font-size: 2.3rem;
+      background: linear-gradient(to right, #ff6a00, #ee0979);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .welcome {
+      text-align: center;
+      font-size: 1rem;
+      color: #ffcc00;
+      margin-bottom: 15px;
+    }
+    .topbar {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 15px;
+    }
+    input {
+      padding: 10px;
+      width: 60%;
+      max-width: 400px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+    button {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      background: #ff6a00;
+      color: #fff;
+      cursor: pointer;
+    }
+    .loader {
+      display: none;
+      text-align: center;
+      padding: 20px;
+      color: #ff6a00;
+    }
+    .cards {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 25px;
+      padding: 20px;
+    }
+    .card {
+      width: 320px;
+      border-radius: 15px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: scale(1.03);
+    }
+    .card iframe {
+      width: 100%;
+      height: 560px;
+      border: none;
+      border-radius: 15px;
+    }
+    .card h4 {
+      padding: 10px;
+      margin: 0;
+      font-size: 1rem;
+    }
+    footer {
+      padding: 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+    .whatsapp {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: #25D366;
+      padding: 12px 18px;
+      border-radius: 50px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      z-index: 9999;
+      transition: background 0.3s;
+    }
+    .whatsapp:hover {
+      background: #1ebe5d;
+    }
+  </style>
+</head>
+<body>
+  <header>Wasi Shorts Tube 🎶</header>
+  <div class="welcome">Pakistani 🇵🇰 & Indian 🇮🇳 Song Shorts • Created by Awais Shani Adeel</div>
+
+  <div class="topbar">
+    <input id="query" placeholder="Search short songs..." onkeydown="if(event.key==='Enter') searchShorts()" />
+    <button onclick="searchShorts()">Search</button>
+    <button onclick="toggleTheme()">🌗 Theme</button>
+  </div>
+  
+  <div id="loader" class="loader">Loading shorts...</div>
+  <div id="cards" class="cards"></div>
+  
+  <footer>WhatsApp: +923175768178 • Built by Wasi</footer>
+  <a class="whatsapp" href="https://wa.me/923175768178" target="_blank">💬 WhatsApp</a>
+
+  <script>
+    // ⚠️ Tumhari existing API key:
+    const apiKey = "AIzaSyCJ5f3o71_PJcI3q4NrdrtC7s9F2iVQVBw";
+
+    function toggleTheme() {
+      document.body.classList.toggle("light");
+    }
+
+    async function searchShorts(customQuery) {
+      const query = customQuery || document.getElementById("query").value.trim() || "Pakistani Indian song #shorts";
+      document.getElementById("loader").style.display = "block";
+      document.getElementById("cards").innerHTML = "";
+
+      try {
+        const res = await fetch(
+          `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=10&videoDuration=short&q=${encodeURIComponent(query)}&key=${apiKey}`
+        );
+        const data = await res.json();
+        document.getElementById("loader").style.display = "none";
+
+        if (!data.items || data.items.length === 0) {
+          document.getElementById("cards").innerHTML = "<p>No shorts found 😢</p>";
+          return;
+        }
+
+        data.items.forEach(item => {
+          const vid = item.id.videoId;
+          const card = document.createElement("div");
+          card.className = "card";
+          card.innerHTML = `
+            <iframe src="https://www.youtube.com/embed/${vid}" allowfullscreen></iframe>
+            <h4>${item.snippet.title}</h4>
+          `;
+          document.getElementById("cards").appendChild(card);
+        });
+      } catch (err) {
+        console.error(err);
+        document.getElementById("loader").style.display = "none";
+        alert("Error fetching shorts. Check your API key or network.");
+      }
+    }
+
+    // 🔥 Default load
+    window.onload = () => {
+      searchShorts("Pakistani Indian song #shorts");
+    };
+  </script>
+
+  <!-- Optional Tidio chat -->
+  <script src="//code.tidio.co/v6flfnabuyblfkrginqkly19wazdskhc.js" async></script>
+</body>
+</html>
