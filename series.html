@@ -5,46 +5,109 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Live Sports Home - Clean Player</title>
 
-  <!-- hls.js for m3u8 -->
   <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.0/dist/hls.min.js"></script>
 
   <style>
     :root{
-      --bg:#111;
+      --bg:#0d0d0d;
       --card:#1a1a1a;
       --accent:#ff6b35;
       --muted:#bdbdbd;
       --white:#fff;
     }
-    *{box-sizing:border-box;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
-    body{margin:0; background:var(--bg); color:var(--white);}
-    .container{max-width:420px; margin:0 auto; width:100%; padding:12px 14px 50px;}
-    .greeting{font-size:20px; font-weight:700; margin:6px 0 12px;}
+    *{box-sizing:border-box;font-family:Inter,system-ui,Roboto,Arial,sans-serif;}
+    body{margin:0;background:var(--bg);color:var(--white);}
+    .container{max-width:480px;margin:0 auto;padding:12px 14px 60px;}
+
+    .greeting{font-size:22px;font-weight:700;margin:10px 0 16px;text-align:center;}
 
     /* Carousel */
-    .carousel{position:relative; width:100%; height:160px; border-radius:18px; overflow:hidden; background:#222;}
-    .carousel-track{display:flex; height:100%; transition:transform 600ms ease;}
-    .carousel-item{min-width:100%; height:100%; position:relative; padding:8px;}
-    .carousel-item img{width:100%; height:100%; object-fit:cover; border-radius:14px; display:block;}
-    .carousel-dot-wrap{position:absolute; left:12px; bottom:12px; display:flex; gap:8px;}
-    .dot{width:8px;height:8px;border-radius:999px;background:rgba(255,255,255,0.3); cursor:pointer;}
+    .carousel{position:relative;width:100%;height:160px;border-radius:18px;overflow:hidden;background:#222;}
+    .carousel-track{display:flex;height:100%;transition:transform 600ms ease;}
+    .carousel-item{min-width:100%;height:100%;}
+    .carousel-item img{width:100%;height:100%;object-fit:cover;display:block;}
+    .carousel-dot-wrap{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);display:flex;gap:8px;}
+    .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.3);cursor:pointer;}
     .dot.active{background:var(--accent);}
 
-    /* Live sports grid */
-    .section-title{color:var(--accent); margin:18px 0 8px; font-weight:700;}
-    .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px;}
-    .card{background:var(--card); border-radius:10px; padding:6px; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.6); cursor:pointer;}
-    .card img{width:100%; height:66px; object-fit:cover; border-radius:8px;}
-    .card p{margin:8px 4px 4px; font-size:12px; color:var(--muted);}
+    /* Section title */
+    .section-title{color:var(--accent);margin:22px 0 10px;font-weight:700;font-size:18px;text-align:left;}
 
-    /* modal player */
-    .modal{position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,0.6); z-index:60; padding:18px;}
+    /* Grid */
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(110px,1fr));
+      gap:14px;
+    }
+    .card{
+      background:var(--card);
+      border-radius:12px;
+      padding:6px;
+      text-align:center;
+      box-shadow:0 4px 10px rgba(0,0,0,0.5);
+      transition:transform 0.2s ease;
+    }
+    .card:hover{transform:translateY(-4px);}
+    .card img{
+      width:100%;
+      height:66px;
+      object-fit:cover;
+      border-radius:10px;
+    }
+    .card p{
+      margin:6px 2px 2px;
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    /* Modal player */
+    .modal{
+      position:fixed;inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      background:rgba(0,0,0,0.7);
+      z-index:100;
+      padding:16px;
+    }
     .modal.open{display:flex;}
-    .player-card{width:100%; max-width:720px; background:#000; border-radius:12px; overflow:hidden;}
-    .player-header{display:flex; justify-content:space-between; align-items:center; padding:10px 12px; background:#111;}
-    .player-header h4{margin:0; font-size:14px;}
-    .close-btn{background:transparent;border:0;color:var(--muted); font-size:20px; cursor:pointer;}
-    video{width:100%; height:320px; background:#000; display:block;}
+    .player-card{
+      width:100%;
+      max-width:720px;
+      background:#000;
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow:0 0 20px rgba(0,0,0,0.8);
+    }
+    .player-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:10px 14px;
+      background:#111;
+    }
+    .player-header h4{margin:0;font-size:15px;}
+    .close-btn{
+      background:none;
+      border:0;
+      color:var(--muted);
+      font-size:24px;
+      cursor:pointer;
+      line-height:1;
+    }
+    video{
+      width:100%;
+      height:320px;
+      background:#000;
+      display:block;
+    }
+
+    /* Responsive tweaks */
+    @media(max-width:400px){
+      .carousel{height:140px;}
+      .card p{font-size:12px;}
+      video{height:240px;}
+    }
   </style>
 </head>
 <body>
@@ -55,13 +118,13 @@
     <!-- Carousel -->
     <div class="carousel" id="carousel">
       <div class="carousel-track" id="carouselTrack">
-        <div class="carousel-item" data-walink="https://chat.whatsapp.com/IbWWO9mim0rGCmVcA11CWI?mode=ems_copy_t">
+        <div class="carousel-item" data-walink="https://chat.whatsapp.com/IbWWO9mim0rGCmVcA11CWI">
           <img src="https://i.postimg.cc/PJx9JB3N/20251009-085134.jpg" alt="poster1" />
         </div>
-        <div class="carousel-item" data-walink="https://chat.whatsapp.com/IbWWO9mim0rGCmVcA11CWI?mode=ems_copy_t">
+        <div class="carousel-item" data-walink="https://chat.whatsapp.com/IbWWO9mim0rGCmVcA11CWI">
           <img src="https://i.postimg.cc/ncNgVSvL/20251009-085254.jpg" alt="poster2" />
         </div>
-        <div class="carousel-item" data-walink="https://chat.whatsapp.com/IbWWO9mim0rGCmVcA11CWI?mode=ems_copy_t">
+        <div class="carousel-item" data-walink="https://chat.whatsapp.com/IbWWO9mim0rGCmVcA11CWI">
           <img src="https://i.postimg.cc/cJRVb7tB/20251009-085546.jpg" alt="poster3" />
         </div>
       </div>
@@ -111,41 +174,31 @@
 
   <script>
     // Greeting by time
-    function updateGreeting(){
-      const el=document.getElementById('greeting');
-      const hr=new Date().getHours();
-      if(hr>=5&&hr<12) el.textContent="Good morning.";
-      else if(hr>=12&&hr<17) el.textContent="Good afternoon.";
-      else if(hr>=17&&hr<21) el.textContent="Good evening.";
-      else el.textContent="Hello!";
-    }
-    updateGreeting();
+    const greetingEl=document.getElementById('greeting');
+    const hr=new Date().getHours();
+    greetingEl.textContent=
+      hr>=5&&hr<12?"Good morning.":hr>=12&&hr<17?"Good afternoon.":hr>=17&&hr<21?"Good evening.":"Hello!";
 
-    // Carousel
+    // Carousel auto-slide
     const track=document.getElementById('carouselTrack');
-    const items=Array.from(track.children);
+    const items=[...track.children];
     const dotsWrap=document.getElementById('dots');
-    let current=0; let auto=null;
-
-    items.forEach((it,i)=>{
+    let current=0;
+    items.forEach((_,i)=>{
       const d=document.createElement('div');
       d.className='dot'+(i===0?' active':'');
-      d.onclick=()=>{goTo(i);resetAuto();};
+      d.onclick=()=>goTo(i);
       dotsWrap.appendChild(d);
     });
     function goTo(i){
       current=i;
       track.style.transform=`translateX(-${i*100}%)`;
-      Array.from(dotsWrap.children).forEach((d,idx)=>d.classList.toggle('active',idx===i));
+      [...dotsWrap.children].forEach((d,idx)=>d.classList.toggle('active',idx===i));
     }
-    function nextSlide(){goTo((current+1)%items.length);}
-    function resetAuto(){clearInterval(auto);auto=setInterval(nextSlide,4000);}
-    resetAuto();
-    items.forEach(it=>{
-      it.onclick=()=>window.open(it.dataset.walink,'_blank');
-    });
+    setInterval(()=>goTo((current+1)%items.length),4000);
+    items.forEach(it=>it.onclick=()=>window.open(it.dataset.walink,'_blank'));
 
-    // Player
+    // Player modal
     const modal=document.getElementById('modal');
     const video=document.getElementById('video');
     const playerTitle=document.getElementById('playerTitle');
@@ -158,23 +211,23 @@
         playerTitle.textContent=card.dataset.title;
         modal.classList.add('open');
         if(hls){hls.destroy();hls=null;}
-        video.pause(); video.removeAttribute('src'); video.load();
+        video.pause();video.removeAttribute('src');video.load();
 
         if(video.canPlayType('application/vnd.apple.mpegurl')){
-          video.src=url; video.play();
+          video.src=url;video.play();
         } else if(Hls.isSupported()){
-          hls=new Hls(); hls.loadSource(url); hls.attachMedia(video);
+          hls=new Hls();hls.loadSource(url);hls.attachMedia(video);
           hls.on(Hls.Events.MANIFEST_PARSED,()=>video.play());
         } else alert('Browser not supported for HLS.');
       };
     });
 
-    closeBtn.onclick=closeModal;
-    modal.onclick=(e)=>{if(e.target===modal) closeModal();};
+    closeBtn.onclick=()=>closeModal();
+    modal.onclick=e=>{if(e.target===modal)closeModal();};
     function closeModal(){
       modal.classList.remove('open');
       if(hls){hls.destroy();hls=null;}
-      video.pause(); video.removeAttribute('src'); video.load();
+      video.pause();video.removeAttribute('src');video.load();
     }
   </script>
 </body>
