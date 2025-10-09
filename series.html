@@ -12,6 +12,24 @@
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
   <style>
+    /* Add this CSS or modify your existing channels container */
+.channels-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 15px;
+  padding: 10px;
+}
+.channel {
+  background: #1a1a1a;
+  border-radius: 10px;
+  text-align: center;
+  padding: 10px;
+}
+.channel img {
+  width: 70px;
+  height: 70px;
+  border-radius: 10px;
+}
     :root {
       --primary: #e50914;
       --primary-dark: #b8070f;
