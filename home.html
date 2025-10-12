@@ -1,311 +1,65 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Live Sports Home - Clean Player</title>
-
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.0/dist/hls.min.js"></script>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Under Maintenance</title>
   <style>
-    :root{
-      --bg:#0d0d0d;
-      --card:#1a1a1a;
-      --accent:#ff6b35;
-      --muted:#bdbdbd;
-      --white:#fff;
+    body {
+      background-color: #f3f4f6;
+      color: #333;
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      flex-direction: column;
     }
-    *{box-sizing:border-box;font-family:Inter,system-ui,Roboto,Arial,sans-serif;}
-    body{margin:0;background:var(--bg);color:var(--white);}
-    .container{max-width:480px;margin:0 auto;padding:12px 14px 60px;}
-
-    .greeting{font-size:22px;font-weight:700;margin:10px 0 16px;text-align:center;}
-
-    /* Carousel */
-    .carousel{position:relative;width:100%;height:160px;border-radius:18px;overflow:hidden;background:#222;}
-    .carousel-track{display:flex;height:100%;transition:transform 600ms ease;}
-    .carousel-item{min-width:100%;height:100%;}
-    .carousel-item img{width:100%;height:100%;object-fit:cover;display:block;}
-    .carousel-dot-wrap{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);display:flex;gap:8px;}
-    .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.3);cursor:pointer;}
-    .dot.active{background:var(--accent);}
-
-    /* Section title */
-    .section-title{color:var(--accent);margin:22px 0 10px;font-weight:700;font-size:18px;text-align:left;}
-
-    /* Grid */
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(110px,1fr));
-      gap:14px;
+    .card {
+      background: white;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      text-align: center;
     }
-    .card{
-      background:var(--card);
-      border-radius:12px;
-      padding:6px;
-      text-align:center;
-      box-shadow:0 4px 10px rgba(0,0,0,0.5);
-      transition:transform 0.2s ease;
+    h1 {
+      margin-bottom: 10px;
+      color: #2563eb;
     }
-    .card:hover{transform:translateY(-4px);}
-    .card img{
-      width:100%;
-      height:66px;
-      object-fit:cover;
-      border-radius:10px;
+    p {
+      font-size: 18px;
+      margin-bottom: 10px;
     }
-    .card p{
-      margin:6px 2px 2px;
-      font-size:13px;
-      color:var(--muted);
-    }
-
-    /* Modal player */
-    .modal{
-      position:fixed;inset:0;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      background:rgba(0,0,0,0.7);
-      z-index:100;
-      padding:16px;
-    }
-    .modal.open{display:flex;}
-    .player-card{
-      width:100%;
-      max-width:720px;
-      background:#000;
-      border-radius:12px;
-      overflow:hidden;
-      box-shadow:0 0 20px rgba(0,0,0,0.8);
-    }
-    .player-header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:10px 14px;
-      background:#111;
-    }
-    .player-header h4{margin:0;font-size:15px;}
-    .close-btn{
-      background:none;
-      border:0;
-      color:var(--muted);
-      font-size:24px;
-      cursor:pointer;
-      line-height:1;
-    }
-    video{
-      width:100%;
-      height:320px;
-      background:#000;
-      display:block;
-    }
-
-    /* Responsive tweaks */
-    @media(max-width:400px){
-      .carousel{height:140px;}
-      .card p{font-size:12px;}
-      video{height:240px;}
+    #countdown {
+      font-weight: bold;
+      color: #dc2626;
     }
   </style>
 </head>
 <body>
-  <!-- ===== Footer Navigation Bar ===== -->
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-/>
-
-<style>
-  .footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: #111;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 10px 0;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
-    z-index: 999;
-  }
-
-  .footer a {
-    color: #bbb;
-    text-decoration: none;
-    font-size: 13px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: color 0.3s, transform 0.3s;
-  }
-
-  .footer a i {
-    font-size: 20px;
-    margin-bottom: 4px;
-  }
-
-  .footer a:hover,
-  .footer a.active {
-    color: #fff;
-    transform: scale(1.1);
-  }
-
-  /* Optional: Prevent footer from covering content */
-  body {
-    margin-bottom: 60px;
-  }
-
-  /* Responsive tweak for small screens */
-  @media (max-width: 480px) {
-    .footer a {
-      font-size: 11px;
-    }
-
-    .footer a i {
-      font-size: 18px;
-    }
-  }
-</style>
-
-<div class="footer">
-  <a href="home.html" class="active">
-    <i class="fa-solid fa-house"></i>
-    <span>Home</span>
-  </a>
-  <a href="series.html">
-    <i class="fa-solid fa-tv"></i>
-    <span>Live TV</span>
-  </a>
-  <a href="info.html">
-    <i class="fa-solid fa-circle-info"></i>
-    <span>Info</span>
-  </a>
-</div>
-
-  <div class="container">
-    <div class="greeting" id="greeting">Hello! Good morning.</div>
-
-    <!-- Carousel -->
-    <div class="carousel" id="carousel">
-      <div class="carousel-track" id="carouselTrack">
-        <div class="carousel-item" data-walink="https://chat.whatsapp.com/IbWWO9mim0rGCmVcA11CWI">
-‎          <img src="https://i.postimg.cc/fL87QN9B/20251011-081732.jpg" alt="poster1" />
-‎        </div>
-        <div class="carousel-item" data-walink="https://chat.whatsapp.com/IbWWO9mim0rGCmVcA11CWI">
-          <img src="https://i.postimg.cc/PJx9JB3N/20251009-085134.jpg" alt="poster2" />
-        </div>
-        <div class="carousel-item" data-walink="https://chat.whatsapp.com/IbWWO9mim0rGCmVcA11CWI">
-          <img src="https://i.postimg.cc/nLcZFXcG/20251011-111015.jpg" alt="poster3" />
-        </div>
-        <div class="carousel-item" data-walink="https://chat.whatsapp.com/IbWWO9mim0rGCmVcA11CWI">
-          <img src="https://i.postimg.cc/cJRVb7tB/20251009-085546.jpg" alt="poster4" />
-        </div>
-      </div>
-      <div class="carousel-dot-wrap" id="dots"></div>
-    </div>
-
-    <div class="section-title">Live Sports</div>
-
-    <div class="grid" id="grid">
-      <div class="card" data-title="EPL" data-link="https://cdn10khi.tamashaweb.com:8087/jazzauth/EPL-A-abr/playlist.m3u8">
-        <img src="https://i.postimg.cc/T1BcqS0R/images-2-30.jpg" alt="EPL" />
-        <p>Premier League</p>
-      </div>
-
-      <div class="card" data-title="BAN vs AFG" data-link="https://cdn01isb-n.tamashaweb.com:8087/jazzauth/AFGVSBAN-abr/playlist.m3u8">
-        <img src="https://canvas.tamashaweb.com/jazzlive/uploads/channels/logo/1759745644401.webp?id=10" alt="BANvsAFG" />
-        <p>Bangladesh vs Afghanistan</p>
-      </div>
-
-      <div class="card" data-title="PTV Home" data-link="https://ptvstream1.nayatel.com:8096/transcoder/ptvhometrc_source/chunks.m3u8">
-        <img src="https://canvas.tamashaweb.com/jazzlive/uploads/channels/1750321508757.webp?id=100" alt="PTV" />
-        <p>PTV home</p>
-      </div>
-
-      <div class="card" data-title="Ten Sports" data-link="https://cdn07isb.tamashaweb.com:8087/YlUHeDQb7a/157-3H/playlist.m3u8">
-        <img src="https://canvas.tamashaweb.com/jazzlive/uploads/channels/poster/ten-sports-hd-poster.webp?id=41" alt="TenSports" />
-        <p>Ten Sports</p>
-      </div>
-  
-‎      <div class="card" data-title="Pak vs Sa test" data-link="https://cdn13lhr.tamashaweb.com:8087/jazzauth/PKvSA-TOT-abr/live/PAKvsSA_360p/chunks.m3u8">
-‎        <img src="https://i.postimg.cc/Kjqp9H1T/16022751031735185464.jpg" alt="Pak vs rsa test" />
-‎        <p>Pak vs rsa test</p>
-‎      </div>
-‎
-    </div>
-  </div>
-
-  <!-- Player modal -->
-  <div id="modal" class="modal">
-    <div class="player-card">
-      <div class="player-header">
-        <h4 id="playerTitle">Playing</h4>
-        <button class="close-btn" id="closeBtn">✕</button>
-      </div>
-      <video id="video" controls playsinline webkit-playsinline></video>
-    </div>
+  <div class="card">
+    <h1>🚧 Under Maintenance</h1>
+    <p>We are under maintenance for <span id="countdown">2:00</span> minutes.</p>
+    <p>Please check back soon!</p>
   </div>
 
   <script>
-    // Greeting by time
-    const greetingEl=document.getElementById('greeting');
-    const hr=new Date().getHours();
-    greetingEl.textContent=
-      hr>=5&&hr<12?"Good morning.":hr>=12&&hr<17?"Good afternoon.":hr>=17&&hr<21?"Good evening.":"Hello!";
+    // Countdown timer for 2 minutes
+    let time = 2 * 60; // seconds
+    const countdown = document.getElementById('countdown');
 
-    // Carousel auto-slide
-    const track=document.getElementById('carouselTrack');
-    const items=[...track.children];
-    const dotsWrap=document.getElementById('dots');
-    let current=0;
-    items.forEach((_,i)=>{
-      const d=document.createElement('div');
-      d.className='dot'+(i===0?' active':'');
-      d.onclick=()=>goTo(i);
-      dotsWrap.appendChild(d);
-    });
-    function goTo(i){
-      current=i;
-      track.style.transform=`translateX(-${i*100}%)`;
-      [...dotsWrap.children].forEach((d,idx)=>d.classList.toggle('active',idx===i));
-    }
-    setInterval(()=>goTo((current+1)%items.length),4000);
-    items.forEach(it=>it.onclick=()=>window.open(it.dataset.walink,'_blank'));
+    const timer = setInterval(() => {
+      const minutes = Math.floor(time / 60);
+      const seconds = time % 60;
+      countdown.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+      time--;
 
-    // Player modal
-    const modal=document.getElementById('modal');
-    const video=document.getElementById('video');
-    const playerTitle=document.getElementById('playerTitle');
-    const closeBtn=document.getElementById('closeBtn');
-    let hls=null;
-
-    document.querySelectorAll('.card').forEach(card=>{
-      card.onclick=()=>{
-        const url=card.dataset.link;
-        playerTitle.textContent=card.dataset.title;
-        modal.classList.add('open');
-        if(hls){hls.destroy();hls=null;}
-        video.pause();video.removeAttribute('src');video.load();
-
-        if(video.canPlayType('application/vnd.apple.mpegurl')){
-          video.src=url;video.play();
-        } else if(Hls.isSupported()){
-          hls=new Hls();hls.loadSource(url);hls.attachMedia(video);
-          hls.on(Hls.Events.MANIFEST_PARSED,()=>video.play());
-        } else alert('Browser not supported for HLS.');
-      };
-    });
-
-    closeBtn.onclick=()=>closeModal();
-    modal.onclick=e=>{if(e.target===modal)closeModal();};
-    function closeModal(){
-      modal.classList.remove('open');
-      if(hls){hls.destroy();hls=null;}
-      video.pause();video.removeAttribute('src');video.load();
-    }
+      if (time < 0) {
+        clearInterval(timer);
+        countdown.textContent = "Maintenance complete!";
+      }
+    }, 1000);
   </script>
 </body>
 </html>
