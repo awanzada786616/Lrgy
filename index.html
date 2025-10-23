@@ -1,155 +1,227 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="ur" dir="rtl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Wasi TV - Cinematic Intro</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Wasi TV — Maintenance</title>
+  <style>
+    /* Reset-ish */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html,body { height: 100%; font-family: "Segoe UI", Roboto, "Noto Naskh Arabic", sans-serif; background: linear-gradient(135deg,#0f172a 0%, #001427 60%); color: #fff; }
 
-<style>
-  *{margin:0;padding:0;box-sizing:border-box}
-  body{
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:#000;
-    overflow:hidden;
-    font-family:"Poppins",sans-serif;
-    color:#fff;
-  }
+    /* Container */
+    .wrap {
+      min-height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+    }
 
-  /* Light rays behind */
-  .rays{
-    position:absolute;
-    top:0;left:0;
-    width:100%;height:100%;
-    background:radial-gradient(circle at center,#ff0048 0%,transparent 60%);
-    opacity:0;
-    filter:blur(80px);
-    animation:flashLight 1.6s ease-out 0.6s forwards;
-  }
-  @keyframes flashLight{
-    0%{opacity:0}
-    40%{opacity:1}
-    100%{opacity:0.15}
-  }
+    .card {
+      width: 100%;
+      max-width: 920px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 24px;
+      align-items: center;
+      backdrop-filter: blur(6px);
+    }
 
-  /* Floating particles */
-  .particle{
-    position:absolute;
-    width:4px;height:4px;
-    background:#fff;
-    border-radius:50%;
-    opacity:0.2;
-    animation:float 6s linear infinite;
-  }
-  @keyframes float{
-    0%{transform:translateY(100vh) scale(0.5);opacity:0.1}
-    50%{opacity:0.8}
-    100%{transform:translateY(-10vh) scale(1.2);opacity:0}
-  }
+    /* Responsive: single column on small screens */
+    @media (max-width: 800px) {
+      .card { grid-template-columns: 1fr; padding: 20px; }
+      .right { order: -1; }
+    }
 
-  /* Splash main */
-  .splash{text-align:center;opacity:0;animation:fadeIn 1.2s ease-out forwards 1s;}
+    /* Left content */
+    .brand {
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom: 10px;
+    }
+    .logo {
+      width:64px;
+      height:64px;
+      border-radius:10px;
+      background: linear-gradient(135deg,#ff6b6b,#ffb86b);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;
+      font-size:20px;
+      color:#071223;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+    }
+    h1 { font-size: 28px; margin-bottom: 6px; line-height:1.05; }
+    p.lead {
+      color: #e6eef8;
+      opacity: 0.9;
+      margin-bottom: 14px;
+    }
+    p.small { color: #d6e7ff; opacity: 0.75; font-size:14px; }
 
-  .logo{
-    font-size:5rem;
-    font-weight:900;
-    text-transform:uppercase;
-    letter-spacing:6px;
-    opacity:0;
-    transform:scale(1.8);
-    background:linear-gradient(90deg,#ff0048,#ff005c,#ff0048);
-    -webkit-background-clip:text;
-    color:transparent;
-    animation:logoReveal 2.5s cubic-bezier(0.22,1,0.36,1) forwards 1.2s;
-  }
+    /* Loader */
+    .loader {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin-bottom: 12px;
+      position: relative;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .ring {
+      position:absolute;
+      width:88px; height:88px;
+      border-radius:50%;
+      border:4px solid rgba(255,255,255,0.08);
+      border-top-color: rgba(255,255,255,0.5);
+      animation: spin 1.6s linear infinite;
+    }
+    .dot {
+      width:18px; height:18px; border-radius:50%;
+      background: radial-gradient(circle at 30% 20%, #fff, #ffd27a 60%);
+      box-shadow: 0 6px 18px rgba(255,170,60,0.18);
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-  .tagline{
-    font-size:1.3rem;
-    letter-spacing:2px;
-    margin-top:12px;
-    color:#ccc;
-    opacity:0;
-    animation:fadeUp 1.2s ease forwards 3.3s;
-  }
+    /* Right column (info box) */
+    .right {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius: 10px;
+      padding: 18px;
+    }
+    .info-row { display:flex; gap:10px; align-items:center; margin-bottom:10px; }
+    .chip { background: rgba(255,255,255,0.04); padding: 8px 12px; border-radius:999px; font-size:13px; }
+    .contact { font-size:14px; color:#dbeafe; opacity:0.95; margin-top:6px; }
 
-  .loader{
-    margin:45px auto 0;
-    font-size:2.2rem;
-    color:#ff0048;
-    opacity:0;
-    animation:spin 2s linear infinite, fadeIn 1s ease forwards 3.8s;
-  }
+    /* subscribe form */
+    .subscribe {
+      display:flex;
+      gap:8px;
+      margin-top:12px;
+      flex-wrap:wrap;
+    }
+    .subscribe input[type="email"]{
+      flex:1 1 180px;
+      padding:10px 12px;
+      border-radius:8px;
+      border: none;
+      outline: none;
+      font-size:14px;
+      background: rgba(255,255,255,0.03);
+      color: #fff;
+    }
+    .subscribe button{
+      padding:10px 14px;
+      border-radius:8px;
+      border:none;
+      background: linear-gradient(90deg,#ff8a65,#ffcf6b);
+      color:#071223;
+      font-weight:700;
+      cursor:pointer;
+      box-shadow: 0 8px 18px rgba(255,160,80,0.12);
+    }
+    .muted { color: #cfe9ff; opacity:0.7; font-size:13px; margin-top:8px; }
 
-  /* Animations */
-  @keyframes fadeIn{to{opacity:1}}
-  @keyframes fadeUp{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
-  @keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+    /* footer small */
+    .foot {
+      margin-top:14px;
+      font-size:13px;
+      color:#cfe9ff;
+      opacity:0.65;
+    }
 
-  @keyframes logoReveal{
-    0%{opacity:0;transform:scale(1.8) skewY(15deg)}
-    40%{opacity:1;transform:scale(1) skewY(0)}
-    70%{filter:drop-shadow(0 0 20px #ff0048)}
-    100%{opacity:1;transform:scale(1);filter:drop-shadow(0 0 35px #ff0048)}
-  }
-
-  @keyframes glowPulse{
-    0%,100%{text-shadow:0 0 25px #ff0048,0 0 40px #ff0048;}
-    50%{text-shadow:0 0 45px #ff0048,0 0 70px #ff0048;}
-  }
-
-  @keyframes fadeOutScreen{to{opacity:0;transform:scale(0.95)}}
-  .fade-out{animation:fadeOutScreen 1.5s ease forwards;}
-</style>
+    /* small helper for rtl-left visual in small screens */
+    .meta { text-align:left; direction:ltr; }
+  </style>
 </head>
 <body>
+  <div class="wrap">
+    <div class="card" role="main" aria-labelledby="title">
+      <!-- LEFT: message -->
+      <div class="left">
+        <div class="brand" aria-hidden="true">
+          <div class="logo">W</div>
+          <div>
+            <div style="font-weight:700;">Wasi TV</div>
+            <div style="font-size:13px;color:#d6e7ff;opacity:0.75;">آن لائن اسٹیشن</div>
+          </div>
+        </div>
 
-<!-- light rays -->
-<div class="rays"></div>
+        <h1 id="title">Wasi TV زیرِِ دیکھ بھال ہے</h1>
+        <p class="lead">ہماری ٹیم بہتر تجربہ لانے کے لیے کام کر رہی ہے۔ تھوڑی دیر میں واپس آ جائیں — ہمیں آپ کے صبر کا شکریہ۔</p>
 
-<!-- background particles -->
-<div class="particle" style="left:10%;animation-delay:0s"></div>
-<div class="particle" style="left:25%;animation-delay:1s"></div>
-<div class="particle" style="left:45%;animation-delay:2s"></div>
-<div class="particle" style="left:65%;animation-delay:3s"></div>
-<div class="particle" style="left:85%;animation-delay:4s"></div>
+        <!-- loader -->
+        <div class="loader" aria-hidden="true">
+          <div class="ring" aria-hidden="true"></div>
+          <div class="dot" aria-hidden="true"></div>
+        </div>
 
-<!-- splash -->
-<div class="splash" id="splash">
-  <div class="logo" id="logo"><i class="fa-solid fa-tv"></i> Wasi TV</div>
-  <div class="tagline">Streaming Beyond Imagination</div>
-  <div class="loader"><i class="fa-solid fa-compact-disc"></i></div>
-</div>
+        <p class="small">اگر آپ کو فوری مدد چاہیے تو نیچے دی گئی معلومات پر رابطہ کریں یا ہمیں ای میل بھیجیں۔</p>
 
-<!-- Intro sound -->
-<audio id="introSound" preload="auto">
-  <source src="https://wasitv.vercel.app/%D9%88%DB%8C%D9%84%DA%A9%D9%85%20%D9%B9%D9%88%20%D9%88%DB%8C%D8%B3%DB%8C%20%D9%B9%DB%8C%20%D9%88%DB%8C.m4a" type="audio/mp4">
-</audio>
+        <div class="foot">
+          © <span id="year"></span> Wasi TV — تمام حقوق محفوط ہیں۔
+        </div>
+      </div>
 
-<script>
-const splash=document.getElementById("splash");
-const logo=document.getElementById("logo");
-const sound=document.getElementById("introSound");
+      <!-- RIGHT: contact + subscribe -->
+      <aside class="right" aria-label="Contact and updates">
+        <div class="info-row">
+          <div class="chip">حالت: زیرِ دیکھ بھال</div>
+          <div class="chip">متوقع واپسی: جلدی</div>
+        </div>
 
-window.addEventListener("load",()=>{
-  sound.volume=1.0;
-  sound.play().then(()=>{
-    logo.style.animation+=", glowPulse 2.8s ease-in-out infinite 2.4s";
-  }).catch(()=>{
-    document.body.addEventListener("click",()=>{
-      sound.play();
-      logo.style.animation+=", glowPulse 2.8s ease-in-out infinite 2.4s";
-    },{once:true});
-  });
-});
+        <div>
+          <div style="font-weight:700;margin-bottom:6px;">ہم سے رابطہ کریں</div>
+          <div class="contact">ای میل: <a href="mailto:support@wasi.tv" style="color:#fff;text-decoration:underline;">support@wasi.tv</a></div>
+          <div class="contact">فون: <span class="meta">+92 300 1234567</span></div>
+        </div>
 
-// Fade out and redirect
-setTimeout(()=>{
-  splash.classList.add("fade-out");
-  setTimeout(()=>window.location.href="home.html",1500);
-},6000);
-</script>
+        <div style="margin-top:12px;">
+          <div style="font-weight:700;margin-bottom:6px;">اپ ڈیٹس کے لیے سبسکرائب کریں</div>
+          <form class="subscribe" onsubmit="event.preventDefault(); subscribe();">
+            <input id="email" type="email" placeholder="اپنا ای میل درج کریں" aria-label="email" required>
+            <button type="submit">سبسکرائب</button>
+          </form>
+          <div id="submsg" class="muted">ہم آپ کو جب سائٹ فعال ہو تو مطلع کریں گے — ایسا کرنے کے لیے ای میل درج کریں۔</div>
+        </div>
+
+        <div style="margin-top:12px;">
+          <div style="font-weight:700;margin-bottom:6px;">سوشل</div>
+          <div style="display:flex;gap:8px;">
+            <a href="#" aria-label="Twitter" style="text-decoration:none;"><div class="chip">ٹویٹر</div></a>
+            <a href="#" aria-label="Facebook" style="text-decoration:none;"><div class="chip">فیس بک</div></a>
+            <a href="#" aria-label="YouTube" style="text-decoration:none;"><div class="chip">یوٹیوب</div></a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    // سال خود بخود دکھائے گا
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Simple "subscribe" front-end behavior — backend nahin hai, isko apne server se jorna hai.
+    function subscribe(){
+      var email = document.getElementById('email').value.trim();
+      var msg = document.getElementById('submsg');
+      if(!email){ msg.textContent = 'براہِ کرم درست ای میل درج کریں۔'; return; }
+      // Yahan aap AJAX call laga ke apne server ko bhej sakte hain.
+      msg.textContent = 'شکریہ! آپ کو مطلع کیا جائے گا۔';
+      // reset input
+      document.getElementById('email').value = '';
+    }
+  </script>
 </body>
 </html>
