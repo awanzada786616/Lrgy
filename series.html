@@ -1258,5 +1258,28 @@
       });
     }
   </script>
+  <!-- WhatsApp floating button: paste before </body> -->
+<a href="https://wa.me/+92300XXXXXXX?text=Assalamualaikum%20%F0%9F%98%8A" target="_blank" rel="noopener"
+   style="position:fixed;right:18px;bottom:18px;z-index:9999;text-decoration:none;">
+  <div style="
+    width:52px;height:52px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 6px 14px rgba(0,0,0,0.18);
+    background:linear-gradient(135deg,#25D366,#128C7E);
+    transition:transform .12s ease,box-shadow .12s ease;">
+    <!-- Inline WhatsApp SVG icon (keeps file small, no external assets) -->
+    <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" focusable="false">
+      <path fill="#fff" d="M20.5 3.5A11.9 11.9 0 0 0 12 .5C6.21.5 1.5 5.21 1.5 11c0 1.94.5 3.77 1.45 5.36L1 23l6.98-2.23A11.97 11.97 0 0 0 12 22.5c5.79 0 10.5-4.71 10.5-10.5 0-2.82-1.1-5.43-3-7.5zM12 20.1c-1.2 0-2.38-.27-3.43-.78l-.24-.12-4.15 1.32 1.26-3.93-.14-.27A8.01 8.01 0 0 1 4 11c0-4.42 3.58-8 8-8s8 3.58 8 8-3.58 8-8 8z"/>
+      <path fill="#fff" d="M17.56 14.08c-.26-.13-1.53-.76-1.77-.85-.24-.1-.42-.13-.6.13-.18.26-.7.85-.86 1.03-.16.18-.32.2-.58.07-.26-.13-1.09-.4-2.07-1.28-.77-.69-1.29-1.54-1.44-1.8-.15-.26-.02-.4.12-.53.12-.12.26-.32.39-.49.13-.17.17-.28.26-.46.09-.18.05-.34-.02-.47-.07-.13-.6-1.45-.82-1.99-.22-.52-.45-.45-.62-.46-.16-.01-.35-.01-.54-.01s-.47.07-.72.34c-.25.26-.96.94-.96 2.3 0 1.36.98 2.68 1.12 2.86.14.18 1.94 3.02 4.7 4.23 1.35.54 1.9.58 2.58.49.66-.09 2.15-.88 2.46-1.73.31-.85.31-1.57.22-1.72-.09-.15-.33-.24-.59-.37z"/>
+    </svg>
+  </div>
+</a>
+
+<!-- Optional: simple hover effect (paste in your CSS file or inside <style> in head) -->
+<style>
+  a[rel="noopener"] div:hover{ transform:translateY(-4px) scale(1.03); box-shadow:0 10px 20px rgba(0,0,0,0.2); }
+  /* smaller on very small screens */
+  @media (max-width:420px){ a[rel="noopener"] div{ width:46px;height:46px } }
+</style>
 </body>
 </html>
