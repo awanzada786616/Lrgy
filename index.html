@@ -1,61 +1,256 @@
 <!DOCTYPE html>
-<html lang="ur">
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Wasi TV - New Update Download</title>
-  <style>
-    body {
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Helvetica Neue", Arial;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      background: linear-gradient(135deg, #0f172a, #0f1f3a);
-      color: #fff;
-    }
-    .card {
-      background: rgba(255,255,255,0.04);
-      padding: 28px;
-      border-radius: 12px;
-      box-shadow: 0 8px 30px rgba(2,6,23,0.6);
-      text-align: center;
-      width: 320px;
-    }
-    h1 { margin: 0 0 8px; font-size: 20px; }
-    p { margin: 0 0 18px; color: #cbd5e1; font-size: 14px; }
-    .btn {
-      display: inline-block;
-      padding: 12px 18px;
-      border-radius: 10px;
-      background: linear-gradient(90deg,#06b6d4,#3b82f6);
-      color: white;
-      text-decoration: none;
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      font-size: 15px;
-    }
-    .note { margin-top:12px; font-size:12px; color:#94a3b8; }
-  </style>
+<meta charset="UTF-8">
+<title>Wasi TV</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+:root{
+ --main:#ff0000;
+ --bg:#0c0c0c;
+ --text:white;
+ --card:white;
+}
+
+.light{
+ --main:#0d6efd;
+ --bg:#f4f4f4;
+ --text:#000;
+ --card:white;
+}
+
+.red{
+ --main:#ff0000;
+}
+
+body{background:var(--bg);color:var(--text);margin:0;font-family:system-ui}
+
+/* HEADER */
+.header{
+position:fixed;top:0;width:100%;
+background:var(--main);color:white;
+text-align:center;padding:10px;
+border-radius:0 0 15px 15px;
+z-index:99;
+}
+
+/* PAGES */
+.page{display:none;padding-top:70px;padding-bottom:80px}
+.page.active{display:block}
+
+/* POSTERS */
+.posters{display:flex;overflow-x:auto;gap:10px;padding:10px}
+.poster{min-width:240px;height:140px;border-radius:12px;overflow:hidden}
+.poster img{width:100%;height:100%;object-fit:cover}
+
+/* TITLE */
+.title{padding:10px}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:10px}
+.card-tv{
+background:var(--card);border-radius:12px;padding:8px;
+text-align:center;color:black;
+}
+.card-tv img{height:80px;width:100%;object-fit:contain}
+.card-tv .name{font-size:13px}
+
+/* MOVIE */
+.coming{text-align:center;margin-top:40%;font-size:22px}
+.coming span{display:block;font-size:16px;opacity:.6}
+
+/* NAV */
+.navbar{
+position:fixed;bottom:0;width:100%;
+background:#111;display:flex;justify-content:space-around;padding:8px
+}
+.nav i{color:#aaa}
+.nav.active i{color:var(--main)}
+
+/* WHATSAPP */
+.whatsapp{
+position:fixed;right:15px;bottom:90px;
+background:#25d366;width:50px;height:50px;
+color:white;border-radius:50%;
+display:flex;align-items:center;justify-content:center
+}
+
+/* PLAYER */
+.player-controls{
+position:absolute;right:20px;bottom:70px;z-index:1000
+}
+#playBtn{
+background:var(--main);
+border:none;border-radius:50%;
+width:60px;height:60px;color:white;
+font-size:22px;
+}
+
+/* MODAL */
+.modal-content{background:black}
+</style>
 </head>
-<body>
-  <div class="card" role="region" aria-label="Wasi TV download card">
-    <h1>Wasi TV — New Update</h1>
-    <p>Naya update download karne ke liye neechey button par click karein.</p>
 
-    <!-- Option 1: Button using JavaScript to open the link -->
-    <button class="btn" id="downloadBtn" type="button">Download</button>
+<body class="red">
 
-    
+<div class="header">Wasi Tv</div>
 
-  <script>
-    document.getElementById('downloadBtn').addEventListener('click', function() {
-      // Agar aap chahen to yahan "https://awan.pk" ko kisi specific file URL se replace kar dein,
-      // example: "https://awan.pk/path/to/file.apk"
-      window.open('https://drive.google.com/file/d/1nwmJVHEnUvJlCfCcBXr7JT8GfbgIW1Hr/view?usp=drivesdk', '_blank', 'noopener,noreferrer');
-    });
-  </script>
+<!-- HOME -->
+<div id="home" class="page active">
+<div class="title">Featured</div>
+<div id="posters" class="posters"></div>
+<div class="title">Latest Channels</div>
+<div id="latest" class="grid"></div>
+</div>
+
+<!-- LIVE -->
+<div id="live" class="page">
+<div class="title">All Channels</div>
+<div id="channels" class="grid"></div>
+</div>
+
+<!-- MOVIES -->
+<div id="movies" class="page">
+<div class="coming">🎬 Movies <span>Coming Soon</span></div>
+</div>
+
+<!-- PLAYER -->
+<div class="modal fade" id="playerModal">
+<div class="modal-dialog modal-fullscreen">
+<div class="modal-content">
+<div class="modal-header border-0">
+<span id="ptitle"></span>
+<button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+</div>
+
+<video id="player" autoplay class="w-100" style="height:90vh"></video>
+
+<div class="player-controls">
+<button id="playBtn" onclick="togglePlay()"><i class="fas fa-play"></i></button>
+</div>
+
+</div></div></div>
+
+<!-- WHATSAPP -->
+<a href="https://wa.me/923342002756" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
+
+<!-- NAV -->
+<div class="navbar">
+<div class="nav active" onclick="openPage('home',this)"><i class="fas fa-home"></i></div>
+<div class="nav" onclick="openPage('live',this)"><i class="fas fa-tv"></i></div>
+<div class="nav" onclick="openPage('movies',this)"><i class="fas fa-film"></i></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+apiKey: "AIzaSyBX7D3Sopqt_JwmQkxz51q6TNPIfVi8aYI",
+authDomain: "wasi-tv.firebaseapp.com",
+projectId: "wasi-tv",
+storageBucket: "wasi-tv.firebasestorage.app",
+messagingSenderId: "223110047484",
+appId: "1:223110047484:web:f665a4cd90d3f3ae4cd979"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+/* PAGE */
+function openPage(id,el){
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+document.querySelectorAll(".nav").forEach(n=>n.classList.remove("active"));
+el.classList.add("active");
+}
+
+/* THEME FETCH */
+db.collection("settings").doc("theme").onSnapshot(d=>{
+if(!d.exists) return;
+document.body.className = d.data().mode;
+});
+
+/* POSTERS */
+db.collection("posters").orderBy("time","desc")
+.onSnapshot(s=>{
+let box="";
+s.forEach(d=> box+=`<div class="poster"><img src="${d.data().img}"></div>`);
+document.getElementById("posters").innerHTML=box;
+});
+
+/* LATEST 7 */
+db.collection("channels").orderBy("created","desc").limit(7)
+.onSnapshot(s=>{
+let box="";
+s.forEach(d=> box+=channel(d.data()));
+document.getElementById("latest").innerHTML=box;
+});
+
+/* ALL */
+db.collection("channels").onSnapshot(s=>{
+let box="";
+s.forEach(d=> box+=channel(d.data()));
+document.getElementById("channels").innerHTML=box;
+});
+
+/* CARD */
+function channel(c){
+return `<div class="card-tv" onclick="play('${c.url}','${c.name}')">
+<img src="${c.logo}"><div class="name">${c.name}</div></div>`;
+}
+
+/* PLAYER */
+let hls=null;
+const modal=new bootstrap.Modal(document.getElementById("playerModal"));
+const player=document.getElementById("player");
+
+function play(url,name){
+document.getElementById("ptitle").innerText=name;
+modal.show();
+goLandscape();
+
+if(Hls.isSupported()){
+if(hls)hls.destroy();
+hls=new Hls();
+hls.loadSource(url);
+hls.attachMedia(player);
+}else player.src=url;
+
+updateIcon();
+}
+
+function togglePlay(){
+if(player.paused) player.play();
+else player.pause();
+updateIcon();
+}
+
+function updateIcon(){
+document.getElementById("playBtn").innerHTML = player.paused?
+'<i class="fas fa-play"></i>' :
+'<i class="fas fa-pause"></i>';
+}
+
+/* ORIENTATION */
+function goLandscape(){
+if(screen.orientation) screen.orientation.lock("landscape").catch(()=>{});
+}
+function exitLandscape(){
+if(screen.orientation) screen.orientation.unlock();
+}
+
+document.getElementById("playerModal").addEventListener("hidden.bs.modal",()=>{
+exitLandscape();
+player.pause();
+if(hls){hls.destroy();hls=null;}
+});
+</script>
+
 </body>
 </html>
