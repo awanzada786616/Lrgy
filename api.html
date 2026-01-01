@@ -1,0 +1,37 @@
+<?php
+// Browser ko access allow karein
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: text/plain'); // OTPGET text return karta hai
+
+// 1. Aapki Configuration
+$api_key = "e4c5d4fcc56363f572a597267b42e5d2"; // Yahan apni OTPGET Key dalein
+$base_url = "http://otpget.com/stubs/handler_api.php";
+
+// 2. Frontend (JS) se data lena
+$action = isset($_GET['action']) ? $_GET['action'] : '';
+
+// 3. URL Banana
+$request_url = "$base_url?api_key=$api_key&action=$action";
+
+// Agar extra parameters hain to add karein
+if (isset($_GET['service'])) { $request_url .= "&service=" . $_GET['service']; }
+if (isset($_GET['country'])) { $request_url .= "&country=" . $_GET['country']; }
+if (isset($_GET['id']))      { $request_url .= "&id=" . $_GET['id']; }
+if (isset($_GET['status']))  { $request_url .= "&status=" . $_GET['status']; }
+
+// 4. cURL Request (Jaisa aapke TikTok code mein tha)
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $request_url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Free hosting fix
+$response = curl_exec($ch);
+
+if(curl_errno($ch)){
+    echo 'Curl error: ' . curl_error($ch);
+} else {
+    // 5. Jawab wapis bhejna
+    echo $response;
+}
+
+curl_close($ch);
+?>
